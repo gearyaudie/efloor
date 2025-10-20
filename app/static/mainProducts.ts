@@ -3,6 +3,7 @@ export const MAIN_PRODUCTS: IMainProduct[] = [
     id: 1,
     name: "Lem efloor Max",
     desc: "Lem kuat untuk berbagai keperluan industri",
+    link: "https://shopee.co.id/Lem-Vinyl-Lem-Karpet-Lantai-EFLOOR-1-KG-4-KG-i.1358565268.24286056849",
     variants: [
       {
         size: "1 KG",
@@ -22,6 +23,7 @@ export const MAIN_PRODUCTS: IMainProduct[] = [
     id: 2,
     name: "Lem Karpet efloor",
     desc: "Lem kuat untuk berbagai keperluan industri",
+    link: "https://shopee.co.id/Lem-Karpet-Lantai-EFLOOR-i.1358565268.28861336172",
     variants: [
       {
         size: "1 KG",
@@ -41,6 +43,7 @@ export const MAIN_PRODUCTS: IMainProduct[] = [
     id: 3,
     name: "List Siku L",
     desc: "List Tangga, Stepnosing, Penutup WPC",
+    link: "https://shopee.co.id/List-Sudut-Siku-L-List-Tangga-Stepnosing-Penutup-Wallpanel-WPC-List-Transisi-untuk-Lantai-Kayu-Lantai-Vinyl-Lantai-Parket-Parquet-270CM-PVC-High-Quality-Tebal-i.1358565268.28462678834",
     variants: [
       {
         size: "L8",
@@ -62,5 +65,6 @@ export interface IMainProduct {
   id: number;
   name: string;
   variants: any;
+  link: string;
   desc: string;
 }

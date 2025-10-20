@@ -34,6 +34,10 @@ export default function Home() {
     }));
   };
 
+  const openLink = (link: string) => {
+    window.open(link, "_");
+  };
+
   return (
     <div>
       <Header />
@@ -93,7 +97,10 @@ export default function Home() {
                     </div>
                     <div className="pt-6 text-gray-700">{product.desc}</div>
                     <div className="pt-8">
-                      <button className="bg-[#FF8E06] text-white px-4 py-2 rounded-2xl">
+                      <button
+                        className="bg-[#FF8E06] text-white px-4 py-2 rounded-2xl hover:cursor-pointer"
+                        onClick={() => openLink(product.link)}
+                      >
                         Cek Harga
                       </button>
                     </div>
