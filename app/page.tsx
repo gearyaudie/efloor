@@ -109,7 +109,10 @@ export default function Home() {
 
       {/* Swiper Slider */}
       <div className="bg-[#f8f8f8]" id="products">
-        <div className="max-w-[1300px] mx-auto flex justify-center items-center p-20 ">
+        <div className="text-[40px] font-semibold mx-auto max-w-[1300px] p-8 pt-16">
+          Kenali Produk Kami
+        </div>
+        <div className="max-w-[1300px] mx-auto flex justify-center items-center p-8 pt-4">
           <Swiper
             modules={[Pagination]}
             spaceBetween={32}
@@ -123,7 +126,7 @@ export default function Home() {
           >
             {fullProducts.map((product) => (
               <SwiperSlide key={product.id}>
-                <div className="flex flex-col items-center justify-center text-center rounded-[36px] bg-white">
+                <div className="flex flex-col items-center justify-center text-center rounded-[36px] bg-white mb-10">
                   {/* Product Image */}
                   <img
                     src={product.img}
