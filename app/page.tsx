@@ -43,7 +43,7 @@ export default function Home() {
       <div className="max-w-[1300px] mx-auto py-10 px-6 mt-8" id="home">
         <Swiper
           modules={[Pagination]}
-          spaceBetween={80}
+          spaceBetween={0}
           slidesPerView={1}
           pagination={{ clickable: true }}
           breakpoints={{
@@ -58,12 +58,12 @@ export default function Home() {
 
             return (
               <SwiperSlide key={product.id}>
-                <div className="flex flex-col items-center justify-center text-center w-[325px]">
+                <div className="flex flex-col items-center justify-center text-center w-[375px]">
                   {/* Product Image */}
                   <img
                     src={selectedVariant.img}
                     alt={`${product.name} ${selectedVariant.size}`}
-                    className="text-center mx-auto w-[325px] transition-all duration-300 rounded-[20px]"
+                    className="text-center mx-auto w-[375px] transition-all duration-300 rounded-[20px]"
                   />
 
                   {/* Variant Selector */}
@@ -131,7 +131,7 @@ export default function Home() {
                   <img
                     src={product.img}
                     alt={product.title}
-                    className="text-center mx-auto rounded-[20px]"
+                    className="text-center mx-auto rounded-t-[20px]"
                   />
 
                   {/* Product Card */}
@@ -140,7 +140,10 @@ export default function Home() {
                       {product.title}
                     </div>
                     <div>
-                      <span>{product.oldPrice}</span> {product.newPrice}
+                      <span className="line-through bg-red">
+                        {product.oldPrice}
+                      </span>{" "}
+                      {product.newPrice}
                     </div>
                     <div className="pt-6 text-gray-700">{product.desc}</div>
                     <div className="pt-8">
