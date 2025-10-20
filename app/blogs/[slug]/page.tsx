@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: any) {
   );
 }
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   const post = await client.fetch(postQuery, { slug: params.slug });
 
   if (!post) return {};
