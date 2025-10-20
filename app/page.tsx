@@ -40,7 +40,7 @@ export default function Home() {
       {/* Promo Banner */}
       <PromoBanner />
       {/* Swiper Slider */}
-      <div className="max-w-[1300px] mx-auto py-10 px-6" id="home">
+      <div className="max-w-[1300px] mx-auto py-10 px-6 mt-8" id="home">
         <Swiper
           modules={[Pagination]}
           spaceBetween={80}
@@ -58,12 +58,12 @@ export default function Home() {
 
             return (
               <SwiperSlide key={product.id}>
-                <div className="flex flex-col items-center justify-center text-center w-[400px]">
+                <div className="flex flex-col items-center justify-center text-center w-[325px]">
                   {/* Product Image */}
                   <img
                     src={selectedVariant.img}
                     alt={`${product.name} ${selectedVariant.size}`}
-                    className="text-center mx-auto w-[400px] transition-all duration-300"
+                    className="text-center mx-auto w-[325px] transition-all duration-300 rounded-[20px]"
                   />
 
                   {/* Variant Selector */}
@@ -131,7 +131,7 @@ export default function Home() {
                   <img
                     src={product.img}
                     alt={product.title}
-                    className="text-center mx-auto"
+                    className="text-center mx-auto rounded-[20px]"
                   />
 
                   {/* Product Card */}

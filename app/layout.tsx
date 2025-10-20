@@ -10,7 +10,8 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "efloor | Your Trusted Home and Decor Store",
-  description: "efloor - your trusted home and decor store",
+  description:
+    "efloor - Leme Vinyl, List Aksesoris Vinyl, List Siku L, List Adaptasi, List Plint, List Transisi",
 };
 
 export default function RootLayout({
