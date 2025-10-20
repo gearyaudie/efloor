@@ -47,11 +47,7 @@ const portableTextComponents = {
     ),
   },
 };
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function BlogPostPage({ params }: any) {
   const post = await client.fetch(postQuery, { slug: params.slug });
   console.log(post);
   if (!post) return notFound();
