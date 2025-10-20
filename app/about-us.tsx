@@ -1,7 +1,6 @@
-"use client";
 import { useRouter } from "next/navigation";
 
-export default function PromoBanner() {
+export default function AboutUs() {
   const router = useRouter();
   return (
     <div className="bg-[#C62020] p-4 text-white text-center">

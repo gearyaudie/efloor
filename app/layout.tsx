@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
+
 import "./globals.css";
+import defaultSeo from "./seo.config";
+import Header from "./layout/Header";
+import PromoBanner from "./components/PromoBanner";
+import Footer from "./layout/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -9,9 +14,17 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "efloor | Your Trusted Home and Decor Store",
-  description:
-    "efloor - Leme Vinyl, List Aksesoris Vinyl, List Siku L, List Adaptasi, List Plint, List Transisi",
+  title: defaultSeo.title,
+  description: defaultSeo.description,
+  openGraph: {
+    ...defaultSeo.openGraph,
+  },
+  twitter: {
+    ...defaultSeo.twitter,
+  },
+  alternates: {
+    canonical: "https://www.efloor.id",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +34,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable}`}>{children}</body>
+      <body>
+        <Header />
+        {/* Promo Banner */}
+        <PromoBanner />
+        <body className={`${poppins.variable}`}>{children}</body>
+        <Footer />
+      </body>
     </html>
   );
 }

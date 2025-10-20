@@ -1,10 +1,23 @@
+"use client";
+import React from "react";
+
+import { usePathname, useRouter } from "next/navigation";
+
 export default function Footer() {
+  const router = useRouter();
+  const pathname = usePathname();
   const scrollToSection = (id: string) => {
+    // If we are NOT on home page, go there first
+    if (pathname !== "/") {
+      router.push(`/#${id}`);
+      return;
+    }
+
+    // If already on home page, just scroll
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
-      // optionally, update the URL hash without full navigation
-      window.history.pushState(null, "", `#${id}`);
+      window.history.pushState(null, "", `/#${id}`);
     }
   };
 
@@ -29,7 +42,12 @@ export default function Footer() {
         >
           Home
         </div>
-        <div className="text-[#ccc]">Articles</div>
+        <div
+          onClick={() => window.open("/blogs", "_")}
+          className="hover:cursor-pointer"
+        >
+          Articles
+        </div>
         <div
           onClick={() => scrollToSection("products")}
           className="hover:cursor-pointer"

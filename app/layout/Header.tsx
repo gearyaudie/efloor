@@ -1,20 +1,28 @@
-import Image from "next/image";
+"use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const scrollToSection = (id: string) => {
+    // If we are NOT on home page, go there first
+    if (pathname !== "/") {
+      router.push(`/#${id}`);
+      return;
+    }
+
+    // If already on home page, just scroll
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
-      // optionally, update the URL hash without full navigation
-      window.history.pushState(null, "", `#${id}`);
+      window.history.pushState(null, "", `/#${id}`);
     }
   };
 
   return (
-    <div>
+    <header>
       <div className="flex justify-between items-center max-w-[1200px] mx-auto">
         <img src="/img/header-logo.png" alt="" className="max-w-[200px] p-4" />
         <div className="hidden gap-20 mr-20 md:flex lg:flex">
@@ -30,9 +38,14 @@ export default function Header() {
           >
             Products
           </div>
-          <div className="text-[#ccc]">Articles</div>
+          <div
+            className="hover:cursor-pointer"
+            onClick={() => window.open("/blogs", "_")}
+          >
+            Articles
+          </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
