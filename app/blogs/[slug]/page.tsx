@@ -59,7 +59,7 @@ export default async function BlogPostPage({ params }: any) {
           <h1 className="text-[36px] font-500 mb-6 text-black  leading-snug">
             {post.title}
           </h1>
-          <div className=" text-gray-500">{post.excerpt}</div>
+          <div className="text-gray-500">{post.excerpt}</div>
         </div>
         <img
           src={post.img?.asset?.url}
