@@ -92,7 +92,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://www.efloor.id/blog/${params.slug}`, // 🔁 update domain
+      url: `https://www.efloor.id/blogs/${params.slug}`, // 🔁 update domain
       images: [
         {
           url: post.img?.asset?.url || "/images/default-og.png",
@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       type: "article",
     },
     alternates: {
-      canonical: `https://www.yourdomain.com/blog/${params.slug}`,
+      canonical: `https://www.efloor.id/blogs/${params.slug}`,
     },
   };
 }
