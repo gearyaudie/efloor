@@ -21,10 +21,21 @@ export default function Header() {
     }
   };
 
+  const onLogoClick = () => {
+    router.push(`/`);
+  };
+
   return (
     <header>
-      <div className="flex justify-between items-center max-w-[1200px] mx-auto">
-        <img src="/img/header-logo.png" alt="" className="max-w-[200px] p-4" />
+      <div
+        className="flex justify-between items-center max-w-[1200px] mx-auto"
+        onClick={() => onLogoClick()}
+      >
+        <img
+          src="/img/header-logo.png"
+          alt=""
+          className="max-w-[200px] p-4 hover:cursor-pointer"
+        />
         <div className="hidden gap-20 mr-20 md:flex lg:flex">
           <div
             className="hover:cursor-pointer"
