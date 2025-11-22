@@ -9,6 +9,7 @@ import AllProducts from "./components/AllProducts";
 import MarketingGrid from "./components/MarketingGrid";
 import Footer from "./layout/Footer";
 import { IMainProduct, MAIN_PRODUCTS } from "./static/mainProducts";
+import FloatingWhatsapp from "./components/FloatingWhatsapp";
 
 export default function Home() {
   const products: IMainProduct[] = MAIN_PRODUCTS;
@@ -101,7 +102,6 @@ export default function Home() {
           })}
         </Swiper>
       </div>
-
       <MarketingGrid />
 
       {/* Swiper Slider */}

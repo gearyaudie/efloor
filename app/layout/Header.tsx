@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
+import FloatingWhatsapp from "../components/FloatingWhatsapp";
 
 export default function Header() {
   const router = useRouter();
@@ -27,6 +28,7 @@ export default function Header() {
 
   return (
     <header>
+      <FloatingWhatsapp />
       <div
         className="flex justify-between items-center max-w-[1200px] mx-auto"
         onClick={() => onLogoClick()}
