@@ -1,11 +1,11 @@
 // app/blogs/[slug]/page.tsx
 import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { groq } from "next-sanity";
 import { client } from "@/sanity.client";
 import { PortableText } from "@portabletext/react";
 
-type Params = {
+type PageProps = {
   params: {
     slug: string;
   };
@@ -27,8 +27,15 @@ const postQuery = groq`
 `;
 
 export async function generateStaticParams() {
-  const slugs = await client.fetch(groq`*[_type == "post"]{ slug }`);
-  return slugs.map((post: any) => ({ slug: post.slug.current }));
+  const slugs = await client.fetch(
+    groq`*[_type == "post" && defined(slug.current)]{
+      "slug": slug.current
+    }`,
+  );
+
+  return slugs.map((post: { slug: string }) => ({
+    slug: post.slug,
+  }));
 }
 
 // Optional: customize how blocks and lists render
@@ -47,28 +54,34 @@ const portableTextComponents = {
     ),
   },
 };
-export default async function BlogPostPage({ params }: any) {
-  const post = await client.fetch(postQuery, { slug: params.slug });
-  console.log(post);
+
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = params;
+
+  const post = await client.fetch(postQuery, { slug });
+
   if (!post) return notFound();
 
   return (
     <div className="bg-white text-black">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mt-16">
-          <h1 className="text-[36px] font-500 mb-6 text-black  leading-snug">
+          <h1 className="text-[36px] font-500 mb-6 text-black leading-snug">
             {post.title}
           </h1>
           <div className="text-gray-500">{post.excerpt}</div>
         </div>
-        <img
-          src={post.img?.asset?.url}
-          alt={post.title}
-          className="w-full rounded-lg mt-10 mb-4"
-        />
-        <div className="text-center mb-12 italic text-sm">
-          This is an example of blablabla
-        </div>
+
+        {post.img?.asset?.url && (
+          <img
+            src={post.img.asset.url}
+            alt={post.title}
+            className="w-full rounded-lg mt-10 mb-4"
+          />
+        )}
+
+        <div className="text-center mb-12 italic text-sm"></div>
+
         <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
           <PortableText
             value={post.content}
@@ -80,8 +93,12 @@ export default async function BlogPostPage({ params }: any) {
   );
 }
 
-export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const post = await client.fetch(postQuery, { slug: params.slug });
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = params;
+
+  const post = await client.fetch(postQuery, { slug });
 
   if (!post) return {};
 
@@ -92,7 +109,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://www.efloor.id/blogs/${params?.slug}`, // 🔁 update domain
+      url: `https://www.efloor.id/blogs/${slug}`,
       images: [
         {
           url: post.img?.asset?.url || "/images/default-og.png",
@@ -104,7 +121,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       type: "article",
     },
     alternates: {
-      canonical: `https://www.efloor.id/blogs/${params?.slug}`,
+      canonical: `https://www.efloor.id/blogs/${slug}`,
     },
   };
 }
