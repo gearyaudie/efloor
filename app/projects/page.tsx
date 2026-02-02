@@ -1,8 +1,7 @@
 import { Metadata } from "next";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Projects() {
-  const router = useRouter();
   return (
     <div className="max-w-[1300px] mx-auto my-20 flex flex-col justify-center items-center px-6">
       <div className="text-[40px] font-medium text-center">
@@ -15,17 +14,15 @@ export default function Projects() {
         kepuasan tinggi.
       </div>
       <div>
-        <button
-          className="bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 p-2 rounded-lg mt-2 mt-8  hover:cursor-pointer"
-          onClick={() =>
-            window.open(
-              "https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0",
-              "_",
-            )
+        <Link
+          href={
+            "https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0"
           }
         >
-          Dapatkan Quotation Sekarang!
-        </button>
+          <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 p-2 rounded-lg mt-2 mt-8  hover:cursor-pointer">
+            Dapatkan Quotation Sekarang!
+          </button>
+        </Link>
       </div>
       <div>
         <img
@@ -46,28 +43,24 @@ export default function Projects() {
         </div>
 
         <div className="flex gap-4 mt-6">
-          <button
-            className="bg-[#FF8E06] py-3 px-4 shadow-md text-white  p-2 rounded-lg hover:cursor-pointer"
-            onClick={() =>
-              window.open(
-                "https://drive.google.com/file/d/15Ma2yiZkQkYtoDQAT7LvYCfoPAPD3sIC/view?usp=drive_link",
-                "_",
-              )
+          <Link
+            href={
+              "https://drive.google.com/file/d/15Ma2yiZkQkYtoDQAT7LvYCfoPAPD3sIC/view?usp=drive_link"
             }
           >
-            Cek MSDS
-          </button>
-          <button
-            className="border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06]  p-2 rounded-lg hover:cursor-pointer"
-            onClick={() =>
-              window.open(
-                "https://drive.google.com/file/d/1kuyz5bfRQuqw37A8tSlYyHDhmZFmyWH0/view?usp=drive_link",
-                "_",
-              )
+            <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white  p-2 rounded-lg hover:cursor-pointer">
+              Cek MSDS
+            </button>
+          </Link>
+          <Link
+            href={
+              "https://drive.google.com/file/d/15Ma2yiZkQkYtoDQAT7LvYCfoPAPD3sIC/view?usp=drive_link"
             }
           >
-            Cek TDS
-          </button>
+            <button className="border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06]  p-2 rounded-lg hover:cursor-pointer">
+              Cek TDS
+            </button>
+          </Link>
         </div>
       </div>
     </div>
