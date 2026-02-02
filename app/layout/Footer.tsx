@@ -54,6 +54,12 @@ export default function Footer() {
         >
           Our Products
         </div>
+        <div
+          onClick={() => window.open("/projects", "_")}
+          className="hover:cursor-pointer"
+        >
+          Projects
+        </div>
       </div>
       <div className="flex flex-1 gap-10 flex-col text-center md:text-left lg:text-left mt-20 md:mt-0 lg:mt-0">
         <div className="font-bold">Our Company</div>
