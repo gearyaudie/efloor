@@ -6,8 +6,8 @@ import { client } from "@/sanity.client";
 import { PortableText } from "@portabletext/react";
 
 type PageProps = {
-  params: {
-    slug: string;
+  params?: {
+    slug?: string;
   };
 };
 
@@ -38,7 +38,7 @@ export async function generateStaticParams() {
   }));
 }
 
-// Optional: customize how blocks and lists render
+// PortableText renderers
 const portableTextComponents = {
   block: {
     normal: ({ children }: any) => (
@@ -56,7 +56,9 @@ const portableTextComponents = {
 };
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = params;
+  const slug = params?.slug;
+
+  if (!slug) return notFound();
 
   const post = await client.fetch(postQuery, { slug });
 
@@ -66,7 +68,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     <div className="bg-white text-black">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mt-16">
-          <h1 className="text-[36px] font-500 mb-6 text-black leading-snug">
+          <h1 className="text-[36px] font-500 mb-6 leading-snug">
             {post.title}
           </h1>
           <div className="text-gray-500">{post.excerpt}</div>
@@ -80,7 +82,9 @@ export default async function BlogPostPage({ params }: PageProps) {
           />
         )}
 
-        <div className="text-center mb-12 italic text-sm"></div>
+        <div className="text-center mb-12 italic text-sm">
+          This is an example of blablabla
+        </div>
 
         <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
           <PortableText
@@ -96,7 +100,15 @@ export default async function BlogPostPage({ params }: PageProps) {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug } = params;
+  const slug = params?.slug;
+
+  // 🔥 CRITICAL FIX: do NOT query Sanity without slug
+  if (!slug) {
+    return {
+      title: "EFLOOR Blog",
+      description: "Artikel dan panduan seputar lem vinyl dan lem karpet.",
+    };
+  }
 
   const post = await client.fetch(postQuery, { slug });
 
