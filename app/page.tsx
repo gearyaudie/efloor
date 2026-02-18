@@ -10,6 +10,7 @@ import MarketingGrid from "./components/MarketingGrid";
 import Footer from "./layout/Footer";
 import { IMainProduct, MAIN_PRODUCTS } from "./static/mainProducts";
 import FloatingWhatsapp from "./components/FloatingWhatsapp";
+import ProjectsSnippet from "./components/ProjectsSnippet";
 
 export default function Home() {
   const products: IMainProduct[] = MAIN_PRODUCTS;
@@ -18,7 +19,7 @@ export default function Home() {
     products.reduce((acc: any, product) => {
       acc[product.id] = 0; // default select the first variant
       return acc;
-    }, {})
+    }, {}),
   );
 
   const handleVariantClick = (productId: any, index: any) => {
@@ -34,8 +35,9 @@ export default function Home() {
 
   return (
     <div>
+      <ProjectsSnippet />
       {/* Swiper Slider */}
-      <div className="max-w-[1300px] mx-auto py-10 px-6 mt-8" id="home">
+      <div className="max-w-[1300px] mx-auto py-10 px-6" id="home">
         <Swiper
           modules={[Pagination]}
           spaceBetween={0}

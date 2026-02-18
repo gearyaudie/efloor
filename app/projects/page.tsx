@@ -63,6 +63,21 @@ export default function Projects() {
           </Link>
         </div>
       </div>
+      <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />
+      <div>
+        <div className="font-medium text-[30px] pb-4 max-w-[800px] mx-auto">
+          Projects
+        </div>
+        <div className="flex gap-4 flex-wrap max-w-[800px] mx-auto justify-center items-center">
+          <img src="/img/pro-1.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-2.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-3.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-4.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-5.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-6.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-7.png" alt="" className="max-w-[390px]" />
+        </div>
+      </div>
     </div>
   );
 }
