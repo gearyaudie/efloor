@@ -43,26 +43,18 @@ export default function Projects() {
           Whatsapp kami untuk info lebih lanjut.
         </div>
 
-        {/* <div className="flex gap-4 mt-6">
-          <Link
-            href={
-              "https://drive.google.com/file/d/15Ma2yiZkQkYtoDQAT7LvYCfoPAPD3sIC/view?usp=drive_link"
-            }
-          >
+        <div className="flex gap-4 mt-6">
+          <Link href="/docs/msds.pdf">
             <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white  p-2 rounded-lg hover:cursor-pointer">
               Cek MSDS
             </button>
           </Link>
-          <Link
-            href={
-              "https://drive.google.com/file/d/15Ma2yiZkQkYtoDQAT7LvYCfoPAPD3sIC/view?usp=drive_link"
-            }
-          >
+          <Link href="/docs/tds.pdf">
             <button className="border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06]  p-2 rounded-lg hover:cursor-pointer">
               Cek TDS
             </button>
           </Link>
-        </div> */}
+        </div>
       </div>
       <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />
       <div>
