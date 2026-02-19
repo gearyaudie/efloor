@@ -33,8 +33,24 @@ export default function Home() {
     window.open(link, "_");
   };
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Lem Efloor Max",
+    description:
+      "Supplier Lem Karpet, Procurement Lem Karpet untuk Kontraktor dan Projekkkkkk",
+    brand: {
+      "@type": "Brand",
+      name: "Efloor",
+    },
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ProjectsSnippet />
       {/* Swiper Slider */}
       <div className="max-w-[1300px] mx-auto py-10 px-6" id="home">

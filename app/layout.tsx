@@ -39,11 +39,11 @@ export default function RootLayout({
         <Header />
         {/* Promo Banner */}
         <PromoBanner />
-        <body className={`${poppins.variable}`}>
+        <div className={poppins.variable}>
           {children}
 
           <GoogleAnalytics gaId="G-GQGMBDHQMG" />
-        </body>
+        </div>
         <Footer />
       </body>
     </html>

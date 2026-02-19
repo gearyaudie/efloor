@@ -6,11 +6,10 @@ import { client } from "@/sanity.client";
 import { PortableText } from "@portabletext/react";
 
 type PageProps = {
-  params?: {
-    slug?: string;
+  params: {
+    slug: string;
   };
 };
-
 const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
     title,
@@ -55,12 +54,14 @@ const portableTextComponents = {
   },
 };
 
-export default async function BlogPostPage({ params }: PageProps) {
-  const slug = params?.slug;
+export default async function BlogPostPage(props: PageProps) {
+  const { slug } = await props.params;
+  console.log(slug);
 
   if (!slug) return notFound();
 
   const post = await client.fetch(postQuery, { slug });
+  console.log(post);
 
   if (!post) return notFound();
 
@@ -97,10 +98,8 @@ export default async function BlogPostPage({ params }: PageProps) {
   );
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const slug = params?.slug;
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const { slug } = await props.params;
 
   // 🔥 CRITICAL FIX: do NOT query Sanity without slug
   if (!slug) {
