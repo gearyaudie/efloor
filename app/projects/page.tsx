@@ -39,10 +39,11 @@ export default function Projects() {
         <div className="my-4 max-w-[700px]">
           Tersedia dalam kemasan 4 KG dan 20 KG, jenis paling populer & pilihan
           terbaik untuk <b>procurement dan kontraktor</b>. Semua data,
-          kelengkapan dan keperluan, telah tersedia di tombol berikut:
+          kelengkapan dan keperluan (TDS dan MSDS), sudah lengkap, hubungi
+          Whatsapp kami untuk info lebih lanjut.
         </div>
 
-        <div className="flex gap-4 mt-6">
+        {/* <div className="flex gap-4 mt-6">
           <Link
             href={
               "https://drive.google.com/file/d/15Ma2yiZkQkYtoDQAT7LvYCfoPAPD3sIC/view?usp=drive_link"
@@ -61,7 +62,7 @@ export default function Projects() {
               Cek TDS
             </button>
           </Link>
-        </div>
+        </div> */}
       </div>
       <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />
       <div>
