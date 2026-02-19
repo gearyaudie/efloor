@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
 import defaultSeo from "./seo.config";
@@ -38,7 +39,11 @@ export default function RootLayout({
         <Header />
         {/* Promo Banner */}
         <PromoBanner />
-        <body className={`${poppins.variable}`}>{children}</body>
+        <body className={`${poppins.variable}`}>
+          {children}
+
+          <GoogleAnalytics gaId="G-GQGMBDHQMG" />
+        </body>
         <Footer />
       </body>
     </html>
