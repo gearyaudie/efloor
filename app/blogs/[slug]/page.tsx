@@ -120,7 +120,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://www.efloor.id/blogs/${slug}`,
+      url: `https://efloor.id/blogs/${slug}`,
       images: [
         {
           url: post.img?.asset?.url || "/images/default-og.png",
@@ -132,7 +132,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       type: "article",
     },
     alternates: {
-      canonical: `https://www.efloor.id/blogs/${slug}`,
+      canonical: `https://efloor.id/blogs/${slug}`,
     },
   };
 }
