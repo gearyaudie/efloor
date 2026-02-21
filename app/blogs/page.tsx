@@ -2,7 +2,7 @@ import { client } from "@/sanity.client";
 import Link from "next/link";
 import RecentArticle from "../components/RecentArticles";
 
-type Post = {
+export type Post = {
   _id: string;
   title: string;
   slug: { current: string };
@@ -24,7 +24,7 @@ export default async function Blogs() {
           url
         }
       }
-    }`
+    }`,
   );
 
   // Get the latest post (first one)

@@ -84,7 +84,7 @@ export default async function BlogPostPage(props: PageProps) {
         )}
 
         <div className="text-center mb-12 italic text-sm">
-          This is an example of blablabla
+          {/* This is an example of blablabla */}
         </div>
 
         <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
