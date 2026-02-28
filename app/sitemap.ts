@@ -66,6 +66,10 @@ export default async function sitemap() {
       lastModified: new Date(),
     },
     {
+      url: "https://efloor.id/about-us",
+      lastModified: new Date(),
+    },
+    {
       url: "https://efloor.id/products/list-adaptasi",
       lastModified: new Date(),
     },
