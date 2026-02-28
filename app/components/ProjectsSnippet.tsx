@@ -20,34 +20,34 @@ export default function ProjectsSnippet() {
       <Swiper
         modules={[Pagination]}
         spaceBetween={16}
-        slidesPerView={1}
+        slidesPerView="auto"
         pagination={{ clickable: true }}
         breakpoints={{
           640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
+          768: { slidesPerView: 4 },
+          1024: { slidesPerView: 5 },
         }}
       >
         <SwiperSlide>
-          <img src="/img/pro-1.png" alt="" />
+          <img src="/img/pro-1.png" alt="" className="w-[400px]" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/img/pro-2.png" alt="" />
+          <img src="/img/pro-2.png" alt="" className="w-[400px]" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/img/pro-3.png" alt="" />
+          <img src="/img/pro-3.png" alt="" className="w-[400px]" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/img/pro-4.png" alt="" />
+          <img src="/img/pro-4.png" alt="" className="w-[400px]" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/img/pro-5.png" alt="" />
+          <img src="/img/pro-5.png" alt="" className="w-[400px]" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/img/pro-6.png" alt="" />
+          <img src="/img/pro-6.png" alt="" className="w-[400px]" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/img/pro-7.png" alt="" />
+          <img src="/img/pro-7.png" alt="" className="w-[400px]" />
         </SwiperSlide>
       </Swiper>
 

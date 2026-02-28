@@ -12,7 +12,11 @@ type Product = {
     current: string;
   };
   desc: string;
-  price: number;
+  price?: number;
+  priceVariants?: {
+    label: string;
+    price: number;
+  }[];
   image: {
     asset: {
       url: string;
@@ -27,6 +31,14 @@ interface Props {
 export default function AllProducts({ products }: Props) {
   const openLink = (slug: string) => {
     window.open(`/products/${slug}`, "_self");
+  };
+
+  const getLowestPrice = (product: Product) => {
+    if (product.priceVariants?.length) {
+      return Math.min(...product.priceVariants.map((v) => v.price));
+    }
+
+    return product.price ?? 0;
   };
 
   return (
@@ -44,40 +56,45 @@ export default function AllProducts({ products }: Props) {
           1024: { slidesPerView: 3 },
         }}
       >
-        {products?.map((product) => (
-          <SwiperSlide key={product._id}>
-            <div className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col h-full">
-              {/* ✅ Image NOT cropped */}
-              <div className="w-full flex justify-center">
-                <img
-                  src={product?.image?.asset?.url}
-                  alt={product.name}
-                  className="max-h-[350px] w-auto object-contain rounded-xl"
-                />
-              </div>
+        {products?.map((product) => {
+          const lowestPrice = getLowestPrice(product);
 
-              {/* Content */}
-              <div className="mt-6 flex flex-col flex-grow text-center">
-                <h3 className="text-xl font-semibold">{product.name}</h3>
+          return (
+            <SwiperSlide key={product._id}>
+              <div className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col h-full">
+                {/* Image (NOT cropped) */}
+                <div className="w-full flex justify-center">
+                  <img
+                    src={product?.image?.asset?.url}
+                    alt={product.name}
+                    className="max-h-[350px] w-auto object-contain rounded-xl"
+                  />
+                </div>
 
-                <p className="text-gray-600 mt-3 text-sm">{product.desc}</p>
+                {/* Content */}
+                <div className="mt-6 flex flex-col flex-grow text-center">
+                  <h3 className="text-xl font-semibold">{product.name}</h3>
 
-                <p className="mt-4 font-bold text-lg">
-                  Rp {Number(product.price || 0).toLocaleString("id-ID")}
-                </p>
+                  <p className="text-gray-600 mt-3 text-sm">{product.desc}</p>
 
-                <div className="mt-6">
-                  <button
-                    className="bg-[#FF8E06] text-white px-6 py-2 rounded-2xl hover:opacity-90 hover:cursor-pointer transition"
-                    onClick={() => openLink(product.slug?.current)}
-                  >
-                    Cek Produk
-                  </button>
+                  {/* ✅ Show cheapest price */}
+                  <p className="mt-4 font-bold text-lg">
+                    Rp {Number(lowestPrice).toLocaleString("id-ID")}
+                  </p>
+
+                  <div className="mt-6">
+                    <button
+                      className="bg-[#FF8E06] text-white px-6 py-2 rounded-2xl hover:opacity-90 hover:cursor-pointer transition"
+                      onClick={() => openLink(product.slug?.current)}
+                    >
+                      Cek Produk
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

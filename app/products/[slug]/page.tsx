@@ -62,44 +62,44 @@ const portableTextComponents = {
 
 export default async function ProductsPage(props: PageProps) {
   const { slug } = await props.params;
-  console.log(slug);
 
   if (!slug) return notFound();
 
   const product = await client.fetch(postQuery, { slug });
-  console.log(product);
 
   if (!product) return notFound();
 
   return (
-    <div className="bg-white text-black flex justify-center my-20 gap-20 max-w-[1400px] mx-auto text-left px-10">
-      <div className="max-w-[500px] flex-1 w-fit">
-        <ProductSlider images={product.images} name={product.name} />
-      </div>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex-1">
-        <div>
-          <h1 className="text-[36px] font-semibold mb-6 leading-snug">
-            {product.name}
-          </h1>
-
-          {product.priceVariants?.length > 0 && (
-            <VariantSelector variants={product.priceVariants} />
-          )}
-        </div>
-
-        <div className="text-center mb-12 italic text-sm mt-6">
-          {/* Optional caption */}
-        </div>
-
-        {/* If you want to render block content instead */}
-        {product.content && (
-          <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
-            <PortableText
-              value={product.content}
-              components={portableTextComponents}
-            />
+    <div className="bg-white text-black">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Responsive Layout */}
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
+          {/* LEFT - IMAGE */}
+          <div className="w-full lg:max-w-[500px] flex-1">
+            <ProductSlider images={product.images} name={product.name} />
           </div>
-        )}
+
+          {/* RIGHT - CONTENT */}
+          <div className="flex-1 w-full">
+            <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-semibold mb-6 leading-snug">
+              {product.name}
+            </h1>
+
+            {product.priceVariants?.length > 0 && (
+              <VariantSelector variants={product.priceVariants} />
+            )}
+
+            {/* Content */}
+            {product.content && (
+              <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none text-black mt-8">
+                <PortableText
+                  value={product.content}
+                  components={portableTextComponents}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
