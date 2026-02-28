@@ -4,6 +4,10 @@ import type { Metadata } from "next";
 import { groq } from "next-sanity";
 import { client } from "@/sanity.client";
 import { PortableText } from "@portabletext/react";
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import ProductSlider from "../components/ProductSlider";
+import VariantSelector from "../components/VariantSelector";
 
 type PageProps = {
   params: {
@@ -14,13 +18,15 @@ const postQuery = groq`
   *[_type == "product" && slug.current == $slug][0] {
     name,
     desc,
+    content,
     slug,
-    price,
     keywords,
-    image {
-      asset -> {
-        url
-      }
+    priceVariants[]{
+      label,
+      price
+    },
+    images[]{
+      "url": asset->url
     }
   }
 `;
@@ -66,34 +72,34 @@ export default async function ProductsPage(props: PageProps) {
   if (!product) return notFound();
 
   return (
-    <div className="bg-white text-black">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="mt-16">
-          <h1 className="text-[36px] font-500 mb-6 leading-snug">
+    <div className="bg-white text-black flex justify-center my-20 gap-20 max-w-[1400px] mx-auto text-left px-10">
+      <div className="max-w-[500px] flex-1 w-fit">
+        <ProductSlider images={product.images} name={product.name} />
+      </div>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex-1">
+        <div>
+          <h1 className="text-[36px] font-semibold mb-6 leading-snug">
             {product.name}
           </h1>
-          <div className="text-gray-500">{product.excerpt}</div>
-          <div>Rp. {product.price}</div>
+
+          {product.priceVariants?.length > 0 && (
+            <VariantSelector variants={product.priceVariants} />
+          )}
         </div>
 
-        {product.image?.asset?.url && (
-          <img
-            src={product.image.asset.url}
-            alt={product.title}
-            className="w-full rounded-lg mt-10 mb-4"
-          />
+        <div className="text-center mb-12 italic text-sm mt-6">
+          {/* Optional caption */}
+        </div>
+
+        {/* If you want to render block content instead */}
+        {product.content && (
+          <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
+            <PortableText
+              value={product.content}
+              components={portableTextComponents}
+            />
+          </div>
         )}
-
-        <div className="text-center mb-12 italic text-sm">
-          {/* This is an example of blablabla */}
-        </div>
-
-        <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
-          <PortableText
-            value={product.desc}
-            components={portableTextComponents}
-          />
-        </div>
       </div>
     </div>
   );

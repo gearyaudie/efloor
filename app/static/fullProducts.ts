@@ -6,7 +6,7 @@ export const FULL_PRODUCTS: IFullProducts[] = [
     oldPrice: "Rp 100.000",
     newPrice: "Rp 87.000",
     desc: "List Sudut Siku L, untuk stepnosing tangga, penutup wallpanel WPC, dan end molding lantai SPC / Vinyl.",
-    link: "",
+    link: "list-siku-l",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const FULL_PRODUCTS: IFullProducts[] = [
     oldPrice: "Rp 120.000",
     newPrice: "Rp 108.000",
     desc: "List Sudut Siku L, untuk stepnosing tangga, penutup wallpanel WPC, dan end molding lantai SPC / Vinyl.",
-    link: "",
+    link: "list-adaptasi",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ export const FULL_PRODUCTS: IFullProducts[] = [
     oldPrice: "Rp 150.000",
     newPrice: "Rp 137.000",
     desc: "List Sudut Siku L, untuk stepnosing tangga, penutup wallpanel WPC, dan end molding lantai SPC / Vinyl.",
-    link: "",
+    link: "list-skirting",
   },
 ];
 

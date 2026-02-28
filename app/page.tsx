@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -11,13 +11,60 @@ import Footer from "./layout/Footer";
 import { IMainProduct, MAIN_PRODUCTS } from "./static/mainProducts";
 import FloatingWhatsapp from "./components/FloatingWhatsapp";
 import ProjectsSnippet from "./components/ProjectsSnippet";
+import { client } from "@/sanity.client";
+
+type SanityProduct = {
+  _id: string;
+  name: string;
+  slug: {
+    current: string;
+  };
+  desc: string;
+  price: number;
+  image: {
+    asset: {
+      url: string;
+    };
+  };
+};
 
 export default function Home() {
   const products: IMainProduct[] = MAIN_PRODUCTS;
 
+  // ✅ Sanity products state
+  const [sanityProducts, setSanityProducts] = useState<SanityProduct[]>([]);
+
+  // ✅ Fetch from Sanity safely (no async component)
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await client.fetch<SanityProduct[]>(`
+          *[_type == "product"]{
+            _id,
+            name,
+            slug,
+            desc,
+            price,
+            image {
+              asset->{
+                url
+              }
+            }
+          }
+        `);
+
+        setSanityProducts(data);
+      } catch (err) {
+        console.error("Sanity fetch error:", err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const [selectedVariants, setSelectedVariants] = React.useState(() =>
     products.reduce((acc: any, product) => {
-      acc[product.id] = 0; // default select the first variant
+      acc[product.id] = 0;
       return acc;
     }, {}),
   );
@@ -51,8 +98,10 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
       <ProjectsSnippet />
-      {/* Swiper Slider */}
+
+      {/* MAIN PRODUCTS SWIPER (STATIC) */}
       <div className="max-w-[1300px] mx-auto py-10 px-6" id="home">
         <Swiper
           modules={[Pagination]}
@@ -72,14 +121,12 @@ export default function Home() {
             return (
               <SwiperSlide key={product.id}>
                 <div className="flex flex-col items-center justify-center text-center w-[375px]">
-                  {/* Product Image */}
                   <img
                     src={selectedVariant.img}
                     alt={`${product.name} ${selectedVariant.size}`}
                     className="text-center mx-auto w-[375px] transition-all duration-300 rounded-[20px]"
                   />
 
-                  {/* Variant Selector */}
                   <div className="bg-[#4D4D4D] flex gap-6 rounded-[50px] p-1 text-white w-fit mx-auto text-[18px] items-center mt-4">
                     {product.variants.map((variant: any, i: any) => (
                       <div
@@ -96,7 +143,6 @@ export default function Home() {
                     ))}
                   </div>
 
-                  {/* Product Card */}
                   <div className="bg-[#F8F8F8] mt-10 max-w-[400px] w-full mx-auto p-8 rounded-[24px] text-center">
                     <div className="font-medium text-[24px]">
                       {product.name}
@@ -120,11 +166,12 @@ export default function Home() {
           })}
         </Swiper>
       </div>
+
       <MarketingGrid />
 
-      {/* Swiper Slider */}
+      {/* SANITY PRODUCTS SECTION */}
       <div className="bg-[#f8f8f8]" id="products">
-        <AllProducts />
+        <AllProducts products={sanityProducts} />
       </div>
     </div>
   );
