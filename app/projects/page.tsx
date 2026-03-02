@@ -69,6 +69,10 @@ export default function Projects() {
           <img src="/img/pro-5.png" alt="" className="max-w-[390px]" />
           <img src="/img/pro-6.png" alt="" className="max-w-[390px]" />
           <img src="/img/pro-7.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-8.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-9.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-10.png" alt="" className="max-w-[390px]" />
+          <img src="/img/pro-11.png" alt="" className="max-w-[390px]" />
         </div>
       </div>
     </div>
