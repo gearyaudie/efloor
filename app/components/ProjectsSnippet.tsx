@@ -61,6 +61,9 @@ export default function ProjectsSnippet() {
         <SwiperSlide>
           <img src="/img/pro-11.png" alt="" className="w-[400px]" />
         </SwiperSlide>
+        <SwiperSlide>
+          <img src="/img/pro-12.png" alt="" className="w-[400px]" />
+        </SwiperSlide>
       </Swiper>
 
       <button
