@@ -16,29 +16,29 @@ export default function AboutUs() {
         </div>
 
         <div className="flex-1 text-center md:text-left">
-          <div className="text-2xl md:text-3xl mb-4 font-semibold">
+          <h1 className="text-2xl md:text-3xl mb-4 font-semibold">
             Awal Perjalanan & Lahirnya Efloor
-          </div>
-          <div className="text-base md:text-lg leading-relaxed">
+          </h1>
+          <h2 className="text-base md:text-lg leading-relaxed">
             Ini adalah masa awal perjalanan kami. Sejak tahun 2010, kami telah
             memasok ribuan pelanggan dengan produk lantai berkualitas tinggi.
             Kepercayaan pelanggan kami bangun melalui toko fisik yang berlokasi
             di Mall Artha Gading, tepatnya di lantai 5 dekat Informa. Dari
             sinilah perjalanan kami dimulai.
-          </div>
+          </h2>
         </div>
       </div>
 
       {/* Section 2 */}
       <div className="flex flex-col max-w-[800px] mx-auto text-center px-4 pb-12 pt-10 md:pt-16">
-        <div className="text-2xl md:text-3xl font-semibold mb-4">Saat Ini</div>
-        <div className="text-base md:text-lg leading-relaxed">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-4">Saat Ini</h2>
+        <h3 className="text-base md:text-lg leading-relaxed">
           Untuk menjaga harga tetap terjangkau, kami memutuskan untuk tidak
           membuka toko fisik tambahan. Dengan cara ini, biaya operasional dapat
           ditekan sehingga kami bisa memberikan harga terbaik bagi pelanggan.
           Hasilnya sangat luar biasa! Kini, produk kami tersedia untuk pembelian
           secara online maupun melalui WhatsApp.
-        </div>
+        </h3>
       </div>
 
       <MarketingGrid />

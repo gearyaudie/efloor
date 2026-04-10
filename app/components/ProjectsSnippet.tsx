@@ -11,12 +11,13 @@ export default function ProjectsSnippet() {
   };
   return (
     <div className="pb-20">
-      <div className="text-[40px] font-semibold text-left pt-16 px-8">
-        Projects & Procurement
-      </div>
-      <div className="text-[#808080] pb-8 px-8">
-        The perfect vendor for contractors & any tender project needs
-      </div>
+      <h1 className="text-[40px] font-semibold text-left pt-16 px-8">
+        Proyek: Supplier Lem Karpet & Vinyl
+      </h1>
+      <h2 className="text-[#808080] pb-8 px-8">
+        Vendor terpercaya untuk keperluan projek & tender lem karpet dan lem
+        vinyl.
+      </h2>
       <Swiper
         modules={[Pagination]}
         spaceBetween={16}

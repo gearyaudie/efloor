@@ -4,15 +4,16 @@ import Link from "next/link";
 export default function Projects() {
   return (
     <div className="max-w-[1300px] mx-auto my-20 flex flex-col justify-center items-center px-6">
-      <div className="text-[40px] font-medium text-center">
-        For Procurement & Contractors
-      </div>
-      <div className="text-[#535353] text-center max-w-[700px] lg:mt-2 mt-4">
+      <h1 className="text-[40px] font-medium text-center">
+        Untuk Kontraktor dan <br />
+        Keperluan Procurement (Supplier)
+      </h1>
+      <h2 className="text-[#535353] text-center max-w-[700px] lg:mt-6">
         Kami adalah distirbutor lem vinyl/karpet yang terpercaya. Menangani
         segala kebutuhan projek dan procurement dengan harga yang bersaing.
         Telah melayani kontraktor, proyek dan procurement dengan tingkat
         kepuasan tinggi.
-      </div>
+      </h2>
       <div>
         <Link
           href={
@@ -33,15 +34,13 @@ export default function Projects() {
       </div>
       <hr className="w-full max-w-[800px] py-4 border-[#ccc]" />
       <div>
-        <div className="text-[28px] font-medium">
-          Lem Karpet/Vinyl Efloor Max
-        </div>
-        <div className="my-4 max-w-[700px]">
+        <h2 className="text-[28px] font-medium">Lem Karpet/Vinyl Efloor Max</h2>
+        <h3 className="my-4 max-w-[700px]">
           Tersedia dalam kemasan 4 KG dan 20 KG, jenis paling populer & pilihan
           terbaik untuk <b>procurement dan kontraktor</b>. Semua data,
           kelengkapan dan keperluan (TDS dan MSDS), sudah lengkap, hubungi
           Whatsapp kami untuk info lebih lanjut.
-        </div>
+        </h3>
 
         <div className="flex gap-4 mt-6">
           <Link href="/docs/msds.pdf">
@@ -59,7 +58,7 @@ export default function Projects() {
       <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />
       <div>
         <div className="font-medium text-[30px] pb-4 max-w-[800px] mx-auto">
-          Projects
+          History proyek kami
         </div>
         <div className="flex gap-4 flex-wrap max-w-[800px] mx-auto justify-center items-center">
           <img src="/img/pro-1.png" alt="" className="max-w-[390px]" />

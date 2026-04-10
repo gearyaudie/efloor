@@ -144,13 +144,11 @@ export default function Home() {
                   </div>
 
                   <div className="bg-[#F8F8F8] mt-10 max-w-[400px] w-full mx-auto p-8 rounded-[24px] text-center">
-                    <div className="font-medium text-[24px]">
-                      {product.name}
-                    </div>
+                    <h2 className="font-medium text-[24px]">{product.name}</h2>
                     <div>
                       {product.variants.map((v: any) => v.size).join(", ")}
                     </div>
-                    <div className="pt-6 text-gray-700">{product.desc}</div>
+                    <h3 className="pt-6 text-gray-700">{product.desc}</h3>
                     <div className="pt-8">
                       <button
                         className="bg-[#FF8E06] text-white px-4 py-2 rounded-2xl hover:cursor-pointer"
