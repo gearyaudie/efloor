@@ -1,9 +1,9 @@
 export const MAIN_PRODUCTS: IMainProduct[] = [
   {
     id: 1,
-    name: "Lem efloor Max",
+    name: "Lem EFLOOR Max",
     desc: "Lem kuat untuk berbagai keperluan industri",
-    link: "https://shopee.co.id/Lem-Vinyl-Lem-Karpet-Lantai-EFLOOR-1-KG-4-KG-i.1358565268.24286056849",
+    link: "/products/lem-efloor-max",
     variants: [
       {
         size: "1 KG",
@@ -21,9 +21,9 @@ export const MAIN_PRODUCTS: IMainProduct[] = [
   },
   {
     id: 2,
-    name: "Lem Karpet efloor",
+    name: "Lem Vinyl & Karpet",
     desc: "Lem kuat untuk berbagai keperluan industri",
-    link: "https://shopee.co.id/Lem-Karpet-Lantai-EFLOOR-i.1358565268.28861336172",
+    link: "/products/lem-vinyl-efloor",
     variants: [
       {
         size: "1 KG",
@@ -43,7 +43,7 @@ export const MAIN_PRODUCTS: IMainProduct[] = [
     id: 3,
     name: "List Siku L",
     desc: "List Tangga, Stepnosing, Penutup WPC",
-    link: "https://shopee.co.id/List-Sudut-Siku-L-List-Tangga-Stepnosing-Penutup-Wallpanel-WPC-List-Transisi-untuk-Lantai-Kayu-Lantai-Vinyl-Lantai-Parket-Parquet-270CM-PVC-High-Quality-Tebal-i.1358565268.28462678834",
+    link: "/products/list-siku-efloor",
     variants: [
       {
         size: "L8",
