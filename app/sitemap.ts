@@ -34,6 +34,10 @@ export default async function sitemap() {
       lastModified: new Date(),
     },
     {
+      url: "https://efloor.id/lem-vinyl-rumah-sakit",
+      lastModified: new Date(),
+    },
+    {
       url: "https://efloor.id/blogs",
       lastModified: new Date(),
     },

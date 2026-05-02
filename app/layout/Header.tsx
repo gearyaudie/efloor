@@ -54,6 +54,12 @@ export default function Header() {
             </div>
             <div
               className="hover:cursor-pointer"
+              onClick={() => window.open("/lem-vinyl-rumah-sakit", "_")}
+            >
+              Pemasangan RS
+            </div>
+            <div
+              className="hover:cursor-pointer"
               onClick={() => scrollToSection("products")}
             >
               Products

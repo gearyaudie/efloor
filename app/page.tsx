@@ -99,6 +99,45 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+      <div className="flex flex-col md:flex-row justify-center px-4 md:px-8 py-10 md:py-20 gap-10 md:gap-16 max-w-[1300px] mx-auto items-center">
+        {/* Image */}
+        <div className="w-full md:flex-1 flex justify-center">
+          <img
+            src="/img/lantai-vinyl-rs.png"
+            alt="Lantai Vinyl Rumah Sakit"
+            className="w-full max-w-[350px] md:max-w-[600px] h-auto"
+          />
+        </div>
+
+        {/* Text */}
+        <div className="w-full md:flex-1 text-center md:text-left">
+          <h1 className="text-2xl md:text-4xl font-semibold leading-snug">
+            Lem Vinyl & Karpet Paling Terpercaya #1,
+            <h2 className="mt-2 text-lg md:text-2xl font-normal text-[#808080]">
+              Penjualan Terbanyak di Shopee & Tokopedia
+            </h2>
+          </h1>
+
+          <p className="pt-6 md:pt-10 text-sm md:text-base text-[#808080] leading-relaxed">
+            Kami adalah supplier lem vinyl eco friendly yang terpercaya dengan
+            penjualan terbanyak di platform marketplace Indonesia. Lem Vinyl
+            EFLOOR / Lem Karpet EFLOOR adalah pilihan terbaik untuk pemasangan
+            indoor di area perkantoran, kamar tidur bayi dan rumah sakit.
+            <br />
+            <br />
+            Berikut adalah keunggulan produk kami:
+          </p>
+
+          <ul className="list-disc text-left mx-auto md:mx-0 max-w-[500px] md:max-w-none pl-5 md:pl-6 pt-4 text-sm md:text-lg text-[#808080] space-y-2">
+            <li>Eco Friendly, Ramah Lingkungan (Lem Waterbased)</li>
+            <li>Tidak Berbau & Hampir Tidak Mengandung VOC</li>
+            <li>Lebih Hemat Karena Viskositas Tinggi (Kental)</li>
+            <li>Daya sebar yang luas, +- 8 - 10m2 per kg</li>
+            <li>Pelayanan untuk procurement yang mudah</li>
+          </ul>
+        </div>
+      </div>
+
       <ProjectsSnippet />
 
       {/* MAIN PRODUCTS SWIPER (STATIC) */}
