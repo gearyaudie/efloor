@@ -12,6 +12,7 @@ import { IMainProduct, MAIN_PRODUCTS } from "./static/mainProducts";
 import FloatingWhatsapp from "./components/FloatingWhatsapp";
 import ProjectsSnippet from "./components/ProjectsSnippet";
 import { client } from "@/sanity.client";
+import HeroSwiper from "./components/HeroSwiper";
 
 type SanityProduct = {
   _id: string;
@@ -99,8 +100,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="flex flex-col md:flex-row justify-center px-4 md:px-8 py-10 md:py-20 gap-10 md:gap-16 max-w-[1300px] mx-auto items-center">
-        {/* Image */}
+      {/* <div className="flex flex-col md:flex-row justify-center px-4 md:px-8 py-10 md:py-20 gap-10 md:gap-16 max-w-[1300px] mx-auto items-center">
         <div className="w-full md:flex-1 flex justify-center">
           <img
             src="/img/lantai-vinyl-rs.png"
@@ -109,7 +109,6 @@ export default function Home() {
           />
         </div>
 
-        {/* Text */}
         <div className="w-full md:flex-1 text-center md:text-left">
           <h1 className="text-2xl md:text-4xl font-semibold leading-snug">
             Lem Vinyl & Karpet Paling Terpercaya #1,
@@ -136,12 +135,18 @@ export default function Home() {
             <li>Pelayanan untuk procurement yang mudah</li>
           </ul>
         </div>
+      </div> */}
+
+      <div className="flex justify-center items-center mx-auto max-w-[1400px]">
+        <HeroSwiper />
       </div>
 
-      <ProjectsSnippet />
+      <div className="bg-[#f8f8f8]">
+        <ProjectsSnippet />
+      </div>
 
       {/* MAIN PRODUCTS SWIPER (STATIC) */}
-      <div className="max-w-[1300px] mx-auto py-10 px-6" id="home">
+      <div className="max-w-[1300px] mx-auto py-10 mt-16 px-6" id="home">
         <Swiper
           modules={[Pagination]}
           spaceBetween={0}

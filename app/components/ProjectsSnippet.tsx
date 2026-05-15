@@ -10,13 +10,13 @@ export default function ProjectsSnippet() {
     window.open(link, "_");
   };
   return (
-    <div className="pb-20">
-      <h1 className="text-[40px] font-semibold text-left pt-16 px-8">
+    <div className="mt-10 pb-10 max-w-[1200px] mx-auto">
+      <h1 className="text-[28px] font-medium text-center pt-10 px-8">
         Proyek: Supplier Lem Karpet & Vinyl
       </h1>
-      <h2 className="text-[#808080] pb-8 px-8">
-        Vendor terpercaya untuk keperluan projek & tender lem karpet dan lem
-        vinyl.
+      <h2 className="text-[#808080] pb-8 pt-2 px-8 text-center max-w-[725px] mx-auto">
+        Dipercayai oleh ribuan perusahaan ternama untuk menjadi supplier vinyl &
+        carpet adhesives. Berikut adalah contoh2 procurement dari kami.
       </h2>
       <Swiper
         modules={[Pagination]}
