@@ -13,6 +13,7 @@ import FloatingWhatsapp from "./components/FloatingWhatsapp";
 import ProjectsSnippet from "./components/ProjectsSnippet";
 import { client } from "@/sanity.client";
 import HeroSwiper from "./components/HeroSwiper";
+import FAQSection from "./components/FaqSection";
 
 type SanityProduct = {
   _id: string;
@@ -210,6 +211,8 @@ export default function Home() {
       </div>
 
       <MarketingGrid />
+
+      <FAQSection />
 
       {/* SANITY PRODUCTS SECTION */}
       <div className="bg-[#f8f8f8]" id="products">
