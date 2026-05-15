@@ -101,5 +101,9 @@ export default async function sitemap() {
       url: "https://efloor.id/products/list-skirting",
       lastModified: new Date(),
     },
+    {
+      url: "https://efloor.id/products/lem-hpl-pvc-sheet",
+      lastModified: new Date(),
+    },
   ];
 }
