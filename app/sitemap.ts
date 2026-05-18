@@ -38,6 +38,22 @@ export default async function sitemap() {
       lastModified: new Date(),
     },
     {
+      url: "https://efloor.id/lem-karpet-gym",
+      lastModified: new Date(),
+    },
+    {
+      url: "https://efloor.id/lem-lapangan-badminton",
+      lastModified: new Date(),
+    },
+    {
+      url: "https://efloor.id/lem-hpl-pvc-sheet",
+      lastModified: new Date(),
+    },
+    {
+      url: "https://efloor.id/lem-karpet-kantor",
+      lastModified: new Date(),
+    },
+    {
       url: "https://efloor.id/blogs",
       lastModified: new Date(),
     },
