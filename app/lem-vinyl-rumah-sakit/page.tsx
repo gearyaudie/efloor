@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import FaqSectionRumahSakit from "../components/FaqSectionRumahSakit";
 
 export default function LemVinylRumahSakit() {
   return (
@@ -33,6 +34,8 @@ export default function LemVinylRumahSakit() {
           </div>
         </div>
       </div>
+
+      <FaqSectionRumahSakit />
 
       {/* Section 2 */}
       <div className="flex flex-col max-w-[800px] mx-auto text-center px-4 pb-12 pt-10 md:pt-16"></div>
