@@ -1,28 +1,29 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import FaqSectionHPL from "../components/FaqSectionHPL";
 
-export default function LemVinylRumahSakit() {
+export default function LemHPL() {
   return (
     <>
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
           <img
-            src="/img/lantai-vinyl-rs.png"
-            alt="Lantai Vinyl RS"
+            src="/img/Lem-hpl-banner.png"
+            alt="Lem HPL EFLOOR"
             className="w-full max-w-[500px] h-auto"
           />
         </div>
 
         <div className="flex-1 text-center md:text-left">
           <h1 className="text-2xl md:text-3xl mb-4 font-semibold">
-            Kenapa Lem Vinyl EFLOOR Paling Cocok Untuk Pemasangan di Rumah Sakit
+            Lem HPL EFLOOR — Daya Rekat Kuat, Cepat Kering, Mudah Diaplikasikan
           </h1>
           <h3 className="text-base md:text-lg leading-relaxed">
-            Karena lem vinyl kami eco-friendly, water-based (hampir tidak
-            mengandung VOC Volatile Organic Compounds). Jadi sangat cocok untuk
-            pengunaan di area yang sensitif dan pengerjaan indoor seperti di
-            rumah sakit.
+            Lem HPL EFLOOR dirancang khusus untuk pemasangan HPL, veneer, PVC
+            sheet, MDF, multiplek, dan berbagai material interior furniture.
+            Ideal untuk kitchen set, kabinet, meja, dan produksi furniture
+            harian — cukup oles di satu sisi, lebih hemat dan lebih praktis.
           </h3>
           <div className="pt-8">
             <Link href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
@@ -33,6 +34,8 @@ export default function LemVinylRumahSakit() {
           </div>
         </div>
       </div>
+
+      <FaqSectionHPL />
 
       {/* Section 2 */}
       <div className="flex flex-col max-w-[800px] mx-auto text-center px-4 pb-12 pt-10 md:pt-16"></div>
@@ -45,54 +48,53 @@ export default function LemVinylRumahSakit() {
             <div>
               <img src="/img/kpk-1.png" alt="" className="w-[150px] mx-auto" />
               <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
-                Eco Friendly, Ramah Lingkungan
+                Daya Rekat Kuat & Tahan Lama
               </h3>
               <div className="text-[#808080] text-center">
-                Lem waterbased dan cocok untuk ruangan indoor. Dengan komposisi
-                waterbased, lem ini dapat menempel dengan kuat tanpa basis
-                solven dan tetap menjadi pilihan yang ramah lingkungan.
+                Lem HPL EFLOOR memberikan daya rekat yang kuat dan tahan lama
+                pada berbagai material interior — HPL, veneer, PVC sheet, MDF,
+                multiplek, hingga particle board. Tidak mudah mengelupas
+                meskipun digunakan setiap hari.
               </div>
             </div>
           </div>
           <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
             <img src="/img/kpk-2.png" alt="" className="w-[150px] mx-auto" />
             <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
-              Hampir Tidak Mengandung VOC
+              Cepat Tack, Cepat Menempel
             </h3>
             <div className="text-[#808080] text-center">
-              Ramah lingkungan dan sangat rendah dalam VOC (Volatile Organic
-              Compounds), yaitu uap yang bisa menganggu kesehatan, pernapasan
-              dan iritasi mata.
+              Formula lem HPL kami memiliki waktu tack yang cepat sehingga
+              proses pemasangan lebih efisien. Cocok untuk tukang, workshop
+              furniture, dan produksi kabinet atau kitchen set berskala harian.
             </div>
           </div>
           <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
             <img src="/img/kpk-3.png" alt="" className="w-[150px] mx-auto" />
             <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
-              Tidak Berbau
+              Cukup Oles Satu Sisi
             </h3>
             <div className="text-[#808080] text-center">
-              Lem Vinyl EFLOOR tidak memiliki bau yang menyengat. Jauh lebih
-              tidak bau dibandingkan dengan lem berbasis solvent atau lem
-              kuning. Jadi sangat cocok untuk pemakaian indoor, untuk kantor dan
-              rumah sakit.
+              Berbeda dengan lem lain yang harus dioleskan di dua permukaan, Lem
+              HPL EFLOOR cukup diaplikasikan pada salah satu sisi saja. Lebih
+              hemat, lebih mudah diratakan, dan tetap menghasilkan sambungan
+              yang kuat.
             </div>
           </div>
           <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
             <img src="/img/kpk-4.png" alt="" className="w-[150px] mx-auto" />
             <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
-              Lebih Hemat
+              Serbaguna untuk Furniture
             </h3>
             <div className="text-[#808080] text-center">
-              Kualitas kami sangat terpercaya, kami adalah lem vinyl dengan
-              penjualan terbanyak di platform shopee dan tokopedia se-Indonesia.
-              Dapatkan lebih banyak pengunaan per m2 dengan produk terpercaya
-              kami.
+              Dari kitchen set, kabinet, meja, hingga panel interior dan
+              produksi custom furniture — Lem HPL EFLOOR siap untuk semua
+              kebutuhan. Kami adalah pilihan terpercaya kontraktor dan pengrajin
+              furniture di seluruh Indonesia.
             </div>
           </div>
         </div>
       </div>
-
-      {/* <MarketingGrid /> */}
     </>
   );
 }
@@ -100,26 +102,31 @@ export default function LemVinylRumahSakit() {
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title:
-      "Lem Vinyl Rumah Sakit | Lem Lantai Anti VOC & Eco Friendly - EFLOOR",
+      "Lem HPL Berkualitas | Daya Rekat Kuat untuk Furniture & Interior - EFLOOR",
 
     description:
-      "Lem vinyl EFLOOR cocok untuk rumah sakit: water-based, hampir tanpa VOC, tidak berbau, dan aman untuk area sensitif. Pilihan terbaik untuk pemasangan lantai vinyl indoor.",
+      "Lem HPL EFLOOR: daya rekat kuat, cepat kering, cukup oles satu sisi. Cocok untuk HPL, veneer, PVC sheet, MDF, multiplek, kitchen set, kabinet, dan produksi furniture harian.",
 
     keywords: [
-      "lem vinyl rumah sakit",
-      "lem lantai vinyl anti voc",
-      "lem vinyl eco friendly",
-      "lem vinyl tidak berbau",
-      "lem lantai rumah sakit",
-      "lem vinyl water based",
-      "lem vinyl aman indoor",
-      "lem vinyl efloor",
-      "lem lantai pvc rumah sakit",
-      "lem vinyl terbaik indonesia",
+      "lem hpl",
+      "lem hpl berkualitas",
+      "lem hpl furniture",
+      "lem hpl kitchen set",
+      "lem hpl multiplek",
+      "lem hpl mdf",
+      "lem hpl veneer",
+      "lem hpl pvc sheet",
+      "lem hpl daya rekat kuat",
+      "lem hpl efloor",
+      "lem untuk hpl",
+      "lem furniture indonesia",
+      "lem kitchen set",
+      "lem kabinet",
+      "lem interior panel",
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/lem-vinyl-rumah-sakit",
+      canonical: "https://www.efloor.id/lem-hpl",
     },
   };
 }
