@@ -1,9 +1,11 @@
 // app/blogs/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { groq } from "next-sanity";
 import { client } from "@/sanity.client";
 import { PortableText } from "@portabletext/react";
+import { SITE_URL } from "@/app/seo.config";
 
 type PageProps = {
   params: {
@@ -56,12 +58,10 @@ const portableTextComponents = {
 
 export default async function BlogPostPage(props: PageProps) {
   const { slug } = await props.params;
-  console.log(slug);
 
   if (!slug) return notFound();
 
   const post = await client.fetch(postQuery, { slug });
-  console.log(post);
 
   if (!post) return notFound();
 
@@ -76,11 +76,14 @@ export default async function BlogPostPage(props: PageProps) {
         </div>
 
         {post.img?.asset?.url && (
-          <img
-            src={post.img.asset.url}
-            alt={post.title}
-            className="w-full rounded-lg mt-10 mb-4"
-          />
+          <div className="relative w-full aspect-video mt-10 mb-4">
+            <Image
+              src={post.img.asset.url}
+              alt={post.title}
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
         )}
 
         <div className="text-center mb-12 italic text-sm">
@@ -120,10 +123,10 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://efloor.id/blogs/${slug}`,
+      url: `${SITE_URL}/blogs/${slug}`,
       images: [
         {
-          url: post.img?.asset?.url || "/images/default-og.png",
+          url: post.img?.asset?.url || `${SITE_URL}/img/og-image.png`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -132,7 +135,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       type: "article",
     },
     alternates: {
-      canonical: `https://efloor.id/blogs/${slug}`,
+      canonical: `${SITE_URL}/blogs/${slug}`,
     },
   };
 }

@@ -1,19 +1,22 @@
 "use client";
 import React from "react";
-
-import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
-  const router = useRouter();
   const pathname = usePathname();
-  const scrollToSection = (id: string) => {
-    // If we are NOT on home page, go there first
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
+    // If we are NOT on home page, let the Link navigate there normally
     if (pathname !== "/") {
-      router.push(`/#${id}`);
       return;
     }
 
     // If already on home page, just scroll
+    e.preventDefault();
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
@@ -24,9 +27,11 @@ export default function Footer() {
   return (
     <footer className="max-w-[1200px] mx-auto py-20 flex justify-between items-center flex-col md:flex-row lg:flex-row">
       <div className="flex-2 justify-center items-center mx-auto">
-        <img
+        <Image
           src="/img/footer-logo.png"
-          alt="footer-logo"
+          alt="EFLOOR - Distributor Lem Vinyl dan Lem Karpet Jakarta"
+          width={272}
+          height={84}
           className="mx-auto flex md:mx-0 lg:mx-0"
         />
         <div className="max-w-[325px] p-4 text-center md:text-left lg:text-left">
@@ -36,41 +41,39 @@ export default function Footer() {
       </div>
       <div className="flex flex-1 gap-10 flex-col text-center md:text-left lg:text-left mt-10 md:mt-0 lg:mt-0">
         <div className="font-bold">Main Pages</div>
-        <div
-          onClick={() => scrollToSection("home")}
+        <Link
+          href="/#home"
+          onClick={(e) => scrollToSection(e, "home")}
           className="hover:cursor-pointer"
         >
           Home
-        </div>
-        <div
-          onClick={() => window.open("/blogs", "_")}
-          className="hover:cursor-pointer"
-        >
+        </Link>
+        <Link href="/blogs" className="hover:cursor-pointer">
           Articles
-        </div>
-        <div
-          onClick={() => scrollToSection("products")}
+        </Link>
+        <Link
+          href="/#products"
+          onClick={(e) => scrollToSection(e, "products")}
           className="hover:cursor-pointer"
         >
           Our Products
-        </div>
-        <div
-          onClick={() => window.open("/projects", "_")}
-          className="hover:cursor-pointer"
-        >
+        </Link>
+        <Link href="/projects" className="hover:cursor-pointer">
           Projects
-        </div>
+        </Link>
       </div>
       <div className="flex flex-1 gap-10 flex-col text-center md:text-left lg:text-left mt-20 md:mt-0 lg:mt-0">
         <div className="font-bold">Our Company</div>
-        <div
-          onClick={() => window.open("/about-us", "_")}
+        <Link href="/about-us" className="hover:cursor-pointer">
+          About Us
+        </Link>
+        <Link
+          href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0"
+          target="_blank"
           className="hover:cursor-pointer"
         >
-          About Us
-        </div>
-        <div className="text-[#ccc]">Careers</div>
-        <div className="text-[#ccc]">Contact Us</div>
+          Contact Us
+        </Link>
       </div>
     </footer>
   );

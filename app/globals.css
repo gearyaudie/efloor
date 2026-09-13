@@ -8,9 +8,25 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --font-poppins: var(--font-poppins);
+
+  /* Brand tokens — the same colors already used ad hoc as arbitrary hex
+     values (bg-[#FF8E06] etc.) across the site, now addressable as
+     bg-brand-orange / text-brand-gray / etc. Existing arbitrary-hex usages
+     are left as-is for this pass; new work should prefer these tokens. */
+  --color-brand-orange: #ff8e06;
+  --color-brand-gray: #808080;
+  --color-brand-red: #c62020;
+  --color-brand-navy: #1a2e5a;
+
+  /* Type scale, for new/touched components to move away from bespoke
+     text-[Npx] arbitrary values. */
+  --text-hero: 2.5rem;
+  --text-h1: 2rem;
+  --text-h2: 1.5rem;
+  --text-h3: 1.25rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
 }
 
 @media (prefers-color-scheme: dark) {

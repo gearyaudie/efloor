@@ -4,45 +4,36 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "Apa itu Lem HPL EFLOOR dan untuk apa digunakan?",
+    question: "Apa itu Lem Karpet Kantor EFLOOR dan untuk apa digunakan?",
     answer:
-      "Lem HPL EFLOOR adalah lem berkualitas tinggi yang dirancang khusus untuk pemasangan HPL (High Pressure Laminate), veneer, PVC sheet, MDF, multiplek, dan particle board. Produk ini ideal untuk kebutuhan furniture interior seperti kitchen set, kabinet, meja, panel dekoratif, dan produksi custom furniture harian.",
+      "Lem Karpet Kantor EFLOOR adalah lem waterbased yang dirancang untuk pemasangan karpet lantai di area perkantoran. Formulanya eco-friendly, hampir tanpa VOC, dan tidak berbau, sehingga cocok untuk ruangan kantor ber-AC yang digunakan banyak karyawan.",
   },
   {
-    question: "Apa saja material yang bisa direkatkan dengan Lem HPL EFLOOR?",
+    question: "Apakah Lem Karpet Kantor EFLOOR aman untuk ruangan ber-AC?",
     answer:
-      "Lem HPL EFLOOR kompatibel dengan berbagai material interior, antara lain: HPL ke multiplek, MDF, atau particle board; veneer dan laminate; PVC sheet dan panel dekoratif; serta kayu, papan, dan material interior lainnya. Cocok untuk hampir semua kebutuhan pemasangan furniture dan interior.",
+      "Aman. Karena berbasis water-based dan hampir tidak mengandung VOC (Volatile Organic Compounds), lem ini tidak menimbulkan bau menyengat maupun uap yang mengganggu kualitas udara di ruangan kantor tertutup.",
   },
   {
-    question: "Apakah Lem HPL EFLOOR harus dioleskan di dua sisi?",
+    question: "Apakah lem ini cocok untuk karpet tile maupun karpet gulung?",
     answer:
-      "Tidak. Salah satu keunggulan utama Lem HPL EFLOOR adalah cukup dioleskan pada satu sisi permukaan saja. Ini membuat proses pemasangan lebih cepat, lebih hemat lem, dan tetap menghasilkan daya rekat yang kuat dan tahan lama.",
-  },
-  {
-    question: "Bagaimana cara menggunakan Lem HPL EFLOOR dengan benar?",
-    answer:
-      "Cara penggunaannya: (1) Bersihkan permukaan dari debu, minyak, dan air terlebih dahulu. (2) Oleskan lem secara merata pada salah satu permukaan. (3) Tunggu hingga lem setengah kering atau terasa tacky. (4) Tempelkan HPL atau material lainnya, lalu tekan merata menggunakan roller atau tekanan manual yang kuat.",
-  },
-  {
-    question: "Berapa lama waktu tunggu sebelum HPL bisa ditempel?",
-    answer:
-      "Tunggu hingga lem terasa setengah kering atau tacky di permukaan — biasanya beberapa menit tergantung suhu dan kelembapan ruangan. Setelah lem terasa lengket namun tidak basah, segera tempelkan HPL dan tekan rata agar daya rekat optimal.",
-  },
-  {
-    question: "Apakah Lem HPL EFLOOR tahan panas?",
-    answer:
-      "Ya, Lem HPL EFLOOR memiliki ketahanan terhadap panas ringan sehingga cocok untuk penggunaan di area seperti kitchen set dan kabinet dapur yang terpapar suhu hangat. Formulasinya juga dirancang agar tidak mudah mengelupas meski digunakan secara intensif.",
+      "Ya, Lem Karpet Kantor EFLOOR kompatibel dengan karpet tile maupun karpet gulung (roll carpet), menjadikannya solusi serbaguna untuk berbagai jenis pemasangan karpet perkantoran.",
   },
   {
     question:
-      "Apakah Lem HPL EFLOOR cocok untuk produksi furniture skala besar?",
+      "Bagaimana cara menggunakan Lem Karpet Kantor EFLOOR dengan benar?",
     answer:
-      "Ya. Lem HPL EFLOOR dirancang untuk memenuhi kebutuhan tukang, workshop furniture, maupun produksi skala besar. Dengan formula cepat tack, mudah diratakan, dan hemat pemakaian karena cukup satu sisi, produktivitas pengerjaan furniture menjadi lebih tinggi.",
+      "Cara penggunaannya: (1) Bersihkan permukaan lantai dari debu, minyak, dan air. (2) Oleskan lem secara merata menggunakan trowel bergerigi. (3) Tunggu hingga lem setengah kering atau terasa tacky. (4) Pasang karpet, lalu tekan merata dengan roller agar daya rekat maksimal.",
   },
   {
-    question: "Di mana bisa membeli Lem HPL EFLOOR?",
+    question:
+      "Apakah Lem Karpet Kantor EFLOOR cocok untuk proyek renovasi kantor skala besar?",
     answer:
-      "Lem HPL EFLOOR tersedia melalui WhatsApp kami, kunjungan langsung ke toko, atau melalui Shopee dan Tokopedia dengan nama toko efloor.id. Untuk kebutuhan volume besar seperti produksi furniture atau proyek interior, hubungi tim kami via WhatsApp untuk konsultasi dan harga terbaik.",
+      "Ya. Lem ini cocok untuk kebutuhan renovasi maupun fit-out kantor skala besar, termasuk untuk kontraktor dan procurement/tender, dengan daya rekat kuat dan hasil pemasangan yang rapi dan tahan lama.",
+  },
+  {
+    question: "Di mana bisa membeli Lem Karpet Kantor EFLOOR?",
+    answer:
+      "Lem Karpet Kantor EFLOOR bisa didapatkan melalui WhatsApp kami, kunjungan langsung ke toko, atau melalui Shopee dan Tokopedia dengan nama toko efloor.id. Untuk kebutuhan proyek kantor berskala besar, hubungi tim kami via WhatsApp untuk konsultasi volume dan harga terbaik.",
   },
 ];
 
@@ -59,7 +50,7 @@ const faqJsonLd = {
   })),
 };
 
-export default function FaqSectionHPL() {
+export default function FaqSectionKantor() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (index: number) => {
@@ -69,8 +60,8 @@ export default function FaqSectionHPL() {
   return (
     <section
       className="max-w-[860px] mx-auto px-6 py-16 md:py-24"
-      id="faq-lem-hpl"
-      aria-label="Pertanyaan yang Sering Diajukan tentang Lem HPL"
+      id="faq-lem-karpet-kantor"
+      aria-label="Pertanyaan yang Sering Diajukan tentang Lem Karpet Kantor"
     >
       {/* JSON-LD for Google FAQ rich results */}
       <script
@@ -84,11 +75,11 @@ export default function FaqSectionHPL() {
           FAQ
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] leading-snug">
-          Pertanyaan Seputar Lem HPL EFLOOR
+          Pertanyaan Seputar Lem Karpet Kantor EFLOOR
         </h2>
         <p className="mt-4 text-[#808080] text-base md:text-lg max-w-[560px] mx-auto">
-          Temukan jawaban lengkap seputar Lem HPL EFLOOR — keunggulan, cara
-          pakai, material yang cocok, hingga cara pembelian.
+          Temukan jawaban lengkap seputar Lem Karpet Kantor EFLOOR — keunggulan,
+          cara pakai, hingga cara pembelian.
         </p>
       </div>
 
@@ -105,8 +96,8 @@ export default function FaqSectionHPL() {
                 <button
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
-                  aria-controls={`faq-hpl-answer-${index}`}
-                  id={`faq-hpl-question-${index}`}
+                  aria-controls={`faq-kantor-answer-${index}`}
+                  id={`faq-kantor-question-${index}`}
                   className="w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer group"
                 >
                   <h3 className="text-[#1a1a1a] font-semibold text-base md:text-lg pr-4 leading-snug group-hover:text-[#FF8E06] transition-colors">
@@ -139,9 +130,9 @@ export default function FaqSectionHPL() {
               </dt>
 
               <dd
-                id={`faq-hpl-answer-${index}`}
+                id={`faq-kantor-answer-${index}`}
                 role="region"
-                aria-labelledby={`faq-hpl-question-${index}`}
+                aria-labelledby={`faq-kantor-question-${index}`}
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
                   isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
                 }`}

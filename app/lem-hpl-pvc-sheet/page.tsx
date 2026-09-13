@@ -1,6 +1,8 @@
 import { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
+import Button from "../components/Button";
 import FaqSectionHPL from "../components/FaqSectionHPL";
+import { SITE_URL } from "../seo.config";
 
 export default function LemHPL() {
   return (
@@ -8,9 +10,11 @@ export default function LemHPL() {
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
-          <img
+          <Image
             src="/img/Lem-hpl-banner.png"
             alt="Lem HPL EFLOOR"
+            width={1200}
+            height={800}
             className="w-full max-w-[500px] h-auto"
           />
         </div>
@@ -26,11 +30,9 @@ export default function LemHPL() {
             harian — cukup oles di satu sisi, lebih hemat dan lebih praktis.
           </h3>
           <div className="pt-8">
-            <Link href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
-              <button className="bg-[#FF8E06] text-white px-4 py-2 rounded-2xl hover:cursor-pointer">
-                Dapatkan Sekarang!
-              </button>
-            </Link>
+            <Button href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
+              Dapatkan Sekarang!
+            </Button>
           </div>
         </div>
       </div>
@@ -44,10 +46,16 @@ export default function LemHPL() {
           Kenapa pilih kami?
         </h2>
         <div className="flex justify-center items-center gap-10">
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
             <div>
-              <img src="/img/kpk-1.png" alt="" className="w-[150px] mx-auto" />
-              <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
+              <Image
+                src="/img/kpk-1.png"
+                alt="Ikon daya rekat kuat dan tahan lama"
+                width={150}
+                height={150}
+                className="w-[150px] mx-auto"
+              />
+              <h3 className="font-semibold text-center text-2xl">
                 Daya Rekat Kuat & Tahan Lama
               </h3>
               <div className="text-[#808080] text-center">
@@ -58,9 +66,15 @@ export default function LemHPL() {
               </div>
             </div>
           </div>
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
-            <img src="/img/kpk-2.png" alt="" className="w-[150px] mx-auto" />
-            <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
+            <Image
+              src="/img/kpk-2.png"
+              alt="Ikon cepat tack, cepat menempel"
+              width={150}
+              height={150}
+              className="w-[150px] mx-auto"
+            />
+            <h3 className="font-semibold text-center text-2xl">
               Cepat Tack, Cepat Menempel
             </h3>
             <div className="text-[#808080] text-center">
@@ -69,9 +83,15 @@ export default function LemHPL() {
               furniture, dan produksi kabinet atau kitchen set berskala harian.
             </div>
           </div>
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
-            <img src="/img/kpk-3.png" alt="" className="w-[150px] mx-auto" />
-            <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
+            <Image
+              src="/img/kpk-3.png"
+              alt="Ikon cukup oles satu sisi"
+              width={150}
+              height={150}
+              className="w-[150px] mx-auto"
+            />
+            <h3 className="font-semibold text-center text-2xl">
               Cukup Oles Satu Sisi
             </h3>
             <div className="text-[#808080] text-center">
@@ -81,9 +101,15 @@ export default function LemHPL() {
               yang kuat.
             </div>
           </div>
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
-            <img src="/img/kpk-4.png" alt="" className="w-[150px] mx-auto" />
-            <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
+            <Image
+              src="/img/kpk-4.png"
+              alt="Ikon serbaguna untuk furniture"
+              width={150}
+              height={150}
+              className="w-[150px] mx-auto"
+            />
+            <h3 className="font-semibold text-center text-2xl">
               Serbaguna untuk Furniture
             </h3>
             <div className="text-[#808080] text-center">
@@ -126,7 +152,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/lem-hpl",
+      canonical: `${SITE_URL}/lem-hpl-pvc-sheet`,
     },
   };
 }

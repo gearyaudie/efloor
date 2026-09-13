@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -35,9 +36,11 @@ export default function RecentArticle({ posts }: { posts: Post[] }) {
         {posts.map((post) => (
           <SwiperSlide key={post._id}>
             <div className="flex flex-col items-center justify-center text-center w-[375px]">
-              <img
+              <Image
                 src={post.img?.asset?.url ?? "/img/blog-placeholder.png"}
                 alt={post.title}
+                width={375}
+                height={220}
                 className="w-[375px] h-[220px] object-cover rounded-t-[24px]"
               />
 

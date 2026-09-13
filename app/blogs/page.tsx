@@ -1,6 +1,17 @@
+import type { Metadata } from "next";
 import { client } from "@/sanity.client";
+import Image from "next/image";
 import Link from "next/link";
 import RecentArticle from "../components/RecentArticles";
+
+export const metadata: Metadata = {
+  title: "Artikel & Tips Lem Vinyl, Lem Karpet | EFLOOR",
+  description:
+    "Kumpulan artikel dan panduan seputar pemasangan lem vinyl, lem karpet, dan list siku/skirting dari EFLOOR — tips perawatan, cara pakai, dan rekomendasi produk.",
+  alternates: {
+    canonical: "/blogs",
+  },
+};
 
 export type Post = {
   _id: string;
@@ -39,11 +50,14 @@ export default async function Blogs() {
         <div className="flex justify-center items-center my-20 gap-10 flex-col px-4 md:flex-row lg:flex-row">
           <div className="flex-1">
             <Link href={`/blogs/${latestPost.slug.current}`}>
-              <img
-                src={latestPost.img?.asset?.url}
-                alt={latestPost.title}
-                className="rounded-[20px] hover:opacity-90 transition-all duration-300 cursor-pointer w-fit"
-              />
+              <div className="relative w-full aspect-video rounded-[20px] overflow-hidden hover:opacity-90 transition-all duration-300 cursor-pointer">
+                <Image
+                  src={latestPost.img?.asset?.url}
+                  alt={latestPost.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </Link>
           </div>
           <div className="flex-1 flex flex-col text-left">

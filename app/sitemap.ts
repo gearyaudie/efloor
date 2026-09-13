@@ -1,8 +1,9 @@
 import { client } from "@/sanity.client";
 import { MetadataRoute } from "next";
 import { Post } from "./blogs/page";
+import { SITE_URL } from "./seo.config";
 
-export default async function sitemap() {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts: Post[] = await client.fetch(
     `*[_type == "post"]{
         _id,
@@ -20,106 +21,65 @@ export default async function sitemap() {
 
   // Fetch all blogs, to be put inside sitemap
   const blogUrls = posts.map((post) => ({
-    url: `https://efloor.id/blogs/${post.slug}`,
+    url: `${SITE_URL}/blogs/${post.slug}`,
+    lastModified: new Date(),
+  }));
+
+  // Fetch all products live from Sanity instead of hardcoding slugs, so the
+  // sitemap can never drift out of sync with what actually exists.
+  const products: { slug: string }[] = await client.fetch(
+    `*[_type == "product" && defined(slug.current)]{
+      "slug": slug.current
+    }`,
+  );
+
+  const productUrls = products.map((product) => ({
+    url: `${SITE_URL}/products/${product.slug}`,
     lastModified: new Date(),
   }));
 
   return [
     {
-      url: "https://efloor.id",
+      url: SITE_URL,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/projects",
+      url: `${SITE_URL}/projects`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-vinyl-rumah-sakit",
+      url: `${SITE_URL}/lem-vinyl-rumah-sakit`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-karpet-gym",
+      url: `${SITE_URL}/lem-karpet-gym`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-lapangan-badminton",
+      url: `${SITE_URL}/lem-lapangan-badminton`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-hpl-pvc-sheet",
+      url: `${SITE_URL}/lem-hpl-pvc-sheet`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-karpet-kantor",
+      url: `${SITE_URL}/lem-karpet-kantor`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/blogs",
+      url: `${SITE_URL}/blogs`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/blogs/tips-perawatan-karpet",
+      url: `${SITE_URL}/products`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/blogs/lem-efloor-max",
+      url: `${SITE_URL}/about-us`,
       lastModified: new Date(),
     },
-    {
-      url: "https://efloor.id/blogs/list-siku-l-efloor",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/blogs/list-adaptasi",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/blogs/list-plint-skirting",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/blogs/cara-pakai-lem-karpet",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/about-us",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/list-adaptasi",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/lem-kayu-wrg",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/lem-karpet",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/list-siku",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/lem-pu",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/lem-vinyl",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/list-skirting",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://efloor.id/products/lem-hpl-pvc-sheet",
-      lastModified: new Date(),
-    },
+    ...productUrls,
+    ...blogUrls,
   ];
 }

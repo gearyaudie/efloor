@@ -1,5 +1,7 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { SITE_URL } from "../seo.config";
 
 export default function Projects() {
   return (
@@ -26,10 +28,12 @@ export default function Projects() {
         </Link>
       </div>
       <div>
-        <img
+        <Image
           src="/img/projects-img.png"
-          alt=""
-          className="max-w-[800px] my-12 w-[400px] lg:w-full"
+          alt="Proyek pemasangan lem vinyl dan lem karpet EFLOOR untuk kontraktor dan procurement"
+          width={1293}
+          height={726}
+          className="max-w-[800px] my-12 w-[400px] lg:w-full h-auto"
         />
       </div>
       <hr className="w-full max-w-[800px] py-4 border-[#ccc]" />
@@ -61,25 +65,23 @@ export default function Projects() {
           History proyek kami
         </div>
         <div className="flex gap-4 flex-wrap max-w-[800px] mx-auto justify-center items-center">
-          <img src="/img/pro-1.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-2.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-3.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-4.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-5.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-6.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-7.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-8.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-9.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-10.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-11.png" alt="" className="max-w-[390px]" />
-          <img src="/img/pro-12.png" alt="" className="max-w-[390px]" />
+          {Array.from({ length: 12 }, (_, i) => i + 1).map((i) => (
+            <Image
+              key={i}
+              src={`/img/pro-${i}.jpg`}
+              alt={`Proyek pemasangan lem vinyl EFLOOR ${i}`}
+              width={700}
+              height={700}
+              className="max-w-[390px] h-auto"
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-export async function generateMetadata({ params }: any): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title:
       "Procurement Lem Vinyl & Lem Karpet | Distributor Grosir untuk Kontraktor & Proyek PT – EFLOOR",
@@ -126,7 +128,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/projects",
+      canonical: `${SITE_URL}/projects`,
     },
   };
 }

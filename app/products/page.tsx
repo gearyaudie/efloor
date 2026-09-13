@@ -1,7 +1,18 @@
+import type { Metadata } from "next";
 import { client } from "@/sanity.client";
-import Link from "next/link";
+import Image from "next/image";
+import Button from "../components/Button";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR)
+
+export const metadata: Metadata = {
+  title: "Produk Kami | Lem Vinyl, Lem Karpet & List Siku - EFLOOR",
+  description:
+    "Jelajahi katalog lengkap produk EFLOOR: lem vinyl, lem karpet, lem HPL, dan list siku/skirting waterbased eco-friendly untuk kebutuhan retail, kontraktor, dan procurement.",
+  alternates: {
+    canonical: "/products",
+  },
+};
 
 export type Product = {
   _id: string;
@@ -47,11 +58,14 @@ export default async function Products() {
           >
             {/* Product Image */}
             {x.image?.asset?.url && (
-              <img
-                src={x.image.asset.url}
-                alt={x.name}
-                className="text-center mx-auto rounded-t-[20px]"
-              />
+              <div className="relative w-full h-[280px]">
+                <Image
+                  src={x.image.asset.url}
+                  alt={x.name}
+                  fill
+                  className="object-contain rounded-t-[20px]"
+                />
+              </div>
             )}
 
             {/* Product Card */}
@@ -68,12 +82,7 @@ export default async function Products() {
               )}
 
               <div className="pt-8">
-                <Link
-                  className="bg-[#FF8E06] text-white px-4 py-2 rounded-2xl hover:cursor-pointer"
-                  href={`/products/${x.slug?.current}`}
-                >
-                  Cek Harga
-                </Link>
+                <Button href={`/products/${x.slug?.current}`}>Cek Harga</Button>
               </div>
             </div>
           </div>
