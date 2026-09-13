@@ -1,3 +1,14 @@
+# Next.js 16 requires Node >= 20.9.0 (see next/package.json "engines"). Pin it
+# explicitly so the build doesn't depend on whatever Node version Netlify
+# defaults to.
+[build.environment]
+  NODE_VERSION = "20.9.0"
+
+# Make the Next.js runtime explicit rather than relying only on Netlify's
+# dashboard-side auto-detection, which is a common source of drift.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 # NOTE: SITE_URL in app/seo.config.ts is currently set to https://www.efloor.id
 # as a placeholder. Confirm the actual primary domain in the Netlify dashboard
 # (Site configuration > Domain management) before relying on this redirect,
