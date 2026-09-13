@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PRICING_FAQ_ITEMS } from "../static/pricingFaq";
 
 const faqs = [
   {
@@ -35,6 +36,7 @@ const faqs = [
     answer:
       "Lem Karpet Kantor EFLOOR bisa didapatkan melalui WhatsApp kami, kunjungan langsung ke toko, atau melalui Shopee dan Tokopedia dengan nama toko efloor.id. Untuk kebutuhan proyek kantor berskala besar, hubungi tim kami via WhatsApp untuk konsultasi volume dan harga terbaik.",
   },
+  ...PRICING_FAQ_ITEMS,
 ];
 
 const faqJsonLd = {

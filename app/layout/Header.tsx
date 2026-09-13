@@ -64,6 +64,14 @@ export default function Header() {
     { label: "Lem Lapangan Badminton", href: "/lem-lapangan-badminton" },
     { label: "Lem Karpet Gym", href: "/lem-karpet-gym" },
     { label: "Lem HPL & PVC Sheet", href: "/lem-hpl-pvc-sheet" },
+    {
+      label: "Lem Vinyl & Karpet Tangerang",
+      href: "/lem-vinyl-karpet-tangerang",
+    },
+    {
+      label: "Lem Vinyl & Karpet Jakarta Timur",
+      href: "/lem-vinyl-karpet-jakarta-timur",
+    },
   ];
 
   return (

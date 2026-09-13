@@ -68,6 +68,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     },
     {
+      url: `${SITE_URL}/lem-vinyl-karpet-tangerang`,
+      lastModified: new Date(),
+    },
+    {
+      url: `${SITE_URL}/lem-vinyl-karpet-jakarta-timur`,
+      lastModified: new Date(),
+    },
+    {
       url: `${SITE_URL}/blogs`,
       lastModified: new Date(),
     },

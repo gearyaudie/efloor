@@ -5,44 +5,36 @@ import { PRICING_FAQ_ITEMS } from "../static/pricingFaq";
 
 const faqs = [
   {
-    question: "Apakah Lem Vinyl EFLOOR ramah lingkungan?",
+    question: "Apakah EFLOOR melayani distributor dan pabrik di Tangerang?",
     answer:
-      "Ya, Lem Vinyl EFLOOR adalah lem ramah lingkungan berbasis air (waterbased) yang hampir tidak mengandung VOC (Volatile Organic Compounds) dan bebas solvent. Aman digunakan di area sensitif seperti rumah sakit, sekolah, dan ruang kantor.",
+      "Ya. EFLOOR melayani pengiriman Lem Vinyl dan Lem Karpet ke Tangerang untuk kebutuhan distributor, pabrik, kontraktor, dan procurement/tender. Kami sudah terbiasa mengirim dalam volume besar untuk kebutuhan proyek maupun stok gudang.",
   },
   {
-    question: "Apakah Lem Vinyl EFLOOR tidak berbau?",
+    question:
+      "Apakah Lem Vinyl / Lem Karpet EFLOOR tersedia untuk kebutuhan pabrik dan grosir di Tangerang?",
     answer:
-      "Berbeda dengan lem kuning solvent yang berbau menyengat, Lem Vinyl EFLOOR berbasis air sehingga baunya sangat minimal dan tidak mengganggu. Cocok untuk pemasangan di perkantoran, rumah sakit, dan ruang dalam (indoor) tanpa perlu ventilasi berlebihan.",
+      "Tersedia. Kami menyediakan Lem Vinyl dan Lem Karpet EFLOOR dalam kemasan 4 KG dan 20 KG untuk kebutuhan grosir, pabrik, dan distributor di area Tangerang, dengan harga khusus untuk pembelian volume besar.",
   },
   {
-    question: "Bagaimana cara menggunakan Lem Vinyl / Karpet EFLOOR?",
+    question: "Berapa lama pengiriman Lem Vinyl / Lem Karpet ke Tangerang?",
     answer:
-      "Cara penggunaannya sangat mudah: oleskan lem secara merata pada satu permukaan, kemudian tunggu hingga warna lem berubah menjadi bening — biasanya sekitar 30 menit hingga 1 jam. Setelah itu, tempelkan vinyl atau karpet pada permukaan yang telah diolesi lem.",
+      "Waktu pengiriman ke Tangerang umumnya 1-2 hari kerja tergantung lokasi dan volume pesanan. Untuk kebutuhan mendesak atau volume besar, hubungi tim kami via WhatsApp untuk estimasi waktu pengiriman yang lebih akurat.",
   },
   {
-    question: "Apa itu Lem Vinyl / Karpet EFLOOR?",
+    question:
+      "Apakah EFLOOR bisa memenuhi kebutuhan procurement dan tender di Tangerang?",
     answer:
-      "Lem Vinyl EFLOOR adalah merek lem khusus pemasangan vinyl dan karpet yang telah menjadi pilihan utama kontraktor dan instalator di seluruh Indonesia. EFLOOR merupakan seller dengan penjualan lem vinyl terbanyak di Shopee dan Tokopedia se-Indonesia.",
+      "Bisa. EFLOOR terbiasa melayani kebutuhan procurement, kontraktor, dan tender untuk proyek di Tangerang, lengkap dengan dokumen pendukung (TDS dan MSDS) yang dibutuhkan untuk keperluan administrasi proyek.",
   },
   {
-    question: "Di mana bisa membeli Lem Vinyl / Karpet EFLOOR?",
+    question:
+      "Di mana bisa membeli Lem Vinyl / Lem Karpet EFLOOR di Tangerang?",
     answer:
-      "Lem Vinyl EFLOOR dapat dibeli melalui beberapa cara: langsung via WhatsApp, datang ke toko kami, atau melalui platform marketplace seperti Shopee dan Tokopedia dengan nama toko efloor.id.",
-  },
-  {
-    question: "Lem Vinyl & Karpet EFLOOR digunakan untuk apa saja?",
-    answer:
-      "Lem EFLOOR cocok untuk berbagai kebutuhan pemasangan lantai dan karpet, antara lain: carpet tile, carpet roll, vinyl tile, vinyl roll, karpet gym (karet), vinyl rumah sakit, vinyl lapangan badminton, dan berbagai aplikasi lantai indoor lainnya.",
-  },
-  {
-    question: "Apa perbedaan Lem EFLOOR dan Lem EFLOOR MAX?",
-    answer:
-      "Perbedaan utama terletak pada tingkat kekentalan dan daya rekat. Lem EFLOOR MAX memiliki viskositas yang lebih tinggi (lebih kental) serta daya rekat yang lebih kuat — ideal untuk proyek berskala besar atau area dengan intensitas penggunaan tinggi.",
+      "Lem Vinyl / Lem Karpet EFLOOR bisa didapatkan melalui WhatsApp kami dengan pengiriman ke seluruh area Tangerang, atau melalui Shopee dan Tokopedia dengan nama toko efloor.id. Untuk kebutuhan volume besar, hubungi tim kami langsung via WhatsApp.",
   },
   ...PRICING_FAQ_ITEMS,
 ];
 
-// JSON-LD structured data for Google's FAQ rich results
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -56,7 +48,7 @@ const faqJsonLd = {
   })),
 };
 
-export default function FAQSection() {
+export default function FaqSectionTangerang() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (index: number) => {
@@ -66,8 +58,8 @@ export default function FAQSection() {
   return (
     <section
       className="max-w-[860px] mx-auto px-6 py-16 md:py-24"
-      id="faq"
-      aria-label="Pertanyaan yang Sering Diajukan"
+      id="faq-lem-vinyl-karpet-tangerang"
+      aria-label="Pertanyaan yang Sering Diajukan tentang Lem Vinyl dan Lem Karpet di Tangerang"
     >
       {/* JSON-LD for Google FAQ rich results */}
       <script
@@ -81,15 +73,15 @@ export default function FAQSection() {
           FAQ
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] leading-snug">
-          Pertanyaan yang Sering Diajukan
+          Pertanyaan Seputar Lem Vinyl &amp; Lem Karpet EFLOOR di Tangerang
         </h2>
         <p className="mt-4 text-[#808080] text-base md:text-lg max-w-[560px] mx-auto">
-          Temukan jawaban seputar Lem Vinyl & Karpet EFLOOR — produk, cara
-          pakai, hingga tempat pembelian.
+          Temukan jawaban lengkap seputar Lem Vinyl &amp; Lem Karpet EFLOOR
+          untuk kebutuhan distributor, pabrik, dan procurement di Tangerang.
         </p>
       </div>
 
-      {/* FAQ list — each item is crawlable by Googlebot */}
+      {/* FAQ list */}
       <dl className="space-y-3">
         {faqs.map((faq, index) => {
           const isOpen = openIndex === index;
@@ -102,8 +94,8 @@ export default function FAQSection() {
                 <button
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${index}`}
-                  id={`faq-question-${index}`}
+                  aria-controls={`faq-tangerang-answer-${index}`}
+                  id={`faq-tangerang-question-${index}`}
                   className="w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer group"
                 >
                   <h3 className="text-[#1a1a1a] font-semibold text-base md:text-lg pr-4 leading-snug group-hover:text-[#FF8E06] transition-colors">
@@ -136,9 +128,9 @@ export default function FAQSection() {
               </dt>
 
               <dd
-                id={`faq-answer-${index}`}
+                id={`faq-tangerang-answer-${index}`}
                 role="region"
-                aria-labelledby={`faq-question-${index}`}
+                aria-labelledby={`faq-tangerang-question-${index}`}
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
                   isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
                 }`}
