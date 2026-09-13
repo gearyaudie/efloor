@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
+import Button from "./Button";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -55,12 +55,9 @@ export default function ProjectsSnippet() {
         ))}
       </Swiper>
 
-      <Link
-        href="/projects"
-        className="bg-[#FF8E06] text-white px-4 py-2 text-center flex justify-center items-center mt-12 mx-auto rounded-2xl hover:cursor-pointer w-fit"
-      >
-        Lihat Selengkapnya
-      </Link>
+      <div className="flex justify-center mt-12">
+        <Button href="/projects">Lihat Selengkapnya</Button>
+      </div>
     </div>
   );
 }

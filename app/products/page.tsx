@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { client } from "@/sanity.client";
 import Image from "next/image";
-import Link from "next/link";
+import Button from "../components/Button";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR)
 
@@ -82,12 +82,7 @@ export default async function Products() {
               )}
 
               <div className="pt-8">
-                <Link
-                  className="bg-[#FF8E06] text-white px-4 py-2 rounded-2xl hover:cursor-pointer"
-                  href={`/products/${x.slug?.current}`}
-                >
-                  Cek Harga
-                </Link>
+                <Button href={`/products/${x.slug?.current}`}>Cek Harga</Button>
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Button from "./Button";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -77,12 +77,7 @@ export default function MainProductsSwiper() {
                   </div>
                   <h3 className="pt-6 text-gray-700">{product.desc}</h3>
                   <div className="pt-8">
-                    <Link
-                      href={product.link}
-                      className="inline-block bg-[#FF8E06] text-white px-4 py-2 rounded-2xl hover:cursor-pointer"
-                    >
-                      Cek Harga
-                    </Link>
+                    <Button href={product.link}>Cek Harga</Button>
                   </div>
                 </div>
               </div>

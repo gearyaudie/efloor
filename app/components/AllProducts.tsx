@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Button from "./Button";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
@@ -84,12 +84,9 @@ export default function AllProducts({ products }: Props) {
                   </p>
 
                   <div className="mt-6">
-                    <Link
-                      href={`/products/${product.slug?.current}`}
-                      className="inline-block bg-[#FF8E06] text-white px-6 py-2 rounded-2xl hover:opacity-90 hover:cursor-pointer transition"
-                    >
+                    <Button href={`/products/${product.slug?.current}`}>
                       Cek Produk
-                    </Link>
+                    </Button>
                   </div>
                 </div>
               </div>
