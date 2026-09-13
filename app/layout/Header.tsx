@@ -1,28 +1,27 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import FloatingWhatsapp from "../components/FloatingWhatsapp";
 
 export default function Header() {
-  const router = useRouter();
   const pathname = usePathname();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
     if (pathname !== "/") {
-      router.push(`/#${id}`);
       return;
     }
+    e.preventDefault();
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
       window.history.pushState(null, "", `/#${id}`);
     }
-  };
-
-  const onLogoClick = () => {
-    router.push(`/`);
   };
 
   // Close dropdown when clicking outside
@@ -44,47 +43,38 @@ export default function Header() {
     { label: "Lem Karpet Kantor", href: "/lem-karpet-kantor" },
     { label: "Lem Lapangan Badminton", href: "/lem-lapangan-badminton" },
     { label: "Lem Karpet Gym", href: "/lem-karpet-gym" },
+    { label: "Lem HPL & PVC Sheet", href: "/lem-hpl-pvc-sheet" },
   ];
 
   return (
     <header className="mb-16">
       <FloatingWhatsapp />
-      <div
-        className="fixed bg-white w-full top-0 z-50 flex justify-between items-center shadow-sm"
-        onClick={() => onLogoClick()}
-      >
+      <div className="fixed bg-white w-full top-0 z-50 flex justify-between items-center shadow-sm">
         <div className="max-w-[1400px] px-12 w-full mx-auto flex py-1 justify-between items-center">
-          <img
-            src="/img/header-logo.png"
-            alt="efloor-logo"
-            className="max-w-[150px] p-2 hover:cursor-pointer"
-          />
+          <Link href="/">
+            <img
+              src="/img/header-logo.png"
+              alt="EFLOOR - Distributor Lem Vinyl dan Lem Karpet Jakarta"
+              className="max-w-[150px] p-2 hover:cursor-pointer"
+            />
+          </Link>
           <div className="hidden gap-10 mr-0 md:flex lg:flex items-center">
-            <div
+            <Link
+              href="/#home"
               className="hover:cursor-pointer font-medium text-[#808080] text-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                scrollToSection("home");
-              }}
+              onClick={(e) => scrollToSection(e, "home")}
             >
               Home
-            </div>
-            <div
+            </Link>
+            <Link
+              href="/projects"
               className="hover:cursor-pointer font-medium text-[#808080] text-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open("/projects", "_blank");
-              }}
             >
               Projects
-            </div>
+            </Link>
 
             {/* Lem Vinyl Dropdown */}
-            <div
-              className="relative"
-              ref={dropdownRef}
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="relative" ref={dropdownRef}>
               <button
                 className="flex items-center gap-1 font-medium text-[#808080] text-md hover:text-[#FF8E06] transition-colors duration-200"
                 onClick={() => setDropdownOpen((prev) => !prev)}
@@ -108,39 +98,32 @@ export default function Header() {
               {dropdownOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50">
                   {lemVinylLinks.map((link) => (
-                    <div
+                    <Link
                       key={link.href}
-                      className="px-4 py-3 text-sm text-[#808080] font-medium hover:bg-orange-50 hover:text-[#FF8E06] cursor-pointer transition-colors duration-150"
-                      onClick={() => {
-                        window.open(link.href, "_blank");
-                        setDropdownOpen(false);
-                      }}
+                      href={link.href}
+                      className="block px-4 py-3 text-sm text-[#808080] font-medium hover:bg-orange-50 hover:text-[#FF8E06] cursor-pointer transition-colors duration-150"
+                      onClick={() => setDropdownOpen(false)}
                     >
                       {link.label}
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}
             </div>
 
-            <div
+            <Link
+              href="/#products"
               className="hover:cursor-pointer font-medium text-[#808080] text-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                scrollToSection("products");
-              }}
+              onClick={(e) => scrollToSection(e, "products")}
             >
               Products
-            </div>
-            <div
+            </Link>
+            <Link
+              href="/blogs"
               className="hover:cursor-pointer font-medium text-[#808080] text-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open("/blogs", "_blank");
-              }}
             >
               Articles
-            </div>
+            </Link>
           </div>
         </div>
       </div>
