@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport: Viewport = {
