@@ -90,12 +90,14 @@ export default async function BlogPostPage(props: PageProps) {
           {/* This is an example of blablabla */}
         </div>
 
-        <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
-          <PortableText
-            value={post.content}
-            components={portableTextComponents}
-          />
-        </div>
+        {Array.isArray(post.content) && post.content.length > 0 && (
+          <div className="prose prose-sm sm:prose lg:prose-lg max-w-none text-black">
+            <PortableText
+              value={post.content}
+              components={portableTextComponents}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

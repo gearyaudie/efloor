@@ -8,17 +8,24 @@ import { PortableText } from "@portabletext/react";
 import ProductSlider from "../components/ProductSlider";
 import VariantSelector from "../components/VariantSelector";
 
-// Sanity portable text blocks -> plain text, for meta descriptions
-function portableTextToPlainText(blocks: any[] | undefined, maxLength = 155) {
-  if (!blocks?.length) return "";
-  const text = blocks
-    .filter((block) => block._type === "block" && block.children)
-    .map((block) =>
-      block.children.map((child: any) => child.text ?? "").join(""),
-    )
-    .join(" ")
-    .trim();
+// Sanity "desc"/"content" fields have been observed as either a plain string
+// or an array of portable text blocks depending on the document, so accept
+// either shape rather than assuming one and crashing on the other.
+function portableTextToPlainText(value: unknown, maxLength = 155): string {
+  let text = "";
 
+  if (typeof value === "string") {
+    text = value;
+  } else if (Array.isArray(value)) {
+    text = value
+      .filter((block) => block?._type === "block" && block.children)
+      .map((block: any) =>
+        block.children.map((child: any) => child?.text ?? "").join(""),
+      )
+      .join(" ");
+  }
+
+  text = text.trim();
   return text.length > maxLength
     ? `${text.slice(0, maxLength).trim()}...`
     : text;
@@ -105,7 +112,7 @@ export default async function ProductsPage(props: PageProps) {
             )}
 
             {/* Content */}
-            {product.content && (
+            {Array.isArray(product.content) && product.content.length > 0 && (
               <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none text-black mt-8">
                 <PortableText
                   value={product.content}
