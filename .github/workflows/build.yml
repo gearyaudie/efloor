@@ -1,0 +1,24 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.9.0"
+          cache: "npm"
+      # Matches Netlify's production-mode install, which is what actually
+      # broke the build when tailwindcss was miscategorized as a
+      # devDependency — a plain `npm ci` here would hide that class of bug.
+      - name: Install dependencies (production mode)
+        run: npm ci --omit=dev
+      - name: Build
+        run: npm run build
