@@ -9,15 +9,12 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# NOTE: SITE_URL in app/seo.config.ts is currently set to https://www.efloor.id
-# as a placeholder. Confirm the actual primary domain in the Netlify dashboard
-# (Site configuration > Domain management) before relying on this redirect,
-# and keep it in sync with SITE_URL if the canonical host changes.
-[[redirects]]
-  from = "https://efloor.id/*"
-  to = "https://www.efloor.id/:splat"
-  status = 301
-  force = true
+# No app-level www/apex redirect here on purpose: Netlify's dashboard
+# (Domain management) already redirects www.efloor.id -> efloor.id at the
+# platform level. Adding the reverse redirect here previously caused an
+# infinite redirect loop (ERR_TOO_MANY_REDIRECTS) — each side kept sending
+# the browser back to the other host. SITE_URL in app/seo.config.ts must
+# stay in sync with whichever host is actually primary in the dashboard.
 
 # Long-lived caching for hashed Next.js build assets and static images —
 # these paths are content-hashed or effectively immutable, so it's safe to

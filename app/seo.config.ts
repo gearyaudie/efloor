@@ -1,11 +1,13 @@
 // seo.config.ts
 
-// Single source of truth for the canonical host. NOTE: the site owner was
-// unsure whether Netlify/DNS actually serves www or non-www as primary —
-// this needs to be confirmed against the live Netlify domain settings
-// before deploy. Everything else (layout, robots.ts, sitemap.ts) reads
-// from this constant, so flipping the domain is a one-line change here.
-export const SITE_URL = "https://www.efloor.id";
+// Single source of truth for the canonical host. Confirmed against the
+// Netlify dashboard: efloor.id (non-www) is the primary domain, and
+// www.efloor.id auto-redirects to it at the platform level — do not add an
+// app-level redirect in the other direction (efloor.id -> www), that
+// creates a redirect loop with Netlify's own www -> apex redirect.
+// Everything else (layout, robots.ts, sitemap.ts) reads from this
+// constant, so flipping the domain is a one-line change here.
+export const SITE_URL = "https://efloor.id";
 
 const defaultSeo = {
   title:
