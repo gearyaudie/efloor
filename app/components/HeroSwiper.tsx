@@ -41,10 +41,6 @@ export default function HeroSwiper() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const openLink = (link: string) => {
-    window.open(link, "_");
-  };
-
   return (
     <div className="relative w-full overflow-hidden bg-white mx-auto">
       <Swiper

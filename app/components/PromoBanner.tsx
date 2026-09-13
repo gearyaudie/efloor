@@ -1,8 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
 
 export default function PromoBanner() {
-  const router = useRouter();
   return (
     <div className="bg-[#C62020] p-3 text-white text-center">
       Langsung kontak kami di WhatsApp untuk Harga Lebih Murah!

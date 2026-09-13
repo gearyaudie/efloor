@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import MarketingGrid from "../components/MarketingGrid";
 import { SITE_URL } from "../seo.config";
 

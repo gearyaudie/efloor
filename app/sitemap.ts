@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 import { Post } from "./blogs/page";
 import { SITE_URL } from "./seo.config";
 
-export default async function sitemap() {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts: Post[] = await client.fetch(
     `*[_type == "post"]{
         _id,

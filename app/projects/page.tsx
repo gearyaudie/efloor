@@ -81,7 +81,7 @@ export default function Projects() {
   );
 }
 
-export async function generateMetadata({ params }: any): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title:
       "Procurement Lem Vinyl & Lem Karpet | Distributor Grosir untuk Kontraktor & Proyek PT – EFLOOR",
