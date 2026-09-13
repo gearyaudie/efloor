@@ -1,0 +1,9 @@
+# NOTE: SITE_URL in app/seo.config.ts is currently set to https://www.efloor.id
+# as a placeholder. Confirm the actual primary domain in the Netlify dashboard
+# (Site configuration > Domain management) before relying on this redirect,
+# and keep it in sync with SITE_URL if the canonical host changes.
+[[redirects]]
+  from = "https://efloor.id/*"
+  to = "https://www.efloor.id/:splat"
+  status = 301
+  force = true

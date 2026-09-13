@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import { client } from "@/sanity.client";
 import Link from "next/link";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR)
+
+export const metadata: Metadata = {
+  title: "Produk Kami | Lem Vinyl, Lem Karpet & List Siku - EFLOOR",
+  description:
+    "Jelajahi katalog lengkap produk EFLOOR: lem vinyl, lem karpet, lem HPL, dan list siku/skirting waterbased eco-friendly untuk kebutuhan retail, kontraktor, dan procurement.",
+  alternates: {
+    canonical: "/products",
+  },
+};
 
 export type Product = {
   _id: string;

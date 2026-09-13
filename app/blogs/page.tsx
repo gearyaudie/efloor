@@ -1,6 +1,16 @@
+import type { Metadata } from "next";
 import { client } from "@/sanity.client";
 import Link from "next/link";
 import RecentArticle from "../components/RecentArticles";
+
+export const metadata: Metadata = {
+  title: "Artikel & Tips Lem Vinyl, Lem Karpet | EFLOOR",
+  description:
+    "Kumpulan artikel dan panduan seputar pemasangan lem vinyl, lem karpet, dan list siku/skirting dari EFLOOR — tips perawatan, cara pakai, dan rekomendasi produk.",
+  alternates: {
+    canonical: "/blogs",
+  },
+};
 
 export type Post = {
   _id: string;

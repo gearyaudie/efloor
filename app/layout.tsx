@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
-import defaultSeo from "./seo.config";
+import defaultSeo, { SITE_URL } from "./seo.config";
 import Header from "./layout/Header";
 import PromoBanner from "./components/PromoBanner";
 import Footer from "./layout/Footer";
@@ -12,9 +12,11 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"], // choose what you need
   variable: "--font-poppins",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: defaultSeo.title,
   description: defaultSeo.description,
   openGraph: {
@@ -24,8 +26,14 @@ export const metadata: Metadata = {
     ...defaultSeo.twitter,
   },
   alternates: {
-    canonical: "https://www.efloor.id",
+    canonical: SITE_URL,
   },
+  manifest: "/manifest.webmanifest",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -34,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="id">
       <body>
         <Header />
         {/* Promo Banner */}

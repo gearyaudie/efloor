@@ -1,6 +1,7 @@
 import { client } from "@/sanity.client";
 import { MetadataRoute } from "next";
 import { Post } from "./blogs/page";
+import { SITE_URL } from "./seo.config";
 
 export default async function sitemap() {
   const posts: Post[] = await client.fetch(
@@ -20,7 +21,7 @@ export default async function sitemap() {
 
   // Fetch all blogs, to be put inside sitemap
   const blogUrls = posts.map((post) => ({
-    url: `https://efloor.id/blogs/${post.slug}`,
+    url: `${SITE_URL}/blogs/${post.slug}`,
     lastModified: new Date(),
   }));
 
@@ -33,49 +34,49 @@ export default async function sitemap() {
   );
 
   const productUrls = products.map((product) => ({
-    url: `https://efloor.id/products/${product.slug}`,
+    url: `${SITE_URL}/products/${product.slug}`,
     lastModified: new Date(),
   }));
 
   return [
     {
-      url: "https://efloor.id",
+      url: SITE_URL,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/projects",
+      url: `${SITE_URL}/projects`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-vinyl-rumah-sakit",
+      url: `${SITE_URL}/lem-vinyl-rumah-sakit`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-karpet-gym",
+      url: `${SITE_URL}/lem-karpet-gym`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-lapangan-badminton",
+      url: `${SITE_URL}/lem-lapangan-badminton`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-hpl-pvc-sheet",
+      url: `${SITE_URL}/lem-hpl-pvc-sheet`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/lem-karpet-kantor",
+      url: `${SITE_URL}/lem-karpet-kantor`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/blogs",
+      url: `${SITE_URL}/blogs`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/products",
+      url: `${SITE_URL}/products`,
       lastModified: new Date(),
     },
     {
-      url: "https://efloor.id/about-us",
+      url: `${SITE_URL}/about-us`,
       lastModified: new Date(),
     },
     ...productUrls,
