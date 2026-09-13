@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SITE_URL } from "../seo.config";
+import WhatsAppLink from "../components/WhatsAppLink";
 
 export default function Projects() {
   return (
@@ -17,15 +18,11 @@ export default function Projects() {
         kepuasan tinggi.
       </h2>
       <div>
-        <Link
-          href={
-            "https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0"
-          }
-        >
+        <WhatsAppLink href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
           <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 p-2 rounded-lg mt-2 mt-8  hover:cursor-pointer">
             Dapatkan Quotation Sekarang!
           </button>
-        </Link>
+        </WhatsAppLink>
       </div>
       <div>
         <Image

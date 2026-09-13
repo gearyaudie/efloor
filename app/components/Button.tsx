@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { isWhatsAppLink, trackWhatsAppClick } from "../lib/analytics";
 
 type CommonProps = {
   children: ReactNode;
@@ -34,7 +37,12 @@ export default function Button({
 
   if ("href" in props && props.href) {
     return (
-      <Link href={props.href} target={props.target} className={classes}>
+      <Link
+        href={props.href}
+        target={props.target}
+        className={classes}
+        onClick={isWhatsAppLink(props.href) ? trackWhatsAppClick : undefined}
+      >
         {children}
       </Link>
     );

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { trackWhatsAppClick } from "../../lib/analytics";
 
 type Variant = {
   label: string;
@@ -13,6 +14,7 @@ export default function VariantSelector({ variants }: { variants: Variant[] }) {
   const activeVariant = variants.find((v) => v.label === selected);
 
   const openLink = (link: string) => {
+    trackWhatsAppClick();
     window.open(link, "_");
   };
 

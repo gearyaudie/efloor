@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { trackWhatsAppClick } from "../lib/analytics";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -71,6 +72,7 @@ export default function Footer() {
           href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0"
           target="_blank"
           className="hover:cursor-pointer"
+          onClick={trackWhatsAppClick}
         >
           Contact Us
         </Link>
