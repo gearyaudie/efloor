@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { client } from "@/sanity.client";
 import AllProducts from "./components/AllProducts";
 import MarketingGrid from "./components/MarketingGrid";
@@ -85,9 +86,12 @@ export default async function Home() {
 
       <div className="flex flex-col md:flex-row justify-center px-4 md:px-8 py-10 md:py-20 gap-10 md:gap-16 max-w-[1300px] mx-auto items-center">
         <div className="w-full md:flex-1 flex justify-center">
-          <img
+          <Image
             src="/img/lantai-vinyl-rs.png"
             alt="Instalasi lem vinyl EFLOOR di rumah sakit"
+            width={1200}
+            height={800}
+            priority
             className="w-full max-w-[350px] md:max-w-[600px] h-auto"
           />
         </div>

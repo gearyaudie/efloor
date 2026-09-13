@@ -4,8 +4,7 @@ import React, { useState } from "react";
 
 const faqs = [
   {
-    question:
-      "Apa itu Lem Lapangan Badminton EFLOOR dan untuk apa digunakan?",
+    question: "Apa itu Lem Lapangan Badminton EFLOOR dan untuk apa digunakan?",
     answer:
       "Lem Lapangan Badminton EFLOOR adalah lem waterbased berdaya rekat kuat yang dirancang untuk pemasangan lantai vinyl dan karpet pada lapangan badminton indoor, mampu menahan beban dan gesekan intensif dari aktivitas olahraga.",
   },

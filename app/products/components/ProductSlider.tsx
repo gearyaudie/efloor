@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -24,11 +25,14 @@ export default function ProductSlider({ images, name }: Props) {
     >
       {images.map((img, index) => (
         <SwiperSlide key={index}>
-          <img
-            src={img.url}
-            alt={name}
-            className="w-full rounded-lg min-w-[450px]"
-          />
+          <div className="relative w-full aspect-square min-w-[450px]">
+            <Image
+              src={img.url}
+              alt={name}
+              fill
+              className="rounded-lg object-contain"
+            />
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>

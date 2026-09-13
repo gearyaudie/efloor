@@ -14,7 +14,8 @@ const faqs = [
       "Ya. Lem ini diformulasikan dengan daya rekat ekstrakuat sehingga tahan terhadap beban alat gym yang berat, termasuk rak beban, treadmill, dan alat fitness lainnya, tanpa risiko karpet atau rubber terangkat.",
   },
   {
-    question: "Apakah Lem Karpet Gym EFLOOR aman digunakan di ruangan tertutup?",
+    question:
+      "Apakah Lem Karpet Gym EFLOOR aman digunakan di ruangan tertutup?",
     answer:
       "Aman. Lem ini berbasis water-based dan hampir tidak mengandung VOC (Volatile Organic Compounds), sehingga tidak berbau menyengat dan aman untuk ruangan gym ber-AC atau tertutup yang digunakan banyak orang.",
   },

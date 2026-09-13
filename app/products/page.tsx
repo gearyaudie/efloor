@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { client } from "@/sanity.client";
+import Image from "next/image";
 import Link from "next/link";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR)
@@ -57,11 +58,14 @@ export default async function Products() {
           >
             {/* Product Image */}
             {x.image?.asset?.url && (
-              <img
-                src={x.image.asset.url}
-                alt={x.name}
-                className="text-center mx-auto rounded-t-[20px]"
-              />
+              <div className="relative w-full h-[280px]">
+                <Image
+                  src={x.image.asset.url}
+                  alt={x.name}
+                  fill
+                  className="object-contain rounded-t-[20px]"
+                />
+              </div>
             )}
 
             {/* Product Card */}

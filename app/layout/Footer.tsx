@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -26,9 +27,11 @@ export default function Footer() {
   return (
     <footer className="max-w-[1200px] mx-auto py-20 flex justify-between items-center flex-col md:flex-row lg:flex-row">
       <div className="flex-2 justify-center items-center mx-auto">
-        <img
+        <Image
           src="/img/footer-logo.png"
           alt="EFLOOR - Distributor Lem Vinyl dan Lem Karpet Jakarta"
+          width={272}
+          height={84}
           className="mx-auto flex md:mx-0 lg:mx-0"
         />
         <div className="max-w-[325px] p-4 text-center md:text-left lg:text-left">

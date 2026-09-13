@@ -1,14 +1,28 @@
-// app/blogs/[slug]/page.tsx
+// app/products/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { groq } from "next-sanity";
 import { client } from "@/sanity.client";
 import { SITE_URL } from "@/app/seo.config";
 import { PortableText } from "@portabletext/react";
-import { Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import ProductSlider from "../components/ProductSlider";
 import VariantSelector from "../components/VariantSelector";
+
+// Sanity portable text blocks -> plain text, for meta descriptions
+function portableTextToPlainText(blocks: any[] | undefined, maxLength = 155) {
+  if (!blocks?.length) return "";
+  const text = blocks
+    .filter((block) => block._type === "block" && block.children)
+    .map((block) =>
+      block.children.map((child: any) => child.text ?? "").join(""),
+    )
+    .join(" ")
+    .trim();
+
+  return text.length > maxLength
+    ? `${text.slice(0, maxLength).trim()}...`
+    : text;
+}
 
 type PageProps = {
   params: {
@@ -121,23 +135,29 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
   if (!product) return {};
 
+  const title = `${product.name} | EFLOOR`;
+  const description =
+    portableTextToPlainText(product.desc) ||
+    portableTextToPlainText(product.content) ||
+    `${product.name} dari EFLOOR — supplier lem vinyl, lem karpet, dan list siku terpercaya.`;
+
   return {
-    title: product.title,
-    description: product.excerpt,
+    title,
+    description,
     keywords: product.keywords?.map((k: string) => k.toLowerCase()) ?? [],
     openGraph: {
-      title: product.title,
-      description: product.excerpt,
+      title,
+      description,
       url: `${SITE_URL}/products/${slug}`,
       images: [
         {
-          url: product.img?.asset?.url || "/images/default-og.png",
+          url: product.images?.[0]?.url || `${SITE_URL}/img/og-image.png`,
           width: 1200,
           height: 630,
-          alt: product.title,
+          alt: product.name,
         },
       ],
-      // type: "article",
+      type: "website",
     },
     alternates: {
       canonical: `${SITE_URL}/products/${slug}`,

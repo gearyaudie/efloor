@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
@@ -52,10 +53,13 @@ export default function Header() {
       <div className="fixed bg-white w-full top-0 z-50 flex justify-between items-center shadow-sm">
         <div className="max-w-[1400px] px-12 w-full mx-auto flex py-1 justify-between items-center">
           <Link href="/">
-            <img
+            <Image
               src="/img/header-logo.png"
               alt="EFLOOR - Distributor Lem Vinyl dan Lem Karpet Jakarta"
-              className="max-w-[150px] p-2 hover:cursor-pointer"
+              width={341}
+              height={103}
+              priority
+              className="max-w-[150px] w-auto h-auto p-2 hover:cursor-pointer"
             />
           </Link>
           <div className="hidden gap-10 mr-0 md:flex lg:flex items-center">

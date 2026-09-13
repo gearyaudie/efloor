@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import MarketingGrid from "../components/MarketingGrid";
 import { SITE_URL } from "../seo.config";
@@ -9,9 +10,11 @@ export default function AboutUs() {
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
-          <img
+          <Image
             src="/img/about-us-efloor.png"
-            alt="About Efloor"
+            alt="Toko fisik EFLOOR di Mall Artha Gading, Jakarta"
+            width={828}
+            height={368}
             className="w-full max-w-[500px] h-auto"
           />
         </div>

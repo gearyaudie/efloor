@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 export default function FloatingWhatsapp() {
@@ -21,9 +22,11 @@ export default function FloatingWhatsapp() {
           Beli Langsung Dari WA, <br /> Dijamin Lebih Murah!
         </div>
       )}
-      <img
+      <Image
         src="/img/whatsapp.svg"
-        alt=""
+        alt="Hubungi EFLOOR via WhatsApp"
+        width={80}
+        height={80}
         className="w-20 z-10 cursor-pointer"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

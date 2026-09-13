@@ -19,12 +19,14 @@ const faqs = [
       "Ya, Lem Karpet Kantor EFLOOR kompatibel dengan karpet tile maupun karpet gulung (roll carpet), menjadikannya solusi serbaguna untuk berbagai jenis pemasangan karpet perkantoran.",
   },
   {
-    question: "Bagaimana cara menggunakan Lem Karpet Kantor EFLOOR dengan benar?",
+    question:
+      "Bagaimana cara menggunakan Lem Karpet Kantor EFLOOR dengan benar?",
     answer:
       "Cara penggunaannya: (1) Bersihkan permukaan lantai dari debu, minyak, dan air. (2) Oleskan lem secara merata menggunakan trowel bergerigi. (3) Tunggu hingga lem setengah kering atau terasa tacky. (4) Pasang karpet, lalu tekan merata dengan roller agar daya rekat maksimal.",
   },
   {
-    question: "Apakah Lem Karpet Kantor EFLOOR cocok untuk proyek renovasi kantor skala besar?",
+    question:
+      "Apakah Lem Karpet Kantor EFLOOR cocok untuk proyek renovasi kantor skala besar?",
     answer:
       "Ya. Lem ini cocok untuk kebutuhan renovasi maupun fit-out kantor skala besar, termasuk untuk kontraktor dan procurement/tender, dengan daya rekat kuat dan hasil pemasangan yang rapi dan tahan lama.",
   },
@@ -76,8 +78,8 @@ export default function FaqSectionKantor() {
           Pertanyaan Seputar Lem Karpet Kantor EFLOOR
         </h2>
         <p className="mt-4 text-[#808080] text-base md:text-lg max-w-[560px] mx-auto">
-          Temukan jawaban lengkap seputar Lem Karpet Kantor EFLOOR —
-          keunggulan, cara pakai, hingga cara pembelian.
+          Temukan jawaban lengkap seputar Lem Karpet Kantor EFLOOR — keunggulan,
+          cara pakai, hingga cara pembelian.
         </p>
       </div>
 

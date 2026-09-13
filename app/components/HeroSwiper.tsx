@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -109,9 +110,12 @@ export default function HeroSwiper() {
               {/* Right — placeholder for image */}
               <div className="hidden md:flex flex-[1] items-center justify-center">
                 <div className="w-120 h-120 rounded-full bg-orange-100 flex items-center justify-center text-6xl">
-                  <img
+                  <Image
                     src="/img/lem_vinyl_efloor_20kg.png"
-                    alt="lem-vinyl-efloor-20kg"
+                    alt="Lem Vinyl EFLOOR kemasan 20kg"
+                    width={702}
+                    height={702}
+                    priority
                   />
                 </div>
               </div>

@@ -7,3 +7,24 @@
   to = "https://www.efloor.id/:splat"
   status = 301
   force = true
+
+# Long-lived caching for hashed Next.js build assets and static images —
+# these paths are content-hashed or effectively immutable, so it's safe to
+# cache them for a year at the edge/browser.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Baseline security headers for every response.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"

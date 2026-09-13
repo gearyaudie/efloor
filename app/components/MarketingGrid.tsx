@@ -1,3 +1,12 @@
+import Image from "next/image";
+
+const imageDimensions: Record<string, { width: number; height: number }> = {
+  "/img/marketingGrid-1.png": { width: 456, height: 403 },
+  "/img/marketingGrid-2.png": { width: 543, height: 607 },
+  "/img/marketingGrid-3.png": { width: 1054, height: 466 },
+  "/img/marketingGrid-4.png": { width: 527, height: 238 },
+};
+
 export default function MarketingGrid() {
   const apps = [
     {
@@ -47,9 +56,10 @@ export default function MarketingGrid() {
                   {apps[0].desc}
                 </p>
               </div>
-              <img
+              <Image
                 src={apps[0].img}
                 alt={apps[0].title}
+                {...imageDimensions[apps[0].img]}
                 className="w-full h-56 object-cover flex-1"
               />
             </div>
@@ -70,9 +80,10 @@ export default function MarketingGrid() {
                       {app.desc}
                     </p>
                   </div>
-                  <img
+                  <Image
                     src={app.img}
                     alt={app.title}
+                    {...imageDimensions[app.img]}
                     className="w-full h-48 object-cover"
                   />
                 </div>
@@ -91,10 +102,11 @@ export default function MarketingGrid() {
                 {apps[1].desc}
               </p>
               <div className="mt-auto flex justify-center items-end p-4">
-                <img
+                <Image
                   src={apps[1].img}
                   alt={apps[1].title}
-                  className="max-h-[400px] object-contain"
+                  {...imageDimensions[apps[1].img]}
+                  className="max-h-[400px] w-auto object-contain"
                 />
               </div>
             </div>

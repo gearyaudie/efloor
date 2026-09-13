@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -45,10 +46,12 @@ export default function MainProductsSwiper() {
           return (
             <SwiperSlide key={product.id}>
               <div className="flex flex-col items-center justify-center text-center w-[375px]">
-                <img
+                <Image
                   src={selectedVariant.img}
                   alt={`${product.name} ${selectedVariant.size}`}
-                  className="text-center mx-auto w-[375px] transition-all duration-300 rounded-[20px]"
+                  width={700}
+                  height={700}
+                  className="text-center mx-auto w-[375px] h-auto transition-all duration-300 rounded-[20px]"
                 />
 
                 <div className="bg-[#4D4D4D] flex gap-6 rounded-[50px] p-1 text-white w-fit mx-auto text-[18px] items-center mt-4">

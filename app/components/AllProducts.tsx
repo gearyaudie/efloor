@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
@@ -29,10 +31,6 @@ interface Props {
 }
 
 export default function AllProducts({ products }: Props) {
-  const openLink = (slug: string) => {
-    window.open(`/products/${slug}`, "_self");
-  };
-
   const getLowestPrice = (product: Product) => {
     if (product.priceVariants?.length) {
       return Math.min(...product.priceVariants.map((v) => v.price));
@@ -63,13 +61,16 @@ export default function AllProducts({ products }: Props) {
             <SwiperSlide key={product._id}>
               <div className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col h-full">
                 {/* Image (NOT cropped) */}
-                <div className="w-full flex justify-center">
-                  <img
-                    src={product?.image?.asset?.url}
-                    alt={product.name}
-                    className="max-h-[350px] w-auto object-contain rounded-xl"
-                  />
-                </div>
+                {product?.image?.asset?.url && (
+                  <div className="relative w-full h-[350px]">
+                    <Image
+                      src={product.image.asset.url}
+                      alt={product.name}
+                      fill
+                      className="object-contain rounded-xl"
+                    />
+                  </div>
+                )}
 
                 {/* Content */}
                 <div className="mt-6 flex flex-col flex-grow text-center">
@@ -83,12 +84,12 @@ export default function AllProducts({ products }: Props) {
                   </p>
 
                   <div className="mt-6">
-                    <button
-                      className="bg-[#FF8E06] text-white px-6 py-2 rounded-2xl hover:opacity-90 hover:cursor-pointer transition"
-                      onClick={() => openLink(product.slug?.current)}
+                    <Link
+                      href={`/products/${product.slug?.current}`}
+                      className="inline-block bg-[#FF8E06] text-white px-6 py-2 rounded-2xl hover:opacity-90 hover:cursor-pointer transition"
                     >
                       Cek Produk
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { SITE_URL } from "../seo.config";
 import FaqSectionKantor from "../components/FaqSectionKantor";
@@ -9,9 +10,11 @@ export default function LemKarpetKantor() {
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
-          <img
+          <Image
             src="/img/karpet-kantor.webp"
             alt="Lem Karpet Untuk Lantai Kantor di Perkantoran"
+            width={846}
+            height={564}
             className="w-full max-w-[500px] h-auto"
           />
         </div>
@@ -47,7 +50,13 @@ export default function LemKarpetKantor() {
         <div className="flex justify-center items-center gap-10">
           <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
             <div>
-              <img src="/img/kpk-1.png" alt="" className="w-[150px] mx-auto" />
+              <Image
+                src="/img/kpk-1.png"
+                alt="Ikon lem waterbased ramah lingkungan"
+                width={150}
+                height={150}
+                className="w-[150px] mx-auto"
+              />
               <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
                 Eco Friendly, Ramah Lingkungan
               </h3>
@@ -59,7 +68,13 @@ export default function LemKarpetKantor() {
             </div>
           </div>
           <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
-            <img src="/img/kpk-2.png" alt="" className="w-[150px] mx-auto" />
+            <Image
+              src="/img/kpk-2.png"
+              alt="Ikon rendah VOC (Volatile Organic Compounds)"
+              width={150}
+              height={150}
+              className="w-[150px] mx-auto"
+            />
             <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
               Hampir Tidak Mengandung VOC
             </h3>
@@ -70,7 +85,13 @@ export default function LemKarpetKantor() {
             </div>
           </div>
           <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
-            <img src="/img/kpk-3.png" alt="" className="w-[150px] mx-auto" />
+            <Image
+              src="/img/kpk-3.png"
+              alt="Ikon lem tidak berbau"
+              width={150}
+              height={150}
+              className="w-[150px] mx-auto"
+            />
             <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
               Tidak Berbau
             </h3>
@@ -82,7 +103,13 @@ export default function LemKarpetKantor() {
             </div>
           </div>
           <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
-            <img src="/img/kpk-4.png" alt="" className="w-[150px] mx-auto" />
+            <Image
+              src="/img/kpk-4.png"
+              alt="Ikon harga lebih hemat"
+              width={150}
+              height={150}
+              className="w-[150px] mx-auto"
+            />
             <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
               Lebih Hemat
             </h3>
