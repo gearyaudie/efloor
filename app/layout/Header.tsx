@@ -10,7 +10,17 @@ export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileLemVinylOpen, setMobileLemVinylOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Only show the header shadow once the page has scrolled, instead of
+  // always rendering it.
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -59,7 +69,11 @@ export default function Header() {
   return (
     <header className="mb-16">
       <FloatingWhatsapp />
-      <div className="fixed bg-white w-full top-0 z-50 shadow-sm">
+      <div
+        className={`fixed bg-white w-full top-0 z-50 transition-shadow duration-200 ${
+          scrolled ? "shadow-md" : "shadow-none"
+        }`}
+      >
         <div className="max-w-[1400px] px-6 md:px-12 w-full mx-auto flex py-1 justify-between items-center">
           <Link href="/">
             <Image
@@ -75,14 +89,14 @@ export default function Header() {
           <div className="hidden gap-10 mr-0 md:flex lg:flex items-center">
             <Link
               href="/#home"
-              className="hover:cursor-pointer font-medium text-[#808080] text-md"
+              className="hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4"
               onClick={(e) => scrollToSection(e, "home")}
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className="hover:cursor-pointer font-medium text-[#808080] text-md"
+              className="hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4"
             >
               Projects
             </Link>
@@ -127,14 +141,14 @@ export default function Header() {
 
             <Link
               href="/#products"
-              className="hover:cursor-pointer font-medium text-[#808080] text-md"
+              className="hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4"
               onClick={(e) => scrollToSection(e, "products")}
             >
               Products
             </Link>
             <Link
               href="/blogs"
-              className="hover:cursor-pointer font-medium text-[#808080] text-md"
+              className="hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4"
             >
               Articles
             </Link>

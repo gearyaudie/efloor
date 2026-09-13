@@ -30,7 +30,7 @@ export default function Button({
   className = "",
   ...props
 }: Props) {
-  const classes = `${variantClasses[variant]} px-4 py-2 rounded-2xl hover:cursor-pointer hover:opacity-90 transition inline-block text-center ${className}`;
+  const classes = `${variantClasses[variant]} px-4 py-2 rounded-2xl hover:cursor-pointer hover:opacity-90 transition inline-block text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy ${className}`;
 
   if ("href" in props && props.href) {
     return (

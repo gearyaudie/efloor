@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import Button from "../components/Button";
 import { SITE_URL } from "../seo.config";
 import FaqSectionKantor from "../components/FaqSectionKantor";
 
@@ -30,11 +30,9 @@ export default function LemKarpetKantor() {
             ber-AC. Rekat kuat, profesional, dan ramah lingkungan.
           </h3>
           <div className="pt-8">
-            <Link href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
-              <button className="bg-[#FF8E06] text-white px-4 py-2 rounded-2xl hover:cursor-pointer">
-                Dapatkan Sekarang!
-              </button>
-            </Link>
+            <Button href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
+              Dapatkan Sekarang!
+            </Button>
           </div>
         </div>
       </div>
@@ -48,7 +46,7 @@ export default function LemKarpetKantor() {
           Kenapa pilih kami?
         </h2>
         <div className="flex justify-center items-center gap-10">
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
             <div>
               <Image
                 src="/img/kpk-1.png"
@@ -57,7 +55,7 @@ export default function LemKarpetKantor() {
                 height={150}
                 className="w-[150px] mx-auto"
               />
-              <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
+              <h3 className="font-semibold text-center text-2xl">
                 Eco Friendly, Ramah Lingkungan
               </h3>
               <div className="text-[#808080] text-center">
@@ -67,7 +65,7 @@ export default function LemKarpetKantor() {
               </div>
             </div>
           </div>
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
             <Image
               src="/img/kpk-2.png"
               alt="Ikon rendah VOC (Volatile Organic Compounds)"
@@ -75,7 +73,7 @@ export default function LemKarpetKantor() {
               height={150}
               className="w-[150px] mx-auto"
             />
-            <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
+            <h3 className="font-semibold text-center text-2xl">
               Hampir Tidak Mengandung VOC
             </h3>
             <div className="text-[#808080] text-center">
@@ -84,7 +82,7 @@ export default function LemKarpetKantor() {
               dan iritasi mata.
             </div>
           </div>
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
             <Image
               src="/img/kpk-3.png"
               alt="Ikon lem tidak berbau"
@@ -92,9 +90,7 @@ export default function LemKarpetKantor() {
               height={150}
               className="w-[150px] mx-auto"
             />
-            <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
-              Tidak Berbau
-            </h3>
+            <h3 className="font-semibold text-center text-2xl">Tidak Berbau</h3>
             <div className="text-[#808080] text-center">
               Lem Vinyl EFLOOR tidak memiliki bau yang menyengat. Jauh lebih
               tidak bau dibandingkan dengan lem berbasis solvent atau lem
@@ -102,7 +98,7 @@ export default function LemKarpetKantor() {
               rumah sakit.
             </div>
           </div>
-          <div className="rounded-lg bg-white max-w-[300px] p-6 min-h-[500px]">
+          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
             <Image
               src="/img/kpk-4.png"
               alt="Ikon harga lebih hemat"
@@ -110,9 +106,7 @@ export default function LemKarpetKantor() {
               height={150}
               className="w-[150px] mx-auto"
             />
-            <h3 className="mt-16 mb-4 font-semibold text-center text-2xl">
-              Lebih Hemat
-            </h3>
+            <h3 className="font-semibold text-center text-2xl">Lebih Hemat</h3>
             <div className="text-[#808080] text-center">
               Kualitas kami sangat terpercaya, kami adalah lem vinyl dengan
               penjualan terbanyak di platform shopee dan tokopedia se-Indonesia.
