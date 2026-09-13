@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import MarketingGrid from "../components/MarketingGrid";
+import { SITE_URL } from "../seo.config";
 
 export default function AboutUs() {
   return (
@@ -20,7 +21,7 @@ export default function AboutUs() {
             Awal Perjalanan & Lahirnya Efloor
           </h1>
           <h2 className="text-base md:text-lg leading-relaxed">
-            Ini adalah masa awal perjalanan kami. Sejak tahun 2010, kami telah
+            Ini adalah masa awal perjalanan kami. Sejak tahun 1990, kami telah
             memasok ribuan pelanggan dengan produk lantai berkualitas tinggi.
             Kepercayaan pelanggan kami bangun melalui toko fisik yang berlokasi
             di Mall Artha Gading, tepatnya di lantai 5 dekat Informa. Dari
@@ -49,10 +50,10 @@ export default function AboutUs() {
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title:
-      "Tentang EFLOOR | Distributor Flooring & Lem Vinyl Jakarta Sejak 2010",
+      "Tentang EFLOOR | Distributor Flooring & Lem Vinyl Jakarta Sejak 1990",
 
     description:
-      "Kenali perjalanan EFLOOR sejak 2010 sebagai distributor flooring dan lem vinyl terpercaya di Jakarta. Dari toko fisik di Mall Artha Gading hingga melayani pembelian online dan WhatsApp dengan harga terbaik untuk pelanggan.",
+      "Kenali perjalanan EFLOOR sejak 1990 sebagai distributor flooring dan lem vinyl terpercaya di Jakarta. Dari toko fisik di Mall Artha Gading hingga melayani pembelian online dan WhatsApp dengan harga terbaik untuk pelanggan.",
 
     keywords: [
       "tentang efloor",
@@ -64,13 +65,13 @@ export async function generateMetadata(): Promise<Metadata> {
       "perusahaan flooring indonesia",
       "toko lantai mall artha gading",
       "supplier lantai terpercaya jakarta",
-      "efloor sejak 2010",
+      "efloor sejak 1990",
       "distributor lantai proyek jakarta",
       "supplier lantai dan lem vinyl",
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/about-us",
+      canonical: `${SITE_URL}/about-us`,
     },
   };
 }

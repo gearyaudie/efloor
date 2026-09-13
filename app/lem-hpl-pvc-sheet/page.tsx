@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import FaqSectionHPL from "../components/FaqSectionHPL";
+import { SITE_URL } from "../seo.config";
 
 export default function LemHPL() {
   return (
@@ -126,7 +127,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/lem-hpl",
+      canonical: `${SITE_URL}/lem-hpl-pvc-sheet`,
     },
   };
 }

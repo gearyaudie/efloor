@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { SITE_URL } from "../seo.config";
 import FaqSectionRumahSakit from "../components/FaqSectionRumahSakit";
 
 export default function LemVinylRumahSakit() {
@@ -122,7 +123,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/lem-vinyl-rumah-sakit",
+      canonical: `${SITE_URL}/lem-vinyl-rumah-sakit`,
     },
   };
 }

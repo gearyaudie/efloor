@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { SITE_URL } from "../seo.config";
+import FaqSectionKantor from "../components/FaqSectionKantor";
 
 export default function LemKarpetKantor() {
   return (
@@ -33,6 +35,8 @@ export default function LemKarpetKantor() {
           </div>
         </div>
       </div>
+
+      <FaqSectionKantor />
 
       {/* Section 2 */}
       <div className="flex flex-col max-w-[800px] mx-auto text-center px-4 pb-12 pt-10 md:pt-16"></div>
@@ -118,7 +122,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "lem karpet terbaik indonesia",
     ],
     alternates: {
-      canonical: "https://www.efloor.id/lem-karpet-kantor",
+      canonical: `${SITE_URL}/lem-karpet-kantor`,
     },
   };
 }

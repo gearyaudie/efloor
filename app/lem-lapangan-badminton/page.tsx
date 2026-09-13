@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { SITE_URL } from "../seo.config";
+import FaqSectionBadminton from "../components/FaqSectionBadminton";
 
 export default function LemLapanganBadminton() {
   return (
@@ -32,6 +34,8 @@ export default function LemLapanganBadminton() {
           </div>
         </div>
       </div>
+
+      <FaqSectionBadminton />
 
       {/* Section 2 */}
       <div className="flex flex-col max-w-[800px] mx-auto text-center px-4 pb-12 pt-10 md:pt-16"></div>
@@ -118,7 +122,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/lem-lapangan-badminton",
+      canonical: `${SITE_URL}/lem-lapangan-badminton`,
     },
   };
 }

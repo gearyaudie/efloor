@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { groq } from "next-sanity";
 import { client } from "@/sanity.client";
 import { PortableText } from "@portabletext/react";
+import { SITE_URL } from "@/app/seo.config";
 
 type PageProps = {
   params: {
@@ -120,7 +121,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://efloor.id/blogs/${slug}`,
+      url: `${SITE_URL}/blogs/${slug}`,
       images: [
         {
           url: post.img?.asset?.url || "/images/default-og.png",
@@ -132,7 +133,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       type: "article",
     },
     alternates: {
-      canonical: `https://efloor.id/blogs/${slug}`,
+      canonical: `${SITE_URL}/blogs/${slug}`,
     },
   };
 }

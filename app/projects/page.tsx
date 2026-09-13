@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { SITE_URL } from "../seo.config";
 
 export default function Projects() {
   return (
@@ -126,7 +127,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     ],
 
     alternates: {
-      canonical: "https://www.efloor.id/projects",
+      canonical: `${SITE_URL}/projects`,
     },
   };
 }

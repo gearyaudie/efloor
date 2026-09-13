@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { groq } from "next-sanity";
 import { client } from "@/sanity.client";
+import { SITE_URL } from "@/app/seo.config";
 import { PortableText } from "@portabletext/react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -127,7 +128,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     openGraph: {
       title: product.title,
       description: product.excerpt,
-      url: `https://efloor.id/products/${slug}`,
+      url: `${SITE_URL}/products/${slug}`,
       images: [
         {
           url: product.img?.asset?.url || "/images/default-og.png",
@@ -139,7 +140,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       // type: "article",
     },
     alternates: {
-      canonical: `https://efloor.id/products/${slug}`,
+      canonical: `${SITE_URL}/products/${slug}`,
     },
   };
 }
