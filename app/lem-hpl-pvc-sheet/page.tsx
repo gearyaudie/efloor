@@ -3,10 +3,15 @@ import Image from "next/image";
 import Button from "../components/Button";
 import FaqSectionHPL from "../components/FaqSectionHPL";
 import { SITE_URL } from "../seo.config";
+import Breadcrumbs from "../components/Breadcrumbs";
+import RelatedVerticals from "../components/RelatedVerticals";
 
 export default function LemHPL() {
   return (
     <>
+      <Breadcrumbs
+        items={[{ label: "Home", href: "/" }, { label: "Lem HPL & PVC Sheet" }]}
+      />
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
@@ -121,6 +126,8 @@ export default function LemHPL() {
           </div>
         </div>
       </div>
+
+      <RelatedVerticals currentHref="/lem-hpl-pvc-sheet" />
     </>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import FloatingWhatsapp from "../components/FloatingWhatsapp";
+import { VERTICAL_PAGES } from "../static/verticals";
 
 export default function Header() {
   const pathname = usePathname();
@@ -58,22 +59,7 @@ export default function Header() {
     setMobileLemVinylOpen(false);
   }, [pathname]);
 
-  const lemVinylLinks = [
-    { label: "Lem Vinyl Rumah Sakit", href: "/lem-vinyl-rumah-sakit" },
-    { label: "Lem Karpet Kantor", href: "/lem-karpet-kantor" },
-    { label: "Lem Lapangan Badminton", href: "/lem-lapangan-badminton" },
-    { label: "Lem Karpet Gym", href: "/lem-karpet-gym" },
-    { label: "Lem HPL & PVC Sheet", href: "/lem-hpl-pvc-sheet" },
-    {
-      label: "Lem Vinyl & Karpet Tangerang",
-      href: "/lem-vinyl-karpet-tangerang",
-    },
-    {
-      label: "Lem Vinyl & Karpet Jakarta Timur",
-      href: "/lem-vinyl-karpet-jakarta-timur",
-    },
-    { label: "Lem Karpet Masjid", href: "/lem-karpet-masjid" },
-  ];
+  const lemVinylLinks = VERTICAL_PAGES;
 
   return (
     <header className="mb-16">

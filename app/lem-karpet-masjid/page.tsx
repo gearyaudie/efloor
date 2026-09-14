@@ -3,10 +3,15 @@ import Image from "next/image";
 import Button from "../components/Button";
 import { SITE_URL } from "../seo.config";
 import FaqSectionMasjid from "../components/FaqSectionMasjid";
+import Breadcrumbs from "../components/Breadcrumbs";
+import RelatedVerticals from "../components/RelatedVerticals";
 
 export default function LemKarpetMasjid() {
   return (
     <>
+      <Breadcrumbs
+        items={[{ label: "Home", href: "/" }, { label: "Lem Karpet Masjid" }]}
+      />
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
@@ -117,6 +122,8 @@ export default function LemKarpetMasjid() {
           </div>
         </div>
       </div>
+
+      <RelatedVerticals currentHref="/lem-karpet-masjid" />
     </>
   );
 }

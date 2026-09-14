@@ -2,6 +2,7 @@ import { client } from "@/sanity.client";
 import { MetadataRoute } from "next";
 import { Post } from "./blogs/page";
 import { SITE_URL } from "./seo.config";
+import { VERTICAL_PAGES } from "./static/verticals";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts: Post[] = await client.fetch(
@@ -38,6 +39,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }));
 
+  const verticalUrls = VERTICAL_PAGES.map((page) => ({
+    url: `${SITE_URL}${page.href}`,
+    lastModified: new Date(),
+  }));
+
   return [
     {
       url: SITE_URL,
@@ -47,38 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_URL}/projects`,
       lastModified: new Date(),
     },
-    {
-      url: `${SITE_URL}/lem-vinyl-rumah-sakit`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${SITE_URL}/lem-karpet-gym`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${SITE_URL}/lem-lapangan-badminton`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${SITE_URL}/lem-hpl-pvc-sheet`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${SITE_URL}/lem-karpet-kantor`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${SITE_URL}/lem-vinyl-karpet-tangerang`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${SITE_URL}/lem-vinyl-karpet-jakarta-timur`,
-      lastModified: new Date(),
-    },
-    {
-      url: `${SITE_URL}/lem-karpet-masjid`,
-      lastModified: new Date(),
-    },
+    ...verticalUrls,
     {
       url: `${SITE_URL}/blogs`,
       lastModified: new Date(),

@@ -3,10 +3,18 @@ import Image from "next/image";
 import Button from "../components/Button";
 import { SITE_URL } from "../seo.config";
 import FaqSectionBadminton from "../components/FaqSectionBadminton";
+import Breadcrumbs from "../components/Breadcrumbs";
+import RelatedVerticals from "../components/RelatedVerticals";
 
 export default function LemLapanganBadminton() {
   return (
     <>
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Lem Lapangan Badminton" },
+        ]}
+      />
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
@@ -115,6 +123,8 @@ export default function LemLapanganBadminton() {
           </div>
         </div>
       </div>
+
+      <RelatedVerticals currentHref="/lem-lapangan-badminton" />
 
       {/* <MarketingGrid /> */}
     </>
