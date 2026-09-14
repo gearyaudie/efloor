@@ -72,6 +72,7 @@ export default function Header() {
       label: "Lem Vinyl & Karpet Jakarta Timur",
       href: "/lem-vinyl-karpet-jakarta-timur",
     },
+    { label: "Lem Karpet Masjid", href: "/lem-karpet-masjid" },
   ];
 
   return (

@@ -76,6 +76,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     },
     {
+      url: `${SITE_URL}/lem-karpet-masjid`,
+      lastModified: new Date(),
+    },
+    {
       url: `${SITE_URL}/blogs`,
       lastModified: new Date(),
     },
