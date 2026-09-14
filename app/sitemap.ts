@@ -53,6 +53,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_URL}/projects`,
       lastModified: new Date(),
     },
+    {
+      url: `${SITE_URL}/harga-lem-vinyl-karpet`,
+      lastModified: new Date(),
+    },
     ...verticalUrls,
     {
       url: `${SITE_URL}/blogs`,

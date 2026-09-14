@@ -95,6 +95,12 @@ export default function Header() {
             >
               Projects
             </Link>
+            <Link
+              href="/harga-lem-vinyl-karpet"
+              className="hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4"
+            >
+              Harga
+            </Link>
 
             {/* Lem Vinyl Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -202,6 +208,13 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Projects
+            </Link>
+            <Link
+              href="/harga-lem-vinyl-karpet"
+              className="py-3 font-medium text-[#808080]"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Harga
             </Link>
 
             <button

@@ -7,6 +7,8 @@ import { SITE_URL } from "@/app/seo.config";
 import { PortableText } from "@portabletext/react";
 import ProductSlider from "../components/ProductSlider";
 import VariantSelector from "../components/VariantSelector";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
+import Link from "next/link";
 
 // Sanity "desc"/"content" fields have been observed as either a plain string
 // or an array of portable text blocks depending on the document, so accept
@@ -93,6 +95,13 @@ export default async function ProductsPage(props: PageProps) {
 
   return (
     <div className="bg-white text-black">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Products", href: "/products" },
+          { label: product.name },
+        ]}
+      />
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Responsive Layout */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
@@ -121,6 +130,15 @@ export default async function ProductsPage(props: PageProps) {
               </div>
             )}
           </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            href="/products"
+            className="inline-block px-5 py-3 rounded-2xl border border-[#e8e8e8] text-sm font-medium text-[#4D4D4D] hover:border-[#FF8E06] hover:text-[#FF8E06] transition-colors"
+          >
+            Lihat Produk Lainnya
+          </Link>
         </div>
       </div>
     </div>

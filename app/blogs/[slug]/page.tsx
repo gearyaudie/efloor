@@ -6,6 +6,8 @@ import { groq } from "next-sanity";
 import { client } from "@/sanity.client";
 import { PortableText } from "@portabletext/react";
 import { SITE_URL } from "@/app/seo.config";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
+import Link from "next/link";
 
 type PageProps = {
   params: {
@@ -67,6 +69,13 @@ export default async function BlogPostPage(props: PageProps) {
 
   return (
     <div className="bg-white text-black">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Articles", href: "/blogs" },
+          { label: post.title },
+        ]}
+      />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mt-16">
           <h1 className="text-[36px] font-500 mb-6 leading-snug">
@@ -98,6 +107,15 @@ export default async function BlogPostPage(props: PageProps) {
             />
           </div>
         )}
+
+        <div className="mt-12 text-center">
+          <Link
+            href="/blogs"
+            className="inline-block px-5 py-3 rounded-2xl border border-[#e8e8e8] text-sm font-medium text-[#4D4D4D] hover:border-[#FF8E06] hover:text-[#FF8E06] transition-colors"
+          >
+            Lihat Artikel Lainnya
+          </Link>
+        </div>
       </div>
     </div>
   );

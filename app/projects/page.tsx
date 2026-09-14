@@ -3,78 +3,112 @@ import Image from "next/image";
 import Link from "next/link";
 import { SITE_URL } from "../seo.config";
 import WhatsAppLink from "../components/WhatsAppLink";
+import Breadcrumbs from "../components/Breadcrumbs";
+import RelatedVerticals from "../components/RelatedVerticals";
+import FaqSectionProjects from "../components/FaqSectionProjects";
+import { PROJECT_CASE_STUDIES } from "../static/projectCaseStudies";
 
 export default function Projects() {
   return (
-    <div className="max-w-[1300px] mx-auto my-20 flex flex-col justify-center items-center px-6">
-      <h1 className="text-[40px] font-medium text-center">
-        Untuk Kontraktor dan <br />
-        Keperluan Procurement (Supplier)
-      </h1>
-      <h2 className="text-[#535353] text-center max-w-[700px] lg:mt-6">
-        Kami adalah distirbutor lem vinyl/karpet yang terpercaya. Menangani
-        segala kebutuhan projek dan procurement dengan harga yang bersaing.
-        Telah melayani kontraktor, proyek dan procurement dengan tingkat
-        kepuasan tinggi.
-      </h2>
-      <div>
-        <WhatsAppLink href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
-          <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 p-2 rounded-lg mt-2 mt-8  hover:cursor-pointer">
-            Dapatkan Quotation Sekarang!
-          </button>
-        </WhatsAppLink>
-      </div>
-      <div>
-        <Image
-          src="/img/projects-img.png"
-          alt="Proyek pemasangan lem vinyl dan lem karpet EFLOOR untuk kontraktor dan procurement"
-          width={1293}
-          height={726}
-          className="max-w-[800px] my-12 w-[400px] lg:w-full h-auto"
-        />
-      </div>
-      <hr className="w-full max-w-[800px] py-4 border-[#ccc]" />
-      <div>
-        <h2 className="text-[28px] font-medium">Lem Karpet/Vinyl Efloor Max</h2>
-        <h3 className="my-4 max-w-[700px]">
-          Tersedia dalam kemasan 4 KG dan 20 KG, jenis paling populer & pilihan
-          terbaik untuk <b>procurement dan kontraktor</b>. Semua data,
-          kelengkapan dan keperluan (TDS dan MSDS), sudah lengkap, hubungi
-          Whatsapp kami untuk info lebih lanjut.
-        </h3>
+    <>
+      <Breadcrumbs
+        items={[{ label: "Home", href: "/" }, { label: "Projects" }]}
+      />
+      <div className="max-w-[1300px] mx-auto my-20 flex flex-col justify-center items-center px-6">
+        <h1 className="text-[40px] font-medium text-center">
+          Untuk Kontraktor dan <br />
+          Keperluan Procurement (Supplier)
+        </h1>
+        <h2 className="text-[#535353] text-center max-w-[700px] lg:mt-6">
+          Kami adalah distirbutor lem vinyl/karpet yang terpercaya. Menangani
+          segala kebutuhan projek dan procurement dengan harga yang bersaing.
+          Telah melayani kontraktor, proyek dan procurement dengan tingkat
+          kepuasan tinggi.
+        </h2>
+        <div>
+          <WhatsAppLink href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
+            <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 p-2 rounded-lg mt-2 mt-8  hover:cursor-pointer">
+              Dapatkan Quotation Sekarang!
+            </button>
+          </WhatsAppLink>
+        </div>
+        <div>
+          <Image
+            src="/img/projects-img.png"
+            alt="Proyek pemasangan lem vinyl dan lem karpet EFLOOR untuk kontraktor dan procurement"
+            width={1293}
+            height={726}
+            className="max-w-[800px] my-12 w-[400px] lg:w-full h-auto"
+          />
+        </div>
+        <hr className="w-full max-w-[800px] py-4 border-[#ccc]" />
+        <div>
+          <h2 className="text-[28px] font-medium">
+            Lem Karpet/Vinyl Efloor Max
+          </h2>
+          <h3 className="my-4 max-w-[700px]">
+            Tersedia dalam kemasan 4 KG dan 20 KG, jenis paling populer &
+            pilihan terbaik untuk <b>procurement dan kontraktor</b>. Semua data,
+            kelengkapan dan keperluan (TDS dan MSDS), sudah lengkap, hubungi
+            Whatsapp kami untuk info lebih lanjut.
+          </h3>
 
-        <div className="flex gap-4 mt-6">
-          <Link href="/docs/msds.pdf">
-            <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white  p-2 rounded-lg hover:cursor-pointer">
-              Cek MSDS
-            </button>
-          </Link>
-          <Link href="/docs/tds.pdf">
-            <button className="border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06]  p-2 rounded-lg hover:cursor-pointer">
-              Cek TDS
-            </button>
-          </Link>
+          <div className="flex gap-4 mt-6">
+            <Link href="/docs/msds.pdf">
+              <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white  p-2 rounded-lg hover:cursor-pointer">
+                Cek MSDS
+              </button>
+            </Link>
+            <Link href="/docs/tds.pdf">
+              <button className="border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06]  p-2 rounded-lg hover:cursor-pointer">
+                Cek TDS
+              </button>
+            </Link>
+          </div>
+        </div>
+        <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />
+        <div>
+          <div className="font-medium text-[30px] pb-4 max-w-[800px] mx-auto text-center">
+            History Proyek Kami
+          </div>
+          <p className="text-[#808080] text-center max-w-[700px] mx-auto mb-8">
+            Sebagian riwayat pengiriman procurement Lem Vinyl &amp; Lem Karpet
+            EFLOOR ke berbagai perusahaan dan kontraktor.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
+            {PROJECT_CASE_STUDIES.map((item) => (
+              <div
+                key={item.image}
+                className="rounded-2xl border border-[#e8e8e8] overflow-hidden bg-white"
+              >
+                <Image
+                  src={item.image}
+                  alt={`${item.label} ${item.product} untuk ${item.client}`}
+                  width={700}
+                  height={700}
+                  className="w-full h-auto"
+                />
+                <div className="p-4 text-left">
+                  <div className="text-xs font-semibold uppercase tracking-widest text-[#FF8E06] mb-1">
+                    {item.label}
+                  </div>
+                  <div className="font-medium text-[#1a1a1a]">
+                    {item.client}
+                  </div>
+                  <div className="text-sm text-[#808080] mt-1">
+                    {item.product} &middot; {item.quantity}
+                  </div>
+                  <div className="text-xs text-[#808080] mt-2">{item.date}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />
-      <div>
-        <div className="font-medium text-[30px] pb-4 max-w-[800px] mx-auto">
-          History proyek kami
-        </div>
-        <div className="flex gap-4 flex-wrap max-w-[800px] mx-auto justify-center items-center">
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((i) => (
-            <Image
-              key={i}
-              src={`/img/pro-${i}.jpg`}
-              alt={`Proyek pemasangan lem vinyl EFLOOR ${i}`}
-              width={700}
-              height={700}
-              className="max-w-[390px] h-auto"
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+
+      <FaqSectionProjects />
+      <RelatedVerticals currentHref="/projects" />
+    </>
   );
 }
 

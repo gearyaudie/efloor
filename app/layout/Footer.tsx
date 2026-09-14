@@ -62,6 +62,9 @@ export default function Footer() {
         <Link href="/projects" className="hover:cursor-pointer">
           Projects
         </Link>
+        <Link href="/harga-lem-vinyl-karpet" className="hover:cursor-pointer">
+          Harga
+        </Link>
       </div>
       <div className="flex flex-1 gap-10 flex-col text-center md:text-left lg:text-left mt-20 md:mt-0 lg:mt-0">
         <div className="font-bold">Our Company</div>
