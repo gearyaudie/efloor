@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Fetch all blogs, to be put inside sitemap
   const blogUrls = posts.map((post) => ({
-    url: `${SITE_URL}/blogs/${post.slug}`,
+    url: `${SITE_URL}/blogs/${post.slug.current}`,
     lastModified: new Date(),
   }));
 

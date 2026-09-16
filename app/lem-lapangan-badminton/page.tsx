@@ -44,7 +44,7 @@ export default function LemLapanganBadminton() {
         <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-center mb-12 mt-4">
           Kenapa pilih kami?
         </h2>
-        <div className="flex justify-center items-center gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 justify-items-center max-w-[1300px] mx-auto">
           <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
             <div>
               <Image

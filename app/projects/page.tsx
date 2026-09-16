@@ -8,11 +8,11 @@ export default function Projects() {
   return (
     <div className="max-w-[1300px] mx-auto my-20 flex flex-col justify-center items-center px-6">
       <h1 className="text-[40px] font-medium text-center">
-        Untuk Kontraktor dan <br />
-        Keperluan Procurement (Supplier)
+        Supplier &amp; Distributor Lem Vinyl dan <br />
+        Karpet untuk Proyek
       </h1>
       <h2 className="text-[#535353] text-center max-w-[700px] lg:mt-6">
-        Kami adalah distirbutor lem vinyl/karpet yang terpercaya. Menangani
+        Kami adalah distributor lem vinyl/karpet yang terpercaya. Menangani
         segala kebutuhan projek dan procurement dengan harga yang bersaing.
         Telah melayani kontraktor, proyek dan procurement dengan tingkat
         kepuasan tinggi.
