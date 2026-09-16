@@ -14,7 +14,13 @@ export default function WhatsAppLink({
   children: ReactNode;
 }) {
   return (
-    <Link href={href} className={className} onClick={trackWhatsAppClick}>
+    <Link
+      href={href}
+      className={className}
+      onClick={() => {
+        void trackWhatsAppClick({ source: "whatsapp-link" });
+      }}
+    >
       {children}
     </Link>
   );

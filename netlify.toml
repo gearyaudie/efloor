@@ -36,3 +36,9 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Analytics and Google Ads conversion tracking only run where this is "true".
+# Deploy previews and branch deploys deliberately leave it unset so test
+# clicks there never file conversions against the live Ads account.
+[context.production.environment]
+  NEXT_PUBLIC_ENABLE_TRACKING = "true"

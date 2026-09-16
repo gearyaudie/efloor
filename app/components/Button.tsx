@@ -41,7 +41,13 @@ export default function Button({
         href={props.href}
         target={props.target}
         className={classes}
-        onClick={isWhatsAppLink(props.href) ? trackWhatsAppClick : undefined}
+        onClick={
+          isWhatsAppLink(props.href)
+            ? () => {
+                void trackWhatsAppClick({ source: "button" });
+              }
+            : undefined
+        }
       >
         {children}
       </Link>

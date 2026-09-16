@@ -1,9 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
 import defaultSeo, { SITE_URL } from "./seo.config";
+import {
+  GA_MEASUREMENT_ID,
+  GOOGLE_ADS_ID,
+  TRACKING_ENABLED,
+} from "./lib/tracking-config";
 import Header from "./layout/Header";
 import PromoBanner from "./components/PromoBanner";
 import Footer from "./layout/Footer";
@@ -54,7 +60,23 @@ export default function RootLayout({
         <div className={poppins.variable}>
           {children}
 
-          <GoogleAnalytics gaId="G-GQGMBDHQMG" />
+          {TRACKING_ENABLED && (
+            <>
+              <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
+              {/*
+                The GA4 tag alone does not make the Google Ads account a
+                destination, so conversions addressed to AW-... were being
+                dropped and no _gcl_aw click cookie was written. Configuring
+                the Ads ID here is what lets WhatsApp clicks actually land as
+                conversions and stay attributed to the ad click.
+              */}
+              <Script id="google-ads-tag" strategy="afterInteractive">
+                {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag("config", "${GOOGLE_ADS_ID}");`}
+              </Script>
+            </>
+          )}
         </div>
         <Footer />
       </body>

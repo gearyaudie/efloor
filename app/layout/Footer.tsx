@@ -72,7 +72,9 @@ export default function Footer() {
           href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0"
           target="_blank"
           className="hover:cursor-pointer"
-          onClick={trackWhatsAppClick}
+          onClick={() => {
+            void trackWhatsAppClick({ source: "footer" });
+          }}
         >
           Contact Us
         </Link>
