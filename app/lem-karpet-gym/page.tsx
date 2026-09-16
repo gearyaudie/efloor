@@ -3,10 +3,15 @@ import Image from "next/image";
 import Button from "../components/Button";
 import { SITE_URL } from "../seo.config";
 import FaqSectionGym from "../components/FaqSectionGym";
+import Breadcrumbs from "../components/Breadcrumbs";
+import RelatedVerticals from "../components/RelatedVerticals";
 
 export default function LemKarpetGym() {
   return (
     <>
+      <Breadcrumbs
+        items={[{ label: "Home", href: "/" }, { label: "Lem Karpet Gym" }]}
+      />
       {/* Section 1 */}
       <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
         <div className="flex-1 flex justify-center">
@@ -116,6 +121,8 @@ export default function LemKarpetGym() {
           </div>
         </div>
       </div>
+
+      <RelatedVerticals currentHref="/lem-karpet-gym" />
 
       {/* <MarketingGrid /> */}
     </>

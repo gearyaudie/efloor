@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import FloatingWhatsapp from "../components/FloatingWhatsapp";
+import { VERTICAL_PAGES } from "../static/verticals";
 
 export default function Header() {
   const pathname = usePathname();
@@ -58,22 +59,7 @@ export default function Header() {
     setMobileLemVinylOpen(false);
   }, [pathname]);
 
-  const lemVinylLinks = [
-    { label: "Lem Vinyl Rumah Sakit", href: "/lem-vinyl-rumah-sakit" },
-    { label: "Lem Karpet Kantor", href: "/lem-karpet-kantor" },
-    { label: "Lem Lapangan Badminton", href: "/lem-lapangan-badminton" },
-    { label: "Lem Karpet Gym", href: "/lem-karpet-gym" },
-    { label: "Lem HPL & PVC Sheet", href: "/lem-hpl-pvc-sheet" },
-    {
-      label: "Lem Vinyl & Karpet Tangerang",
-      href: "/lem-vinyl-karpet-tangerang",
-    },
-    {
-      label: "Lem Vinyl & Karpet Jakarta Timur",
-      href: "/lem-vinyl-karpet-jakarta-timur",
-    },
-    { label: "Lem Karpet Masjid", href: "/lem-karpet-masjid" },
-  ];
+  const lemVinylLinks = VERTICAL_PAGES;
 
   return (
     <header className="mb-16">
@@ -108,6 +94,12 @@ export default function Header() {
               className="hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4"
             >
               Projects
+            </Link>
+            <Link
+              href="/harga-lem-vinyl-karpet"
+              className="hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4"
+            >
+              Harga
             </Link>
 
             {/* Lem Vinyl Dropdown */}
@@ -216,6 +208,13 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Projects
+            </Link>
+            <Link
+              href="/harga-lem-vinyl-karpet"
+              className="py-3 font-medium text-[#808080]"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Harga
             </Link>
 
             <button
