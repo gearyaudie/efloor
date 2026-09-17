@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { SITE_URL } from "../seo.config";
 import WhatsAppButton from "../components/WhatsAppButton";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -57,16 +56,12 @@ export default function Projects() {
           </h3>
 
           <div className="flex gap-4 mt-6">
-            <Link href="/docs/msds.pdf">
-              <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white  p-2 rounded-lg hover:cursor-pointer">
-                Cek MSDS
-              </button>
-            </Link>
-            <Link href="/docs/tds.pdf">
-              <button className="border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06]  p-2 rounded-lg hover:cursor-pointer">
-                Cek TDS
-              </button>
-            </Link>
+            <a href="/docs/msds.pdf" target="_blank" rel="noopener" className="inline-block bg-[#FF8E06] py-3 px-4 shadow-md text-white rounded-lg hover:cursor-pointer">
+              Cek MSDS
+            </a>
+            <a href="/docs/tds.pdf" target="_blank" rel="noopener" className="inline-block border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06] rounded-lg hover:cursor-pointer">
+              Cek TDS
+            </a>
           </div>
         </div>
         <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />

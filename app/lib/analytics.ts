@@ -79,3 +79,16 @@ export function trackWhatsAppClick(
     });
   });
 }
+
+/**
+ * Reports a tap on the phone number. Sent to GA4 only: it can be imported into
+ * Google Ads as a secondary conversion, so calls are measured without bidding
+ * toward them.
+ */
+export function trackPhoneClick(context: { source?: string } = {}) {
+  if (!TRACKING_ENABLED || typeof window === "undefined") return;
+  sendGAEvent("event", "phone_click", {
+    method: "phone",
+    ...(context.source ? { source: context.source } : {}),
+  });
+}

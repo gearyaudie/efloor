@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import WhatsAppButton from "../components/WhatsAppButton";
+import PhoneLink from "../components/PhoneLink";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -74,6 +75,7 @@ export default function Footer() {
         <WhatsAppButton source="footer" variant="plain">
           Contact Us
         </WhatsAppButton>
+        <PhoneLink source="footer" />
       </div>
     </footer>
   );
