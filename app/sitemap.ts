@@ -3,6 +3,7 @@ import { MetadataRoute } from "next";
 import { Post } from "./blogs/page";
 import { SITE_URL } from "./seo.config";
 import { VERTICAL_PAGES } from "./static/verticals";
+import { ACCESSORY_PAGES } from "./static/accessories";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts: Post[] = await client.fetch(
@@ -44,6 +45,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }));
 
+  const accessoryUrls = ACCESSORY_PAGES.map((page) => ({
+    url: `${SITE_URL}${page.href}`,
+    lastModified: new Date(),
+  }));
+
   return [
     {
       url: SITE_URL,
@@ -58,6 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     },
     ...verticalUrls,
+    ...accessoryUrls,
     {
       url: `${SITE_URL}/blogs`,
       lastModified: new Date(),

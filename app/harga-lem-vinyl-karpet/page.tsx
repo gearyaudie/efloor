@@ -8,6 +8,12 @@ import { PRICING_FAQ_ITEMS } from "../static/pricingFaq";
 
 const PRICE_ROWS = [
   {
+    size: "1 KG",
+    price: "Rp85.000",
+    coverage: "±9 m²",
+    perKg: "Rp85.000 / KG",
+  },
+  {
     size: "4 KG",
     price: "Rp315.000",
     coverage: "±36 m²",
@@ -56,8 +62,8 @@ export default function HargaLemVinylKarpet() {
           Harga Lem Vinyl &amp; Lem Karpet EFLOOR Terbaru
         </h1>
         <h3 className="text-base md:text-lg leading-relaxed text-[#555555]">
-          Berikut harga referensi Lem Vinyl / Lem Karpet EFLOOR untuk kemasan 4
-          KG dan 20 KG, lengkap dengan estimasi luas area yang bisa dilapisi.
+          Berikut harga referensi Lem Vinyl / Lem Karpet EFLOOR untuk kemasan 1
+          KG, 4 KG, dan 20 KG, lengkap dengan estimasi luas area yang bisa dilapisi.
           Harga dapat berubah sewaktu-waktu — hubungi kami via WhatsApp untuk
           harga terbaru dan penawaran khusus pembelian dalam jumlah besar.
         </h3>
