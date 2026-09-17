@@ -10,19 +10,19 @@ const PRICE_ROWS = [
   {
     size: "1 KG",
     price: "Rp85.000",
-    coverage: "±9 m²",
+    coverage: "8–10 m²",
     perKg: "Rp85.000 / KG",
   },
   {
     size: "4 KG",
     price: "Rp315.000",
-    coverage: "±36 m²",
+    coverage: "32–40 m²",
     perKg: "±Rp78.750 / KG",
   },
   {
     size: "20 KG",
     price: "Rp1.525.000",
-    coverage: "±180 m²",
+    coverage: "160–200 m²",
     perKg: "±Rp76.250 / KG",
   },
 ];
@@ -100,7 +100,7 @@ export default function HargaLemVinylKarpet() {
         <p className="text-sm text-[#808080] text-center mt-4">
           Kemasan 20 KG lebih ekonomis per kg-nya — pilihan tepat untuk
           procurement, kontraktor, dan proyek volume besar. Estimasi cakupan
-          berdasarkan ±9 m² per KG, tergantung jenis permukaan dan teknik
+          berdasarkan 8–10 m² per KG, tergantung jenis permukaan dan teknik
           aplikasi.
         </p>
       </div>

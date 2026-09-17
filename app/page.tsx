@@ -8,6 +8,8 @@ import HeroSwiper from "./components/HeroSwiper";
 import FAQSection from "./components/FaqSection";
 import MainProductsSwiper from "./components/MainProductsSwiper";
 import { SITE_URL } from "./seo.config";
+import { MARKETPLACES } from "./static/business";
+import { WHATSAPP_NUMBER } from "./lib/whatsapp";
 
 export const revalidate = 60;
 
@@ -75,6 +77,8 @@ export default async function Home() {
       postalCode: "14240",
       addressCountry: "ID",
     },
+    telephone: `+${WHATSAPP_NUMBER}`,
+    sameAs: MARKETPLACES.map((shop) => shop.url),
   };
 
   return (

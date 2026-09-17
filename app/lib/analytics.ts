@@ -92,3 +92,20 @@ export function trackPhoneClick(context: { source?: string } = {}) {
     ...(context.source ? { source: context.source } : {}),
   });
 }
+
+/** Reports a click through to the EFLOOR Shopee or Tokopedia shop (GA4 only). */
+export function trackMarketplaceClick(context: { marketplace: string; source?: string }) {
+  if (!TRACKING_ENABLED || typeof window === "undefined") return;
+  sendGAEvent("event", "marketplace_click", {
+    marketplace: context.marketplace,
+    ...(context.source ? { source: context.source } : {}),
+  });
+}
+
+/** Reports a click on Google Maps directions to the store (GA4 only). */
+export function trackDirectionsClick(context: { source?: string } = {}) {
+  if (!TRACKING_ENABLED || typeof window === "undefined") return;
+  sendGAEvent("event", "directions_click", {
+    ...(context.source ? { source: context.source } : {}),
+  });
+}

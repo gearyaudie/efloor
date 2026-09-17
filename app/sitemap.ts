@@ -63,6 +63,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_URL}/harga-lem-vinyl-karpet`,
       lastModified: new Date(),
     },
+    {
+      url: `${SITE_URL}/kontak`,
+      lastModified: new Date(),
+    },
     ...verticalUrls,
     ...accessoryUrls,
     {

@@ -12,6 +12,6 @@ export const PRICING_FAQ_ITEMS = [
     question:
       "Berapa luas area yang bisa dilapisi 1 KG Lem Vinyl / Lem Karpet EFLOOR?",
     answer:
-      "1 KG Lem Vinyl / Lem Karpet EFLOOR dapat digunakan untuk +- 9m2 area pemasangan (tergantung jenis permukaan dan teknik aplikasi). Artinya, kemasan 4 KG cukup untuk +- 36m2, dan kemasan 20 KG cukup untuk +- 180m2. Hubungi tim kami via WhatsApp untuk membantu menghitung kebutuhan lem sesuai luas proyek Anda.",
+      "1 KG Lem Vinyl / Lem Karpet EFLOOR dapat digunakan untuk 8–10 m² area pemasangan (tergantung jenis permukaan dan teknik aplikasi). Artinya, kemasan 4 KG cukup untuk 32–40 m², dan kemasan 20 KG cukup untuk 160–200 m². Hubungi tim kami via WhatsApp untuk membantu menghitung kebutuhan lem sesuai luas proyek Anda.",
   },
 ];

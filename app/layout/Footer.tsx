@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import WhatsAppButton from "../components/WhatsAppButton";
 import PhoneLink from "../components/PhoneLink";
+import { MarketplaceLinks } from "../components/OutboundLinks";
+import { BUSINESS_ADDRESS_DISPLAY, OPENING_HOURS_DISPLAY } from "../static/business";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -37,8 +39,8 @@ export default function Footer() {
           className="mx-auto flex md:mx-0 lg:mx-0"
         />
         <div className="max-w-[325px] p-4 text-center md:text-left lg:text-left">
-          Jl. Raya Gading Bukit Indah No.2, RT.18/RW.8, Klp. Gading Bar., Kec.
-          Klp. Gading, Jkt Utara, Daerah Khusus Ibukota Jakarta 14240
+          {BUSINESS_ADDRESS_DISPLAY}
+          <div className="mt-2 text-[#808080]">Jam buka: {OPENING_HOURS_DISPLAY}</div>
         </div>
       </div>
       <div className="flex flex-1 gap-10 flex-col text-center md:text-left lg:text-left mt-10 md:mt-0 lg:mt-0">
@@ -76,6 +78,10 @@ export default function Footer() {
           Contact Us
         </WhatsAppButton>
         <PhoneLink source="footer" />
+        <Link href="/kontak" className="hover:cursor-pointer">
+          Kontak &amp; Alamat
+        </Link>
+        <MarketplaceLinks source="footer" className="flex flex-col gap-10" />
       </div>
     </footer>
   );
