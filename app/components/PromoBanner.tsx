@@ -1,6 +1,6 @@
 "use client";
 
-import { trackWhatsAppClick } from "../lib/analytics";
+import { openWhatsApp } from "../lib/openWhatsApp";
 
 export default function PromoBanner() {
   return (
@@ -9,11 +9,7 @@ export default function PromoBanner() {
       <button
         className="bg-[#FF8E06] text-white ml-4 p-2 rounded-lg mt-2 md:mt-0 lg:mt-0 hover:cursor-pointer"
         onClick={() => {
-          trackWhatsAppClick();
-          window.open(
-            "https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0",
-            "_",
-          );
+          openWhatsApp({ source: "promo-banner" });
         }}
       >
         Get now

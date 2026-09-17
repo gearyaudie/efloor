@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Button from "../components/Button";
+import WhatsAppButton from "../components/WhatsAppButton";
 import FaqSectionHPL from "../components/FaqSectionHPL";
 import { SITE_URL } from "../seo.config";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -35,9 +35,9 @@ export default function LemHPL() {
             harian — cukup oles di satu sisi, lebih hemat dan lebih praktis.
           </h3>
           <div className="pt-8">
-            <Button href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
+            <WhatsAppButton product="Lem HPL & PVC Sheet" source="landing-hero">
               Dapatkan Sekarang!
-            </Button>
+            </WhatsAppButton>
           </div>
         </div>
       </div>

@@ -24,6 +24,12 @@ export type WhatsAppClickContext = {
   source?: string;
   /** Product or landing page the visitor was looking at. */
   product?: string;
+  /**
+   * Lead reference written into the WhatsApp message. It is sent as the
+   * conversion transaction ID, so an order closed in that chat can later
+   * restate the conversion value by order ID, without needing the gclid.
+   */
+  ref?: string;
 };
 
 /**
@@ -45,6 +51,7 @@ export function trackWhatsAppClick(
     method: "whatsapp",
     ...(context.source ? { source: context.source } : {}),
     ...(context.product ? { product: context.product } : {}),
+    ...(context.ref ? { ref: context.ref } : {}),
   });
 
   const gtag = (window as GtagWindow).gtag;
@@ -66,12 +73,9 @@ export function trackWhatsAppClick(
       send_to: WHATSAPP_CONVERSION_SEND_TO,
       value: WHATSAPP_LEAD_VALUE_IDR,
       currency: "IDR",
+      ...(context.ref ? { transaction_id: context.ref } : {}),
       transport_type: "beacon",
       event_callback: settle,
     });
   });
-}
-
-export function isWhatsAppLink(href: string) {
-  return href.includes("api.whatsapp.com") || href.includes("wa.me");
 }

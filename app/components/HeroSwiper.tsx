@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
-import { trackWhatsAppClick } from "../lib/analytics";
+import { openWhatsApp } from "../lib/openWhatsApp";
 
 // Import Swiper styles
 import "swiper/css";
@@ -93,11 +93,7 @@ export default function HeroSwiper() {
                   <button
                     className="bg-[#6b7db3] hover:bg-[#5a6da3] text-white px-6 py-3.5 rounded-full text-sm font-semibold transition-colors flex items-center gap-2 whitespace-nowrap border-none cursor-pointer"
                     onClick={() => {
-                      trackWhatsAppClick();
-                      window.open(
-                        "https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0",
-                        "_",
-                      );
+                      openWhatsApp({ source: "home-hero" });
                     }}
                   >
                     Tanyakan Sekarang →

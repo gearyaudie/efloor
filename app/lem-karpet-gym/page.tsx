@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Button from "../components/Button";
+import WhatsAppButton from "../components/WhatsAppButton";
 import { SITE_URL } from "../seo.config";
 import FaqSectionGym from "../components/FaqSectionGym";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -35,9 +35,9 @@ export default function LemKarpetGym() {
             ruangan tertutup. Solusi lantai gym profesional dan terpercaya.
           </h3>
           <div className="pt-8">
-            <Button href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
+            <WhatsAppButton product="Lem Karpet Gym" source="landing-hero">
               Dapatkan Sekarang!
-            </Button>
+            </WhatsAppButton>
           </div>
         </div>
       </div>

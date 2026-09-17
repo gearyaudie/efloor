@@ -2,17 +2,13 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { trackWhatsAppClick } from "../lib/analytics";
+import { openWhatsApp } from "../lib/openWhatsApp";
 
 export default function FloatingWhatsapp() {
   const [hovered, setHovered] = useState(false);
 
   const openWhatsapp = () => {
-    trackWhatsAppClick();
-    window.open(
-      "https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0",
-      "_",
-    );
+    openWhatsApp({ source: "floating-button" });
   };
 
   return (

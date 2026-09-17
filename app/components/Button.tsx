@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
-import { isWhatsAppLink, trackWhatsAppClick } from "../lib/analytics";
 
 type CommonProps = {
   children: ReactNode;
@@ -41,13 +40,6 @@ export default function Button({
         href={props.href}
         target={props.target}
         className={classes}
-        onClick={
-          isWhatsAppLink(props.href)
-            ? () => {
-                void trackWhatsAppClick({ source: "button" });
-              }
-            : undefined
-        }
       >
         {children}
       </Link>

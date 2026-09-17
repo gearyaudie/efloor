@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Button from "../components/Button";
+import WhatsAppButton from "../components/WhatsAppButton";
 import Breadcrumbs from "../components/Breadcrumbs";
 import RelatedVerticals from "../components/RelatedVerticals";
 import Faq from "../components/Faq";
@@ -62,9 +62,9 @@ export default function HargaLemVinylKarpet() {
           harga terbaru dan penawaran khusus pembelian dalam jumlah besar.
         </h3>
         <div className="pt-8">
-          <Button href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
+          <WhatsAppButton product="harga Lem Vinyl & Karpet" source="pricing-hero">
             Tanyakan Harga Sekarang!
-          </Button>
+          </WhatsAppButton>
         </div>
       </div>
 

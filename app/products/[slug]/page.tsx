@@ -117,7 +117,10 @@ export default async function ProductsPage(props: PageProps) {
             </h1>
 
             {product.priceVariants?.length > 0 && (
-              <VariantSelector variants={product.priceVariants} />
+              <VariantSelector
+                variants={product.priceVariants}
+                productName={product.name}
+              />
             )}
 
             {/* Content */}

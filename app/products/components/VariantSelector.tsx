@@ -1,22 +1,25 @@
 "use client";
 
 import React from "react";
-import { trackWhatsAppClick } from "../../lib/analytics";
+import { openWhatsApp } from "../../lib/openWhatsApp";
 
 type Variant = {
   label: string;
   price: number;
 };
 
-export default function VariantSelector({ variants }: { variants: Variant[] }) {
+export default function VariantSelector({
+  variants,
+  productName,
+}: {
+  variants: Variant[];
+  productName?: string;
+}) {
   const [selected, setSelected] = React.useState(variants[0]?.label);
 
   const activeVariant = variants.find((v) => v.label === selected);
 
-  const openLink = (link: string) => {
-    trackWhatsAppClick();
-    window.open(link, "_");
-  };
+  
 
   return (
     <div className="mt-6">
@@ -46,9 +49,12 @@ export default function VariantSelector({ variants }: { variants: Variant[] }) {
           <button
             className="bg-[#FF8E06] text-white px-4 py-2 text-center mt-8 mx-auto rounded-2xl hover:cursor-pointer"
             onClick={() =>
-              openLink(
-                "https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0",
-              )
+              openWhatsApp({
+                source: "product-page",
+                product: productName
+                  ? `${productName} (${activeVariant.label})`
+                  : undefined,
+              })
             }
           >
             Beli / Cek Sekarang

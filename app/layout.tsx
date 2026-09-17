@@ -13,6 +13,7 @@ import {
 import Header from "./layout/Header";
 import PromoBanner from "./components/PromoBanner";
 import Footer from "./layout/Footer";
+import AttributionCapture from "./components/AttributionCapture";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -54,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body>
+        <AttributionCapture />
         <Header />
         {/* Promo Banner */}
         <PromoBanner />

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SITE_URL } from "../seo.config";
-import WhatsAppLink from "../components/WhatsAppLink";
+import WhatsAppButton from "../components/WhatsAppButton";
 import Breadcrumbs from "../components/Breadcrumbs";
 import RelatedVerticals from "../components/RelatedVerticals";
 import FaqSectionProjects from "../components/FaqSectionProjects";
@@ -16,21 +16,24 @@ export default function Projects() {
       />
       <div className="max-w-[1300px] mx-auto my-20 flex flex-col justify-center items-center px-6">
         <h1 className="text-[40px] font-medium text-center">
-          Untuk Kontraktor dan <br />
-          Keperluan Procurement (Supplier)
+          Supplier &amp; Distributor Lem Vinyl dan <br />
+          Karpet untuk Proyek
         </h1>
         <h2 className="text-[#535353] text-center max-w-[700px] lg:mt-6">
-          Kami adalah distirbutor lem vinyl/karpet yang terpercaya. Menangani
+          Kami adalah distributor lem vinyl/karpet yang terpercaya. Menangani
           segala kebutuhan projek dan procurement dengan harga yang bersaing.
           Telah melayani kontraktor, proyek dan procurement dengan tingkat
           kepuasan tinggi.
         </h2>
         <div>
-          <WhatsAppLink href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0">
-            <button className="bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 p-2 rounded-lg mt-2 mt-8  hover:cursor-pointer">
-              Dapatkan Quotation Sekarang!
-            </button>
-          </WhatsAppLink>
+          <WhatsAppButton
+            product="penawaran harga untuk proyek"
+            source="projects-quotation"
+            variant="plain"
+            className="inline-block bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 rounded-lg mt-8 hover:cursor-pointer"
+          >
+            Dapatkan Quotation Sekarang!
+          </WhatsAppButton>
         </div>
         <div>
           <Image

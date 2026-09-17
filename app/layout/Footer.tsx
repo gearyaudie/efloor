@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { trackWhatsAppClick } from "../lib/analytics";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -71,16 +71,9 @@ export default function Footer() {
         <Link href="/about-us" className="hover:cursor-pointer">
           About Us
         </Link>
-        <Link
-          href="https://api.whatsapp.com/send/?phone=628561153725&text&type=phone_number&app_absent=0"
-          target="_blank"
-          className="hover:cursor-pointer"
-          onClick={() => {
-            void trackWhatsAppClick({ source: "footer" });
-          }}
-        >
+        <WhatsAppButton source="footer" variant="plain">
           Contact Us
-        </Link>
+        </WhatsAppButton>
       </div>
     </footer>
   );
