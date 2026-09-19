@@ -20,7 +20,8 @@ export default function LoginForm() {
         body: JSON.stringify({ password }),
       });
       if (!res.ok) {
-        setError("Wrong password.");
+        const body = await res.json().catch(() => null);
+        setError(body?.error ?? `Sign-in failed (HTTP ${res.status}).`);
         return;
       }
       router.refresh();
