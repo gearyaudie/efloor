@@ -38,6 +38,18 @@ type SanityProduct = {
   };
 };
 
+type SanityB2BProject = {
+  _id: string;
+  type?: string;
+  namaBarang?: string;
+  namaPT?: string;
+  photo?: {
+    asset?: {
+      url: string;
+    };
+  };
+};
+
 export default async function Home() {
   let sanityProducts: SanityProduct[] = [];
   try {
@@ -49,6 +61,25 @@ export default async function Home() {
         desc,
         price,
         image {
+          asset->{
+            url
+          }
+        }
+      }
+    `);
+  } catch (err) {
+    console.error("Sanity fetch error:", err);
+  }
+
+  let sanityProjects: SanityB2BProject[] = [];
+  try {
+    sanityProjects = await client.fetch<SanityB2BProject[]>(`
+      *[_type == "b2bProject"] | order(tanggal desc)[0...12]{
+        _id,
+        type,
+        namaBarang,
+        namaPT,
+        photo {
           asset->{
             url
           }
@@ -133,7 +164,7 @@ export default async function Home() {
       </div>
 
       <div className="bg-[#f8f8f8]">
-        <ProjectsSnippet />
+        <ProjectsSnippet projects={sanityProjects} />
       </div>
 
       {/* MAIN PRODUCTS SWIPER (STATIC) */}

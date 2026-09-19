@@ -1,13 +1,45 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import { client } from "@/sanity.client";
 import { SITE_URL } from "../seo.config";
 import WhatsAppButton from "../components/WhatsAppButton";
 import Breadcrumbs from "../components/Breadcrumbs";
 import RelatedVerticals from "../components/RelatedVerticals";
 import FaqSectionProjects from "../components/FaqSectionProjects";
-import { PROJECT_CASE_STUDIES } from "../static/projectCaseStudies";
 
-export default function Projects() {
+export const revalidate = 60; // Cache for 60 seconds (ISR)
+
+export type B2BProject = {
+  _id: string;
+  type?: string;
+  namaBarang?: string;
+  namaPT?: string;
+  quantity?: string;
+  tanggal?: string;
+  photo?: {
+    asset?: {
+      url: string;
+    };
+  };
+};
+
+export default async function Projects() {
+  const projects: B2BProject[] = await client.fetch(
+    `*[_type == "b2bProject"] | order(tanggal desc){
+      _id,
+      type,
+      namaBarang,
+      namaPT,
+      quantity,
+      tanggal,
+      photo {
+        asset->{
+          url
+        }
+      }
+    }`,
+  );
+
   return (
     <>
       <Breadcrumbs
@@ -74,32 +106,45 @@ export default function Projects() {
             EFLOOR ke berbagai perusahaan dan kontraktor.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
-            {PROJECT_CASE_STUDIES.map((item) => (
-              <div
-                key={item.image}
-                className="rounded-2xl border border-[#e8e8e8] overflow-hidden bg-white"
-              >
-                <Image
-                  src={item.image}
-                  alt={`${item.label} ${item.product} untuk ${item.client}`}
-                  width={700}
-                  height={700}
-                  className="w-full h-auto"
-                />
-                <div className="p-4 text-left">
-                  <div className="text-xs font-semibold uppercase tracking-widest text-[#FF8E06] mb-1">
-                    {item.label}
+            {projects?.map((item) =>
+              item.photo?.asset?.url ? (
+                <div
+                  key={item._id}
+                  className="rounded-2xl border border-[#e8e8e8] overflow-hidden bg-white"
+                >
+                  <Image
+                    src={item.photo.asset.url}
+                    alt={`${item.type ?? ""} ${item.namaBarang ?? ""} untuk ${item.namaPT ?? ""}`}
+                    width={700}
+                    height={700}
+                    className="w-full h-auto"
+                  />
+                  <div className="p-4 text-left">
+                    {item.type && (
+                      <div className="text-xs font-semibold uppercase tracking-widest text-[#FF8E06] mb-1">
+                        {item.type}
+                      </div>
+                    )}
+                    <div className="font-medium text-[#1a1a1a]">
+                      {item.namaPT}
+                    </div>
+                    <div className="text-sm text-[#808080] mt-1">
+                      {item.namaBarang}
+                      {item.quantity ? ` · ${item.quantity}` : ""}
+                    </div>
+                    {item.tanggal && (
+                      <div className="text-xs text-[#808080] mt-2">
+                        {new Date(item.tanggal).toLocaleDateString("id-ID", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </div>
+                    )}
                   </div>
-                  <div className="font-medium text-[#1a1a1a]">
-                    {item.client}
-                  </div>
-                  <div className="text-sm text-[#808080] mt-1">
-                    {item.product} &middot; {item.quantity}
-                  </div>
-                  <div className="text-xs text-[#808080] mt-2">{item.date}</div>
                 </div>
-              </div>
-            ))}
+              ) : null,
+            )}
           </div>
         </div>
       </div>
