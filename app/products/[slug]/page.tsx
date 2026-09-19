@@ -33,6 +33,18 @@ function portableTextToPlainText(value: unknown, maxLength = 155): string {
     : text;
 }
 
+// Sanity's priceVariants[].price has been observed as either a plain number
+// or a formatted string (e.g. "Rp150.000") depending on how it was entered —
+// same defensive-shape reasoning as portableTextToPlainText above.
+function parsePriceMicros(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const digits = value.replace(/[^0-9]/g, "");
+    if (digits) return Number(digits);
+  }
+  return null;
+}
+
 type PageProps = {
   params: {
     slug: string;
@@ -93,8 +105,53 @@ export default async function ProductsPage(props: PageProps) {
 
   if (!product) return notFound();
 
+  const images: string[] = (product.images ?? [])
+    .map((img: { url?: string }) => img?.url)
+    .filter(Boolean);
+  const description =
+    portableTextToPlainText(product.desc) || portableTextToPlainText(product.content);
+
+  const prices = (product.priceVariants ?? [])
+    .map((v: { price?: unknown }) => parsePriceMicros(v?.price))
+    .filter((p: number | null): p is number => p !== null);
+
+  let offers: Record<string, unknown> | undefined;
+  if (prices.length === 1) {
+    offers = {
+      "@type": "Offer",
+      priceCurrency: "IDR",
+      price: prices[0],
+      availability: "https://schema.org/InStock",
+      url: `${SITE_URL}/products/${slug}`,
+    };
+  } else if (prices.length > 1) {
+    offers = {
+      "@type": "AggregateOffer",
+      priceCurrency: "IDR",
+      lowPrice: Math.min(...prices),
+      highPrice: Math.max(...prices),
+      offerCount: prices.length,
+      availability: "https://schema.org/InStock",
+      url: `${SITE_URL}/products/${slug}`,
+    };
+  }
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    ...(description ? { description } : {}),
+    ...(images.length > 0 ? { image: images } : {}),
+    brand: { "@type": "Brand", name: "EFLOOR" },
+    ...(offers ? { offers } : {}),
+  };
+
   return (
     <div className="bg-white text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },

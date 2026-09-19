@@ -16,6 +16,27 @@ export const BUSINESS_ADDRESS_DISPLAY =
 
 export const OPENING_HOURS_DISPLAY = "11.00 – 17.00 WIB";
 
+// Same hours, structured for schema.org OpeningHoursSpecification.
+export const OPENING_HOURS_SPEC = {
+  days: [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ],
+  opens: "11:00",
+  closes: "17:00",
+};
+
+// The Kelapa Gading store, for schema.org GeoCoordinates.
+export const BUSINESS_GEO = {
+  latitude: -6.149892891483808,
+  longitude: 106.89877868372666,
+};
+
 export const MARKETPLACES = [
   { id: "shopee", label: "Shopee", url: "https://shopee.co.id/efloor.id" },
   { id: "tokopedia", label: "Tokopedia", url: "https://www.tokopedia.com/efloorid" },
