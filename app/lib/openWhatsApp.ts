@@ -1,5 +1,6 @@
 import { trackWhatsAppClick } from "./analytics";
 import { createLeadRef } from "./attribution";
+import { logLeadEvent } from "./leadLog";
 import { buildWhatsAppUrl } from "./whatsapp";
 
 /**
@@ -20,6 +21,7 @@ export function openWhatsApp({
   // promise loses the user gesture and gets popup-blocked. The conversion goes
   // out by beacon, which completes even after the hand-off to WhatsApp.
   const tab = window.open(url, "_blank");
+  logLeadEvent({ ref, source, product });
   const tracked = trackWhatsAppClick({ source, product, ref });
   if (tab) {
     tab.opener = null;

@@ -9,6 +9,12 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# Standalone functions (outside the Next.js app) — currently just the daily
+# Google Ads snapshot puller, which needs a cron schedule Next.js route
+# handlers can't declare on Netlify.
+[functions]
+  directory = "netlify/functions"
+
 # No app-level www/apex redirect here on purpose: Netlify's dashboard
 # (Domain management) already redirects www.efloor.id -> efloor.id at the
 # platform level. Adding the reverse redirect here previously caused an
