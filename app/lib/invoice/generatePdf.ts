@@ -97,11 +97,12 @@ export async function generateInvoicePdf(input: InvoiceInput): Promise<Uint8Arra
   const rightMidX = headerRightX + headerRightWidth / 2;
   page.drawLine({ start: { x: rightMidX, y: headerTop }, end: { x: rightMidX, y: headerTop - headerHeight }, thickness: 1, color: BLACK });
 
-  // Horizontal dividers
+  // Horizontal dividers — only within the right-hand info grid; the customer/address
+  // column on the left stays one open cell with no internal ruling.
   let rowY = headerTop;
   for (const h of rowHeights.slice(0, -1)) {
     rowY -= h;
-    page.drawLine({ start: { x: MARGIN, y: rowY }, end: { x: MARGIN + CONTENT_WIDTH, y: rowY }, thickness: 1, color: BLACK });
+    page.drawLine({ start: { x: headerRightX, y: rowY }, end: { x: MARGIN + CONTENT_WIDTH, y: rowY }, thickness: 1, color: BLACK });
   }
   // split right column into invoice-no / date on row 1, do-no / sales on row 2, po-no / delivery on row 3
   const rowTops = [headerTop, headerTop - rowHeights[0], headerTop - rowHeights[0] - rowHeights[1]];
@@ -172,9 +173,6 @@ export async function generateInvoicePdf(input: InvoiceInput): Promise<Uint8Arra
     drawText(page, `Rp. ${formatIdrAmount(item.pricePerUnit)}`, COL_X[4] + 3, textTop, font, 8);
     drawText(page, `Rp ${formatIdrAmount(total)}`, COL_X[5] + 3, textTop, font, 8, { align: "right", maxWidth: COL_WIDTHS[5] - 6 });
 
-    if (idx < input.items.length - 1) {
-      page.drawLine({ start: { x: MARGIN, y: cursorY - rowH }, end: { x: MARGIN + CONTENT_WIDTH, y: cursorY - rowH }, thickness: 0.5, color: BLACK });
-    }
     cursorY -= rowH;
   });
 
