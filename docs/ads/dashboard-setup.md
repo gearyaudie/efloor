@@ -55,17 +55,38 @@ to both the Next.js runtime and standalone functions on Netlify, and to
 
 ## What the numbers mean (and don't)
 
-- **Ads-reported conversions** come straight from the Google Ads API
-  (`metrics.conversions`) — this is whatever conversion actions are
+- **Ads-reported conversions (all actions)** comes straight from the Google
+  Ads API (`metrics.conversions`) — this is whatever conversion actions are
   currently biddable/counted in the account (see the baseline doc's table),
   not a sales-verified figure. There's no CRM behind this site, so unlike a
   lead-to-policy dashboard, nothing here confirms a WhatsApp chat became a
   sale.
+- **WhatsApp Click conversions** is the one action in that blend that
+  actually corresponds to a lead — pulled out separately because, at
+  baseline, "Local actions - Directions" (an auto-counted, low-intent,
+  Google-hosted action) supplied effectively all of "conversions" while
+  WhatsApp Click itself wasn't even biddable yet. The **"Conversions by
+  action"** table below both KPIs shows every conversion action Google Ads
+  is recording, with a badge for whether it's currently counted toward
+  bidding at all.
 - **"Leads from Google Ads"** is the share of logged WhatsApp clicks that
   carried a `gclid`/`gbraid`/`wbraid` at click time — a proxy for
   paid-channel origin, not a matched Ads conversion record.
 - **Blended CPL** = ad spend ÷ those Google-Ads-attributed leads for the
   selected range.
+- **Keyword performance** and **Search terms** are period totals over the
+  snapshot's 60-day lookback window, refreshed daily — they do **not**
+  move when you switch the MTD / Last 28 days toggle above them. This is
+  deliberate: `ad_group_criterion.quality_info.quality_score` is a current
+  snapshot value, not a true daily historical metric, so there was no real
+  benefit to day-segmenting either report at this account's size (see the
+  baseline doc's own "90-day totals" framing, which this follows). Search
+  terms are capped to the top 200 by cost; rows with Rp20,000+ spent and
+  zero conversions are flagged as negative-keyword candidates — the
+  dashboard only flags, it doesn't auto-suggest negatives, since the
+  baseline doc already found real conflicts between "irrelevant"-looking
+  terms and legitimate "lem …" queries that a naive heuristic would get
+  wrong.
 
 ## Extending this later
 

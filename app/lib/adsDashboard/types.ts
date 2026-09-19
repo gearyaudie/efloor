@@ -18,8 +18,50 @@ export type AdsCampaignDailyMetric = AdsDailyMetric & {
 export type AdsConversionActionDailyMetric = {
   date: string;
   conversionActionName: string;
-  conversions: number;
+  conversions: number; // counted toward the account's biddable "Conversions"
+  allConversions: number; // every recorded conversion, counted or not
   conversionsValueMicros: number;
+};
+
+/** Whether a named conversion action is counted toward bidding, from the `conversion_action` resource. */
+export type AdsConversionActionMeta = {
+  name: string;
+  category: string;
+  includeInConversionsMetric: boolean;
+  status: string;
+};
+
+/**
+ * One keyword's performance totals over the snapshot's lookback window
+ * (not day-segmented — see docs/ads/dashboard-setup.md for why).
+ */
+export type AdsKeywordMetric = {
+  campaignId: string;
+  campaignName: string;
+  adGroupId: string;
+  adGroupName: string;
+  keywordId: string;
+  keywordText: string;
+  matchType: string;
+  status: string;
+  qualityScore: number | null;
+  clicks: number;
+  impressions: number;
+  costMicros: number;
+  conversions: number;
+};
+
+/** One search term's totals over the snapshot's lookback window, top N by cost. */
+export type AdsSearchTermMetric = {
+  searchTerm: string;
+  campaignId: string;
+  campaignName: string;
+  adGroupId: string;
+  adGroupName: string;
+  clicks: number;
+  impressions: number;
+  costMicros: number;
+  conversions: number;
 };
 
 export type AdsSnapshot = {
@@ -29,6 +71,9 @@ export type AdsSnapshot = {
   daily: AdsDailyMetric[];
   campaignDaily: AdsCampaignDailyMetric[];
   conversionActionDaily: AdsConversionActionDailyMetric[];
+  conversionActions: AdsConversionActionMeta[];
+  keywords: AdsKeywordMetric[];
+  searchTerms: AdsSearchTermMetric[];
 };
 
 /** One WhatsApp CTA click, logged server-side when the click fires client-side. */

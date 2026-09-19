@@ -17,7 +17,8 @@ export type DashboardPayload = {
     paidLeadShare: Kpi; // fraction 0..1, leads that carried a Google Ads click id
     adSpendMicros: Kpi;
     blendedCplMicros: Kpi | null; // spend / paid leads
-    adsReportedConversions: Kpi;
+    adsReportedConversions: Kpi; // every biddable action combined — see conversionsByAction for the split
+    whatsappClickConversions: Kpi; // the one conversion action that actually means "lead"
     ctr: Kpi; // fraction 0..1
   };
   trend: { date: string; paidLeads: number; otherLeads: number }[];
@@ -29,7 +30,41 @@ export type DashboardPayload = {
     conversions: number;
     convRate: number; // fraction 0..1
   }[];
+  conversionsByAction: {
+    name: string;
+    countedInBidding: boolean;
+    conversions: number;
+    allConversions: number;
+    valueMicros: number;
+  }[];
+  /** Period totals over the snapshot's lookback window — not sliced by `range`. See dashboard-setup.md. */
+  keywords: {
+    campaignName: string;
+    adGroupName: string;
+    keywordId: string;
+    keywordText: string;
+    matchType: string;
+    status: string;
+    qualityScore: number | null;
+    clicks: number;
+    costMicros: number;
+    conversions: number;
+    convRate: number;
+  }[];
+  /** Same lookback-window caveat as `keywords`. */
+  searchTerms: {
+    searchTerm: string;
+    campaignName: string;
+    adGroupName: string;
+    clicks: number;
+    costMicros: number;
+    conversions: number;
+    zeroConversionSpend: boolean;
+  }[];
 };
+
+/** Below this, a zero-conversion search term isn't worth flagging as a likely leak. */
+const ZERO_CONVERSION_SPEND_THRESHOLD_MICROS = 20_000 * 1_000_000;
 
 type Kpi = { current: number; previous: number; deltaPct: number | null };
 
@@ -159,6 +194,69 @@ export function buildDashboardPayload(
     }))
     .sort((a, b) => b.costMicros - a.costMicros);
 
+  const countedByName = new Map(
+    (snapshot?.conversionActions ?? []).map((a) => [a.name, a.includeInConversionsMetric]),
+  );
+
+  const conversionActionTotals = new Map<
+    string,
+    { conversions: number; allConversions: number; valueMicros: number }
+  >();
+  for (const row of snapshot?.conversionActionDaily ?? []) {
+    if (!inRange(row.date, window.start, window.end)) continue;
+    const acc = conversionActionTotals.get(row.conversionActionName) ?? {
+      conversions: 0,
+      allConversions: 0,
+      valueMicros: 0,
+    };
+    acc.conversions += row.conversions;
+    acc.allConversions += row.allConversions;
+    acc.valueMicros += row.conversionsValueMicros;
+    conversionActionTotals.set(row.conversionActionName, acc);
+  }
+  const conversionsByAction = [...conversionActionTotals.entries()]
+    .map(([name, v]) => ({
+      name,
+      countedInBidding: countedByName.get(name) ?? false,
+      conversions: v.conversions,
+      allConversions: v.allConversions,
+      valueMicros: v.valueMicros,
+    }))
+    .sort((a, b) => b.allConversions - a.allConversions);
+
+  const whatsappConversionsFor = (start: string, end: string) =>
+    (snapshot?.conversionActionDaily ?? [])
+      .filter((row) => row.conversionActionName === "WhatsApp Click" && inRange(row.date, start, end))
+      .reduce((acc, row) => acc + row.conversions, 0);
+
+  const keywords = [...(snapshot?.keywords ?? [])]
+    .map((k) => ({
+      campaignName: k.campaignName,
+      adGroupName: k.adGroupName,
+      keywordId: k.keywordId,
+      keywordText: k.keywordText,
+      matchType: k.matchType,
+      status: k.status,
+      qualityScore: k.qualityScore,
+      clicks: k.clicks,
+      costMicros: k.costMicros,
+      conversions: k.conversions,
+      convRate: k.clicks === 0 ? 0 : k.conversions / k.clicks,
+    }))
+    .sort((a, b) => b.costMicros - a.costMicros);
+
+  const searchTerms = [...(snapshot?.searchTerms ?? [])]
+    .map((t) => ({
+      searchTerm: t.searchTerm,
+      campaignName: t.campaignName,
+      adGroupName: t.adGroupName,
+      clicks: t.clicks,
+      costMicros: t.costMicros,
+      conversions: t.conversions,
+      zeroConversionSpend: t.conversions === 0 && t.costMicros >= ZERO_CONVERSION_SPEND_THRESHOLD_MICROS,
+    }))
+    .sort((a, b) => b.costMicros - a.costMicros);
+
   return {
     fetchedAt: snapshot?.fetchedAt ?? null,
     currency: snapshot?.currency ?? "IDR",
@@ -175,6 +273,10 @@ export function buildDashboardPayload(
           ? null
           : kpi(currentSpend / paidLeadsCurrent, paidLeadsPrevious === 0 ? 0 : previousSpend / paidLeadsPrevious),
       adsReportedConversions: kpi(currentConversions, previousConversions),
+      whatsappClickConversions: kpi(
+        whatsappConversionsFor(window.start, window.end),
+        whatsappConversionsFor(window.compareStart, window.compareEnd),
+      ),
       ctr: kpi(
         currentImpressions === 0 ? 0 : currentClicks / currentImpressions,
         previousImpressions === 0 ? 0 : previousClicks / previousImpressions,
@@ -182,5 +284,8 @@ export function buildDashboardPayload(
     },
     trend,
     campaigns,
+    conversionsByAction,
+    keywords,
+    searchTerms,
   };
 }
