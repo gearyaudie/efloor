@@ -3,6 +3,12 @@
 # defaults to.
 [build.environment]
   NODE_VERSION = "20.9.0"
+  # GOOGLE_ADS_CUSTOMER_ID is a Google Ads account number, not a credential —
+  # it's already public in docs/ads/baseline-2026-09-16.md ("985-990-2435")
+  # and hardcoded as googleAdsClient.ts's fallback default. Netlify's secret
+  # scanner otherwise fails the build on any match of a configured env var's
+  # value anywhere in the repo/output.
+  SECRETS_SCAN_OMIT_KEYS = "GOOGLE_ADS_CUSTOMER_ID"
 
 # Make the Next.js runtime explicit rather than relying only on Netlify's
 # dashboard-side auto-detection, which is a common source of drift.
