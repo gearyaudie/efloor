@@ -6,13 +6,14 @@ import { VERTICAL_PAGES } from "./static/verticals";
 import { ACCESSORY_PAGES } from "./static/accessories";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts: Post[] = await client.fetch(
+  const posts: (Post & { _updatedAt?: string })[] = await client.fetch(
     `*[_type == "post"]{
         _id,
         title,
         slug,
         content,
         excerpt,
+        _updatedAt,
         img {
           asset->{
             url
@@ -24,20 +25,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all blogs, to be put inside sitemap
   const blogUrls = posts.map((post) => ({
     url: `${SITE_URL}/blogs/${post.slug.current}`,
-    lastModified: new Date(),
+    lastModified: post._updatedAt ? new Date(post._updatedAt) : new Date(),
   }));
 
   // Fetch all products live from Sanity instead of hardcoding slugs, so the
   // sitemap can never drift out of sync with what actually exists.
-  const products: { slug: string }[] = await client.fetch(
+  const products: { slug: string; _updatedAt?: string }[] = await client.fetch(
     `*[_type == "product" && defined(slug.current)]{
-      "slug": slug.current
+      "slug": slug.current,
+      _updatedAt
     }`,
   );
 
   const productUrls = products.map((product) => ({
     url: `${SITE_URL}/products/${product.slug}`,
-    lastModified: new Date(),
+    lastModified: product._updatedAt ? new Date(product._updatedAt) : new Date(),
   }));
 
   const verticalUrls = VERTICAL_PAGES.map((page) => ({

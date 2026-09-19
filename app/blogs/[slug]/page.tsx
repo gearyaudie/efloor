@@ -21,6 +21,8 @@ const postQuery = groq`
     slug,
     excerpt,
     keywords,
+    _createdAt,
+    _updatedAt,
     img {
       asset -> {
         url
@@ -67,8 +69,29 @@ export default async function BlogPostPage(props: PageProps) {
 
   if (!post) return notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    ...(post.excerpt ? { description: post.excerpt } : {}),
+    ...(post.img?.asset?.url ? { image: [post.img.asset.url] } : {}),
+    ...(post._createdAt ? { datePublished: post._createdAt } : {}),
+    ...(post._updatedAt ? { dateModified: post._updatedAt } : {}),
+    author: { "@type": "Organization", name: "EFLOOR" },
+    publisher: {
+      "@type": "Organization",
+      name: "EFLOOR",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/img/header-logo.png` },
+    },
+    mainEntityOfPage: `${SITE_URL}/blogs/${slug}`,
+  };
+
   return (
     <div className="bg-white text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },

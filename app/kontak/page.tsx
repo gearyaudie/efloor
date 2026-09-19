@@ -8,9 +8,11 @@ import { PHONE_DISPLAY, WHATSAPP_NUMBER } from "../lib/whatsapp";
 import {
   BUSINESS_ADDRESS,
   BUSINESS_ADDRESS_DISPLAY,
+  BUSINESS_GEO,
   MAPS_EMBED_URL,
   MARKETPLACES,
   OPENING_HOURS_DISPLAY,
+  OPENING_HOURS_SPEC,
 } from "../static/business";
 
 const PAGE_HREF = "/kontak";
@@ -34,6 +36,18 @@ export default function Kontak() {
       addressCountry: BUSINESS_ADDRESS.country,
     },
     sameAs: MARKETPLACES.map((shop) => shop.url),
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: OPENING_HOURS_SPEC.days,
+      opens: OPENING_HOURS_SPEC.opens,
+      closes: OPENING_HOURS_SPEC.closes,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: BUSINESS_GEO.latitude,
+      longitude: BUSINESS_GEO.longitude,
+    },
+    priceRange: "Rp",
   };
 
   return (
