@@ -34,6 +34,11 @@ function formatNumber(n: number): string {
   return new Intl.NumberFormat("id-ID").format(n);
 }
 
+/** Last line of defense against a null/undefined creeping past the aggregation layer. */
+function formatCount(n: number | null | undefined): string {
+  return (n ?? 0).toFixed(1);
+}
+
 function Delta({ deltaPct, goodDirection }: { deltaPct: number | null; goodDirection: "up" | "down" }) {
   if (deltaPct === null) {
     return <span className="text-sm text-[--muted]" style={{ color: TEXT_MUTED }}>vs prior period: n/a</span>;
@@ -229,10 +234,10 @@ function ConversionsByActionTable({ rows }: { rows: DashboardPayload["conversion
               {r.countedInBidding ? <Badge tone="good">Counted</Badge> : <Badge tone="muted">Not counted</Badge>}
             </td>
             <td className="py-2" style={{ color: TEXT_PRIMARY }}>
-              {r.conversions.toFixed(1)}
+              {formatCount(r.conversions)}
             </td>
             <td className="py-2" style={{ color: TEXT_PRIMARY }}>
-              {r.allConversions.toFixed(1)}
+              {formatCount(r.allConversions)}
             </td>
           </tr>
         ))}
@@ -298,7 +303,7 @@ function KeywordTable({ keywords, currency }: { keywords: DashboardPayload["keyw
               {k.clicks === 0 ? "–" : formatIdr(k.costMicros / k.clicks)}
             </td>
             <td className="py-2" style={{ color: TEXT_PRIMARY }}>
-              {k.conversions.toFixed(1)}
+              {formatCount(k.conversions)}
             </td>
             <td className="py-2" style={{ color: TEXT_PRIMARY }}>
               {formatPct(k.convRate)}
@@ -349,7 +354,7 @@ function SearchTermsTable({ terms, currency }: { terms: DashboardPayload["search
                 {currency === "IDR" ? formatIdr(t.costMicros) : t.costMicros / 1_000_000}
               </td>
               <td className="py-2" style={{ color: TEXT_PRIMARY }}>
-                {t.conversions.toFixed(1)}
+                {formatCount(t.conversions)}
               </td>
             </tr>
           ))}
@@ -404,7 +409,7 @@ function CampaignTable({ campaigns, currency }: { campaigns: DashboardPayload["c
               {c.clicks === 0 ? "–" : formatIdr(c.costMicros / c.clicks)}
             </td>
             <td className="py-2" style={{ color: TEXT_PRIMARY }}>
-              {c.conversions.toFixed(1)}
+              {formatCount(c.conversions)}
             </td>
             <td className="py-2" style={{ color: TEXT_PRIMARY }}>
               {formatPct(c.convRate)}
@@ -540,14 +545,14 @@ export default function Dashboard() {
             />
             <StatTile
               label="WhatsApp Click conversions"
-              value={data.kpis.whatsappClickConversions.current.toFixed(1)}
+              value={formatCount(data.kpis.whatsappClickConversions.current)}
               deltaPct={data.kpis.whatsappClickConversions.deltaPct}
               goodDirection="up"
               sub="The one Ads-reported action that means a real lead"
             />
             <StatTile
               label="Ads-reported conversions (all actions)"
-              value={data.kpis.adsReportedConversions.current.toFixed(1)}
+              value={formatCount(data.kpis.adsReportedConversions.current)}
               deltaPct={data.kpis.adsReportedConversions.deltaPct}
               goodDirection="up"
               sub="Includes Directions/Calls — see breakdown below"

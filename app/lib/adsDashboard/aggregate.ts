@@ -133,14 +133,14 @@ export function buildDashboardPayload(
   const sum = (rows: typeof daily, pick: (d: (typeof daily)[number]) => number) =>
     rows.reduce((acc, d) => acc + pick(d), 0);
 
-  const currentSpend = sum(currentDaily, (d) => d.costMicros);
-  const previousSpend = sum(previousDaily, (d) => d.costMicros);
-  const currentClicks = sum(currentDaily, (d) => d.clicks);
-  const currentImpressions = sum(currentDaily, (d) => d.impressions);
-  const previousClicks = sum(previousDaily, (d) => d.clicks);
-  const previousImpressions = sum(previousDaily, (d) => d.impressions);
-  const currentConversions = sum(currentDaily, (d) => d.conversions);
-  const previousConversions = sum(previousDaily, (d) => d.conversions);
+  const currentSpend = sum(currentDaily, (d) => d.costMicros ?? 0);
+  const previousSpend = sum(previousDaily, (d) => d.costMicros ?? 0);
+  const currentClicks = sum(currentDaily, (d) => d.clicks ?? 0);
+  const currentImpressions = sum(currentDaily, (d) => d.impressions ?? 0);
+  const previousClicks = sum(previousDaily, (d) => d.clicks ?? 0);
+  const previousImpressions = sum(previousDaily, (d) => d.impressions ?? 0);
+  const currentConversions = sum(currentDaily, (d) => d.conversions ?? 0);
+  const previousConversions = sum(previousDaily, (d) => d.conversions ?? 0);
 
   const leadsByDate = (start: string, end: string) =>
     leadEvents.filter((e) => inRange(e.loggedAt.slice(0, 10), start, end));
@@ -178,9 +178,9 @@ export function buildDashboardPayload(
       costMicros: 0,
       conversions: 0,
     };
-    acc.clicks += row.clicks;
-    acc.costMicros += row.costMicros;
-    acc.conversions += row.conversions;
+    acc.clicks += row.clicks ?? 0;
+    acc.costMicros += row.costMicros ?? 0;
+    acc.conversions += row.conversions ?? 0;
     campaignTotals.set(row.campaignId, acc);
   }
   const campaigns = [...campaignTotals.entries()]
@@ -209,9 +209,9 @@ export function buildDashboardPayload(
       allConversions: 0,
       valueMicros: 0,
     };
-    acc.conversions += row.conversions;
-    acc.allConversions += row.allConversions;
-    acc.valueMicros += row.conversionsValueMicros;
+    acc.conversions += row.conversions ?? 0;
+    acc.allConversions += row.allConversions ?? 0;
+    acc.valueMicros += row.conversionsValueMicros ?? 0;
     conversionActionTotals.set(row.conversionActionName, acc);
   }
   const conversionsByAction = [...conversionActionTotals.entries()]
@@ -227,34 +227,42 @@ export function buildDashboardPayload(
   const whatsappConversionsFor = (start: string, end: string) =>
     (snapshot?.conversionActionDaily ?? [])
       .filter((row) => row.conversionActionName === "WhatsApp Click" && inRange(row.date, start, end))
-      .reduce((acc, row) => acc + row.conversions, 0);
+      .reduce((acc, row) => acc + (row.conversions ?? 0), 0);
 
   const keywords = [...(snapshot?.keywords ?? [])]
-    .map((k) => ({
-      campaignName: k.campaignName,
-      adGroupName: k.adGroupName,
-      keywordId: k.keywordId,
-      keywordText: k.keywordText,
-      matchType: k.matchType,
-      status: k.status,
-      qualityScore: k.qualityScore,
-      clicks: k.clicks,
-      costMicros: k.costMicros,
-      conversions: k.conversions,
-      convRate: k.clicks === 0 ? 0 : k.conversions / k.clicks,
-    }))
+    .map((k) => {
+      const clicks = k.clicks ?? 0;
+      const conversions = k.conversions ?? 0;
+      return {
+        campaignName: k.campaignName,
+        adGroupName: k.adGroupName,
+        keywordId: k.keywordId,
+        keywordText: k.keywordText,
+        matchType: k.matchType,
+        status: k.status,
+        qualityScore: k.qualityScore ?? null,
+        clicks,
+        costMicros: k.costMicros ?? 0,
+        conversions,
+        convRate: clicks === 0 ? 0 : conversions / clicks,
+      };
+    })
     .sort((a, b) => b.costMicros - a.costMicros);
 
   const searchTerms = [...(snapshot?.searchTerms ?? [])]
-    .map((t) => ({
-      searchTerm: t.searchTerm,
-      campaignName: t.campaignName,
-      adGroupName: t.adGroupName,
-      clicks: t.clicks,
-      costMicros: t.costMicros,
-      conversions: t.conversions,
-      zeroConversionSpend: t.conversions === 0 && t.costMicros >= ZERO_CONVERSION_SPEND_THRESHOLD_MICROS,
-    }))
+    .map((t) => {
+      const conversions = t.conversions ?? 0;
+      const costMicros = t.costMicros ?? 0;
+      return {
+        searchTerm: t.searchTerm,
+        campaignName: t.campaignName,
+        adGroupName: t.adGroupName,
+        clicks: t.clicks ?? 0,
+        costMicros,
+        conversions,
+        zeroConversionSpend: conversions === 0 && costMicros >= ZERO_CONVERSION_SPEND_THRESHOLD_MICROS,
+      };
+    })
     .sort((a, b) => b.costMicros - a.costMicros);
 
   return {
