@@ -17,9 +17,6 @@ const BLACK = rgb(0, 0, 0);
 const PAGE_WIDTH = 595.28;
 const MARGIN = 34;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
-const TOP_MARGIN = 16;
-const BOTTOM_MARGIN = 16;
-const GAP_AFTER_LOGO = 14;
 
 // TYPE | DESCRIPTION | COLOUR | UNIT | PRICE/UNIT | TOTAL
 const COL_WIDTHS = [58, 195, 58, 40, 88, CONTENT_WIDTH - (58 + 195 + 58 + 40 + 88)];
@@ -69,63 +66,35 @@ function wrapText(text: string, font: PDFFont, size: number, maxWidth: number): 
   return lines.length ? lines : [""];
 }
 
+const PAGE_HEIGHT = 841.89;
+
 export async function generateInvoicePdf(input: InvoiceInput): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
+  const page = doc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   const font = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
 
   const logoBytes = await readFile(path.join(process.cwd(), "public", "img", "header-logo.png"));
   const logo = await doc.embedPng(logoBytes);
-  const logoDims = logo.scale(0.2);
+  const logoDims = logo.scale(0.24);
 
-  // ---- Precompute every section's height so the page can be sized to fit the
-  // content exactly (no big blank top margin, no wasted space at the bottom —
-  // the whole thing is meant to print on half an A4 sheet). ----
-  const headerRowHeights = [22, 18, 22];
-  const headerHeight = headerRowHeights.reduce((a, b) => a + b, 0);
-  const tableHeaderHeight = 14;
-
-  const descMaxWidth = COL_WIDTHS[1] - 6;
-  const itemLineHeight = 10;
-  const rowPadding = 6;
-  const itemRowHeights = input.items.map((item) => {
-    const lines = wrapText(item.description, font, 8, descMaxWidth);
-    return Math.max(18, lines.length * itemLineHeight + rowPadding);
-  });
-  const itemsHeight = Math.max(36, itemRowHeights.reduce((a, b) => a + b, 0));
-
-  const footerRowHeight = 14;
-  const footerHeight = footerRowHeight * 3;
-  const bankRowHeight = 16;
-  const sigRowHeight = 38;
-
-  const contentHeight =
-    TOP_MARGIN +
-    logoDims.height +
-    GAP_AFTER_LOGO +
-    headerHeight +
-    tableHeaderHeight +
-    itemsHeight +
-    footerHeight +
-    bankRowHeight +
-    sigRowHeight +
-    BOTTOM_MARGIN;
-
-  const page = doc.addPage([PAGE_WIDTH, contentHeight]);
-
-  let y = contentHeight - TOP_MARGIN;
+  // Only the top margin (the gap above the logo) was shrunk here — every other
+  // spacing value below (gap after logo, header/item/footer/signature rows) is
+  // unchanged from the original full-A4, single-page layout.
+  let y = PAGE_HEIGHT - 14;
 
   // Logo + INVOICE title
   page.drawImage(logo, { x: MARGIN, y: y - logoDims.height, width: logoDims.width, height: logoDims.height });
   drawText(page, "INVOICE", MARGIN, y - logoDims.height - 4, bold, 20, { align: "right", maxWidth: CONTENT_WIDTH });
-  y -= logoDims.height + GAP_AFTER_LOGO;
+  y -= logoDims.height + 20;
 
   // ---- Header info box ----
   const headerTop = y;
   const headerLeftWidth = 300;
   const headerRightX = MARGIN + headerLeftWidth;
   const headerRightWidth = CONTENT_WIDTH - headerLeftWidth;
-  const rowHeights = headerRowHeights;
+  const rowHeights = [24, 20, 28];
+  const headerHeight = rowHeights.reduce((a, b) => a + b, 0);
 
   // Outer box + vertical dividers
   page.drawRectangle({ x: MARGIN, y: headerTop - headerHeight, width: CONTENT_WIDTH, height: headerHeight, borderColor: BLACK, borderWidth: 1 });
@@ -166,6 +135,7 @@ export async function generateInvoicePdf(input: InvoiceInput): Promise<Uint8Arra
   y = headerTop - headerHeight;
 
   // ---- Item table header ----
+  const tableHeaderHeight = 16;
   const headers = ["TYPE", "DESCRIPTION", "COLOUR", "UNIT", "PRICE/UNIT", "TOTAL"];
   page.drawRectangle({ x: MARGIN, y: y - tableHeaderHeight, width: CONTENT_WIDTH, height: tableHeaderHeight, borderColor: BLACK, borderWidth: 1 });
   headers.forEach((h, i) => {
@@ -174,6 +144,14 @@ export async function generateInvoicePdf(input: InvoiceInput): Promise<Uint8Arra
   y -= tableHeaderHeight;
 
   // ---- Item rows ----
+  const descMaxWidth = COL_WIDTHS[1] - 6;
+  const itemLineHeight = 10;
+  const rowPadding = 6;
+  const itemRowHeights = input.items.map((item) => {
+    const lines = wrapText(item.description, font, 8, descMaxWidth);
+    return Math.max(20, lines.length * itemLineHeight + rowPadding);
+  });
+  const itemsHeight = Math.max(200, itemRowHeights.reduce((a, b) => a + b, 0));
   const tableTop = y;
 
   page.drawRectangle({ x: MARGIN, y: tableTop - itemsHeight, width: CONTENT_WIDTH, height: itemsHeight, borderColor: BLACK, borderWidth: 1 });
@@ -207,6 +185,9 @@ export async function generateInvoicePdf(input: InvoiceInput): Promise<Uint8Arra
 
   // ---- SAY / totals footer ----
   const hasOngkir = input.ongkir > 0;
+  const totalsRows = hasOngkir ? 3 : 1;
+  const footerRowHeight = 16;
+  const footerHeight = footerRowHeight * 3;
   const footerLeftWidth = CONTENT_WIDTH * 0.62;
   const footerRightX = MARGIN + footerLeftWidth;
 
@@ -239,11 +220,13 @@ export async function generateInvoicePdf(input: InvoiceInput): Promise<Uint8Arra
   y -= footerHeight;
 
   // ---- Bank account line ----
+  const bankRowHeight = 20;
   page.drawRectangle({ x: MARGIN, y: y - bankRowHeight, width: CONTENT_WIDTH, height: bankRowHeight, borderColor: BLACK, borderWidth: 1 });
   drawText(page, BANK_ACCOUNT_LINE, MARGIN + 6, y - 13, font, 8.5);
   y -= bankRowHeight;
 
   // ---- Signature row ----
+  const sigRowHeight = 50;
   const sigColWidth = CONTENT_WIDTH / 3;
   page.drawRectangle({ x: MARGIN, y: y - sigRowHeight, width: CONTENT_WIDTH, height: sigRowHeight, borderColor: BLACK, borderWidth: 1 });
   page.drawLine({ start: { x: MARGIN + sigColWidth, y }, end: { x: MARGIN + sigColWidth, y: y - sigRowHeight }, thickness: 1, color: BLACK });
