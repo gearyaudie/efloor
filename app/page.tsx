@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { client } from "@/sanity.client";
-import AllProducts from "./components/AllProducts";
-import MarketingGrid from "./components/MarketingGrid";
-import ProjectsSnippet from "./components/ProjectsSnippet";
-import HeroSwiper from "./components/HeroSwiper";
 import FAQSection from "./components/FaqSection";
-import MainProductsSwiper from "./components/MainProductsSwiper";
+import WhatsAppButton from "./components/WhatsAppButton";
+import { WhatsAppDot } from "./components/icons";
+import Hero from "./components/home/Hero";
+import StatsStrip from "./components/home/StatsStrip";
+import FeaturedProducts from "./components/home/FeaturedProducts";
+import WhyEfloor from "./components/home/WhyEfloor";
+import Solutions from "./components/home/Solutions";
+import CategoryBento from "./components/home/CategoryBento";
+import ProjectsMarquee, { type HomeProject } from "./components/home/ProjectsMarquee";
+import HowToUse from "./components/home/HowToUse";
+import ProductGrid, { type HomeProduct } from "./components/home/ProductGrid";
+import ClosingCta from "./components/home/ClosingCta";
+import RevealOnScroll from "./components/home/RevealOnScroll";
 import { SITE_URL } from "./seo.config";
 import { MARKETPLACES } from "./static/business";
 import { WHATSAPP_NUMBER } from "./lib/whatsapp";
@@ -23,43 +30,17 @@ export const metadata: Metadata = {
   },
 };
 
-type SanityProduct = {
-  _id: string;
-  name: string;
-  slug: {
-    current: string;
-  };
-  desc: string;
-  price: number;
-  image: {
-    asset: {
-      url: string;
-    };
-  };
-};
-
-type SanityB2BProject = {
-  _id: string;
-  type?: string;
-  namaBarang?: string;
-  namaPT?: string;
-  photo?: {
-    asset?: {
-      url: string;
-    };
-  };
-};
-
 export default async function Home() {
-  let sanityProducts: SanityProduct[] = [];
+  let sanityProducts: HomeProduct[] = [];
   try {
-    sanityProducts = await client.fetch<SanityProduct[]>(`
+    sanityProducts = await client.fetch<HomeProduct[]>(`
       *[_type == "product"]{
         _id,
         name,
         slug,
         desc,
         price,
+        priceVariants[]{label, price},
         image {
           asset->{
             url
@@ -71,9 +52,9 @@ export default async function Home() {
     console.error("Sanity fetch error:", err);
   }
 
-  let sanityProjects: SanityB2BProject[] = [];
+  let sanityProjects: HomeProject[] = [];
   try {
-    sanityProjects = await client.fetch<SanityB2BProject[]>(`
+    sanityProjects = await client.fetch<HomeProject[]>(`
       *[_type == "b2bProject"] | order(tanggal desc)[0...12]{
         _id,
         type,
@@ -113,71 +94,41 @@ export default async function Home() {
   };
 
   return (
-    <div>
+    <div className="bg-paper">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <RevealOnScroll />
 
-      <div className="flex flex-col md:flex-row justify-center px-4 md:px-8 py-10 md:py-20 gap-10 md:gap-16 max-w-[1300px] mx-auto items-center">
-        <div className="w-full md:flex-1 flex justify-center">
-          <Image
-            src="/img/lantai-vinyl-rs.png"
-            alt="Instalasi lem vinyl EFLOOR di rumah sakit"
-            width={1200}
-            height={800}
-            priority
-            className="w-full max-w-[350px] md:max-w-[600px] h-auto"
-          />
-        </div>
-
-        <div className="w-full md:flex-1 text-center md:text-left">
-          <h1 className="text-2xl md:text-4xl font-semibold leading-snug">
-            Lem Vinyl & Karpet Paling Terpercaya #1
-          </h1>
-          <h2 className="mt-2 text-lg md:text-2xl font-normal text-[#808080]">
-            Penjualan Terbanyak di Shopee & Tokopedia
-          </h2>
-
-          <p className="pt-6 md:pt-10 text-sm md:text-base text-[#808080] leading-relaxed">
-            Kami adalah supplier lem vinyl eco friendly yang terpercaya dengan
-            penjualan terbanyak di platform marketplace Indonesia. Lem Vinyl
-            EFLOOR / Lem Karpet EFLOOR adalah pilihan terbaik untuk pemasangan
-            indoor di area perkantoran, kamar tidur bayi dan rumah sakit.
-            <br />
-            <br />
-            Berikut adalah keunggulan produk kami:
-          </p>
-
-          <ul className="list-disc text-left mx-auto md:mx-0 max-w-[500px] md:max-w-none pl-5 md:pl-6 pt-4 text-sm md:text-lg text-[#808080] space-y-2">
-            <li>Eco Friendly, Ramah Lingkungan (Lem Waterbased)</li>
-            <li>Tidak Berbau & Hampir Tidak Mengandung VOC</li>
-            <li>Lebih Hemat Karena Viskositas Tinggi (Kental)</li>
-            <li>Daya sebar yang luas, +- 8 - 10m2 per kg</li>
-            <li>Pelayanan untuk procurement yang mudah</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="flex justify-center items-center mx-auto max-w-[1400px]">
-        <HeroSwiper />
-      </div>
-
-      <div className="bg-[#f8f8f8]">
-        <ProjectsSnippet projects={sanityProjects} />
-      </div>
-
-      {/* MAIN PRODUCTS SWIPER (STATIC) */}
-      <MainProductsSwiper />
-
-      <MarketingGrid />
-
-      <FAQSection />
-
-      {/* SANITY PRODUCTS SECTION */}
-      <div className="bg-[#f8f8f8]" id="products">
-        <AllProducts products={sanityProducts} />
-      </div>
+      <Hero />
+      <StatsStrip />
+      <FeaturedProducts />
+      <WhyEfloor />
+      <Solutions />
+      <CategoryBento />
+      <ProjectsMarquee projects={sanityProjects} />
+      <HowToUse />
+      <ProductGrid products={sanityProducts} />
+      <FAQSection
+        aside={
+          <div className="mt-8 p-6 rounded-[28px] bg-white shadow-e1">
+            <b className="block text-[17px]">Masih ada pertanyaan?</b>
+            <p className="text-muted text-[14.5px] mt-1 mb-4">
+              Tim kami siap bantu hitung kebutuhan lem proyek Anda.
+            </p>
+            <WhatsAppButton
+              source="home-faq"
+              variant="plain"
+              className="inline-flex items-center gap-2.5 h-[42px] px-[18px] rounded-full bg-brand-gradient text-white text-sm font-semibold shadow-cta hover:-translate-y-0.5 transition-transform"
+            >
+              <WhatsAppDot />
+              Chat tim EFLOOR
+            </WhatsAppButton>
+          </div>
+        }
+      />
+      <ClosingCta />
     </div>
   );
 }

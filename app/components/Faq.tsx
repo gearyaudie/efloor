@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 export type FaqItem = { question: string; answer: string };
 
@@ -15,6 +15,7 @@ export default function Faq({
   title,
   subtitle,
   eyebrow = "FAQ",
+  aside,
 }: {
   items: FaqItem[];
   sectionId: string;
@@ -22,6 +23,9 @@ export default function Faq({
   title: string;
   subtitle: string;
   eyebrow?: string;
+  /** When set, the header and this content sit in a sticky left column
+   * beside the questions instead of centered above them. */
+  aside?: ReactNode;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -42,9 +46,15 @@ export default function Faq({
     })),
   };
 
+  const split = aside !== undefined;
+
   return (
     <section
-      className="max-w-[860px] mx-auto px-6 py-16 md:py-24"
+      className={
+        split
+          ? "max-w-[1200px] mx-auto px-4 md:px-8 pb-[72px] lg:pb-[104px] grid gap-10 lg:gap-16 lg:grid-cols-[0.8fr_1.2fr] items-start scroll-mt-24"
+          : "max-w-[860px] mx-auto px-6 py-16 md:py-24"
+      }
       id={sectionId}
       aria-label={ariaLabel}
     >
@@ -55,17 +65,31 @@ export default function Faq({
       />
 
       {/* Section header */}
-      <div className="text-center mb-12">
-        <p className="text-[#FF8E06] font-semibold text-sm uppercase tracking-widest mb-2">
-          {eyebrow}
-        </p>
-        <h2 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] leading-snug">
-          {title}
-        </h2>
-        <p className="mt-4 text-[#808080] text-base md:text-lg max-w-[560px] mx-auto">
-          {subtitle}
-        </p>
-      </div>
+      {split ? (
+        <div className="lg:sticky lg:top-28">
+          <p className="inline-flex items-center gap-2 text-brand-flame font-semibold text-[12.5px] uppercase tracking-[0.12em]">
+            <span className="w-[18px] h-0.5 rounded-full bg-brand-gradient" aria-hidden="true" />
+            {eyebrow}
+          </p>
+          <h2 className="mt-3.5 text-[28px] md:text-[34px] lg:text-[42px] leading-[1.15] font-semibold tracking-[-0.02em] text-ink text-balance">
+            {title}
+          </h2>
+          <p className="mt-3.5 text-muted text-base md:text-[17px]">{subtitle}</p>
+          {aside}
+        </div>
+      ) : (
+        <div className="text-center mb-12">
+          <p className="text-[#FF8E06] font-semibold text-sm uppercase tracking-widest mb-2">
+            {eyebrow}
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] leading-snug">
+            {title}
+          </h2>
+          <p className="mt-4 text-[#808080] text-base md:text-lg max-w-[560px] mx-auto">
+            {subtitle}
+          </p>
+        </div>
+      )}
 
       {/* FAQ list */}
       <dl className="space-y-3">
@@ -74,7 +98,11 @@ export default function Faq({
           return (
             <div
               key={index}
-              className="border border-[#e8e8e8] rounded-2xl overflow-hidden bg-white transition-shadow hover:shadow-sm"
+              className={
+                split
+                  ? `rounded-[20px] overflow-hidden bg-white transition-shadow ${isOpen ? "shadow-e2" : "shadow-e1"}`
+                  : "border border-[#e8e8e8] rounded-2xl overflow-hidden bg-white transition-shadow hover:shadow-sm"
+              }
             >
               <dt>
                 <button
