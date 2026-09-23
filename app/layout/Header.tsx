@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
-import FloatingWhatsapp from "../components/FloatingWhatsapp";
+import { WhatsAppDot } from "../components/icons";
+import { openWhatsApp } from "../lib/openWhatsApp";
 import { VERTICAL_PAGES } from "../static/verticals";
 import { ACCESSORY_PAGES } from "../static/accessories";
 
@@ -14,6 +15,13 @@ const MENUS = [
   { id: "list", label: "List & Aksesoris", links: ACCESSORY_PAGES },
 ];
 
+// Plain links after the dropdowns.
+const LINKS = [
+  { href: "/harga-lem-vinyl-karpet", label: "Harga" },
+  { href: "/projects", label: "Proyek" },
+  { href: "/blogs", label: "Artikel" },
+];
+
 function Chevron({ open }: { open: boolean }) {
   return (
     <svg
@@ -21,6 +29,7 @@ function Chevron({ open }: { open: boolean }) {
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
+      aria-hidden="true"
     >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
     </svg>
@@ -33,32 +42,15 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileOpenMenu, setMobileOpenMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const desktopMenusRef = useRef<HTMLDivElement>(null);
+  const desktopMenusRef = useRef<HTMLElement>(null);
 
-  // Only show the header shadow once the page has scrolled, instead of
-  // always rendering it.
+  // Only show the header border and shadow once the page has scrolled.
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const scrollToSection = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
-  ) => {
-    setMobileMenuOpen(false);
-    if (pathname !== "/") {
-      return;
-    }
-    e.preventDefault();
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      window.history.pushState(null, "", `/#${id}`);
-    }
-  };
 
   // Close any open dropdown when clicking outside the desktop nav
   useEffect(() => {
@@ -81,199 +73,170 @@ export default function Header() {
     setOpenMenu(null);
   }, [pathname]);
 
-  const desktopLinkClass =
-    "hover:cursor-pointer font-medium text-[#808080] text-md rounded-sm focus-visible:outline-2 focus-visible:outline-brand-navy focus-visible:outline-offset-4";
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
+
+  const pillClass = (active: boolean) =>
+    `inline-flex items-center gap-1 px-3.5 py-2 rounded-full text-[14.5px] font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-brand-flame focus-visible:outline-offset-2 ${
+      active ? "bg-surface text-ink" : "text-ink-soft hover:bg-surface hover:text-ink"
+    }`;
 
   return (
-    <header className="mb-16">
-      <FloatingWhatsapp />
-      <div
-        className={`fixed bg-white w-full top-0 z-50 transition-shadow duration-200 ${
-          scrolled ? "shadow-md" : "shadow-none"
-        }`}
-      >
-        <div className="max-w-[1400px] px-6 md:px-12 w-full mx-auto flex py-1 justify-between items-center">
-          <Link href="/">
-            <Image
-              src="/img/header-logo.png"
-              alt="EFLOOR - Distributor Lem Vinyl dan Lem Karpet Jakarta"
-              width={341}
-              height={103}
-              priority
-              className="max-w-[150px] w-auto h-auto p-2 hover:cursor-pointer"
-            />
+    <header
+      className={`sticky top-0 z-50 bg-paper/85 backdrop-blur-md backdrop-saturate-150 border-b transition-[border-color,box-shadow] duration-200 ${
+        scrolled
+          ? "border-line shadow-[0_6px_24px_-18px_rgba(0,0,0,0.25)]"
+          : "border-transparent"
+      }`}
+    >
+      <div className="max-w-[1200px] mx-auto px-4 md:px-8 h-16 lg:h-[76px] flex items-center gap-7">
+        <Link href="/" className="shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-brand-flame">
+          <Image
+            src="/img/header-logo.png"
+            alt="EFLOOR - Distributor Lem Vinyl dan Lem Karpet Jakarta"
+            width={341}
+            height={103}
+            priority
+            className="h-6 lg:h-[30px] w-auto"
+          />
+        </Link>
+
+        <nav
+          ref={desktopMenusRef}
+          aria-label="Utama"
+          className="hidden lg:flex items-center gap-1 ml-auto"
+        >
+          <Link href="/products" className={pillClass(isActive("/products"))}>
+            Produk
           </Link>
 
-          <div
-            ref={desktopMenusRef}
-            className="hidden gap-10 mr-0 md:flex lg:flex items-center"
-          >
+          {MENUS.map((menu) => (
+            <div className="relative" key={menu.id}>
+              <button
+                type="button"
+                className={pillClass(openMenu === menu.id)}
+                aria-expanded={openMenu === menu.id}
+                onClick={() =>
+                  setOpenMenu((prev) => (prev === menu.id ? null : menu.id))
+                }
+              >
+                {menu.label}
+                <Chevron open={openMenu === menu.id} />
+              </button>
+
+              {openMenu === menu.id && (
+                <div className="absolute top-[calc(100%+8px)] left-0 min-w-[264px] p-2 bg-white rounded-[18px] shadow-e3 z-50">
+                  {menu.links.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block px-3 py-2.5 rounded-[10px] text-sm text-ink-soft hover:bg-surface hover:text-ink transition-colors"
+                      onClick={() => setOpenMenu(null)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+
+          {LINKS.map((link) => (
+            <Link key={link.href} href={link.href} className={pillClass(isActive(link.href))}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <button
+          type="button"
+          className="hidden lg:inline-flex items-center gap-2.5 h-[42px] px-[18px] rounded-full bg-brand-gradient text-white text-sm font-semibold shadow-cta hover:-translate-y-0.5 transition-transform cursor-pointer"
+          onClick={() => openWhatsApp({ source: "header" })}
+        >
+          <WhatsAppDot />
+          Chat WhatsApp
+        </button>
+
+        {/* Mobile hamburger toggle */}
+        <button
+          type="button"
+          className="lg:hidden ml-auto grid place-items-center w-11 h-11 rounded-full bg-surface cursor-pointer"
+          aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav-panel"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+        >
+          <svg className="w-5 h-5 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            {mobileMenuOpen ? (
+              <path strokeLinecap="round" strokeWidth={2} d="M6 6l12 12M18 6 6 18" />
+            ) : (
+              <path strokeLinecap="round" strokeWidth={2} d="M4 7h16M4 12h16M4 17h10" />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile nav panel */}
+      {mobileMenuOpen && (
+        <div
+          id="mobile-nav-panel"
+          className="lg:hidden border-t border-line bg-paper px-4 md:px-8 pt-2 pb-5 flex flex-col max-h-[calc(100dvh-64px)] overflow-y-auto"
+        >
+          <Link href="/products" className="py-3 border-b border-line font-medium text-ink">
+            Produk
+          </Link>
+
+          {MENUS.map((menu) => (
+            <div key={menu.id} className="border-b border-line">
+              <button
+                type="button"
+                className="flex items-center justify-between py-3 font-medium text-ink w-full text-left cursor-pointer"
+                aria-expanded={mobileOpenMenu === menu.id}
+                onClick={() =>
+                  setMobileOpenMenu((prev) => (prev === menu.id ? null : menu.id))
+                }
+              >
+                {menu.label}
+                <Chevron open={mobileOpenMenu === menu.id} />
+              </button>
+              {mobileOpenMenu === menu.id && (
+                <div className="pl-4 pb-2 flex flex-col">
+                  {menu.links.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="py-2 text-sm text-ink-soft"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+
+          {LINKS.map((link) => (
             <Link
-              href="/#home"
-              className={desktopLinkClass}
-              onClick={(e) => scrollToSection(e, "home")}
+              key={link.href}
+              href={link.href}
+              className="py-3 border-b border-line font-medium text-ink"
+              onClick={() => setMobileMenuOpen(false)}
             >
-              Home
+              {link.label}
             </Link>
-            <Link href="/projects" className={desktopLinkClass}>
-              Projects
-            </Link>
-            <Link href="/harga-lem-vinyl-karpet" className={desktopLinkClass}>
-              Harga
-            </Link>
+          ))}
 
-            {MENUS.map((menu) => (
-              <div className="relative" key={menu.id}>
-                <button
-                  type="button"
-                  className="flex items-center gap-1 font-medium text-[#808080] text-md hover:text-[#FF8E06] transition-colors duration-200"
-                  aria-expanded={openMenu === menu.id}
-                  onClick={() =>
-                    setOpenMenu((prev) => (prev === menu.id ? null : menu.id))
-                  }
-                >
-                  {menu.label}
-                  <Chevron open={openMenu === menu.id} />
-                </button>
-
-                {openMenu === menu.id && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-60 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50">
-                    {menu.links.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className="block px-4 py-3 text-sm text-[#808080] font-medium hover:bg-orange-50 hover:text-[#FF8E06] cursor-pointer transition-colors duration-150"
-                        onClick={() => setOpenMenu(null)}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            <Link
-              href="/#products"
-              className={desktopLinkClass}
-              onClick={(e) => scrollToSection(e, "products")}
-            >
-              Products
-            </Link>
-            <Link href="/blogs" className={desktopLinkClass}>
-              Articles
-            </Link>
-          </div>
-
-          {/* Mobile hamburger toggle */}
           <button
             type="button"
-            className="md:hidden flex items-center justify-center w-10 h-10 -mr-2"
-            aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu"}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-nav-panel"
-            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="mt-4 inline-flex items-center justify-center gap-2.5 h-[52px] rounded-full bg-brand-gradient text-white font-semibold shadow-cta cursor-pointer"
+            onClick={() => openWhatsApp({ source: "header-mobile" })}
           >
-            <svg
-              className="w-6 h-6 text-[#4D4D4D]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {mobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
+            <WhatsAppDot />
+            Chat WhatsApp
           </button>
         </div>
-
-        {/* Mobile nav panel */}
-        {mobileMenuOpen && (
-          <div
-            id="mobile-nav-panel"
-            className="md:hidden border-t border-gray-100 bg-white px-6 py-4 flex flex-col gap-1 max-h-[calc(100vh-56px)] overflow-y-auto"
-          >
-            <Link
-              href="/#home"
-              className="py-3 font-medium text-[#808080]"
-              onClick={(e) => scrollToSection(e, "home")}
-            >
-              Home
-            </Link>
-            <Link
-              href="/projects"
-              className="py-3 font-medium text-[#808080]"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Projects
-            </Link>
-            <Link
-              href="/harga-lem-vinyl-karpet"
-              className="py-3 font-medium text-[#808080]"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Harga
-            </Link>
-
-            {MENUS.map((menu) => (
-              <div key={menu.id}>
-                <button
-                  type="button"
-                  className="flex items-center justify-between py-3 font-medium text-[#808080] w-full text-left"
-                  aria-expanded={mobileOpenMenu === menu.id}
-                  onClick={() =>
-                    setMobileOpenMenu((prev) => (prev === menu.id ? null : menu.id))
-                  }
-                >
-                  {menu.label}
-                  <Chevron open={mobileOpenMenu === menu.id} />
-                </button>
-                {mobileOpenMenu === menu.id && (
-                  <div className="pl-4 flex flex-col gap-1">
-                    {menu.links.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className="py-2 text-sm text-[#808080]"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            <Link
-              href="/#products"
-              className="py-3 font-medium text-[#808080]"
-              onClick={(e) => scrollToSection(e, "products")}
-            >
-              Products
-            </Link>
-            <Link
-              href="/blogs"
-              className="py-3 font-medium text-[#808080]"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Articles
-            </Link>
-          </div>
-        )}
-      </div>
+      )}
     </header>
   );
 }

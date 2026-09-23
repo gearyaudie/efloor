@@ -9,6 +9,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-poppins: var(--font-poppins);
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
 
   /* Brand tokens — the same colors already used ad hoc as arbitrary hex
      values (bg-[#FF8E06] etc.) across the site, now addressable as
@@ -18,6 +20,47 @@
   --color-brand-gray: #808080;
   --color-brand-red: #c62020;
   --color-brand-navy: #1a2e5a;
+
+  /* Home redesign palette: warm neutrals around the orange→red logo
+     gradient, plus a deeper navy for the footer. */
+  --color-brand-flame: #f2561d;
+  --color-brand-navy-deep: #122247;
+  --color-orange-tint: #fff3e4;
+  --color-paper: #fafaf7;
+  --color-surface: #f2f0eb;
+  --color-ink: #18171b;
+  --color-ink-soft: #3b3a40;
+  --color-muted: #6b6a70;
+  --color-line: #e8e5de;
+  --color-wa: #1faf55;
+
+  /* Soft, Material-style elevation: e1 resting, e2 hover/open, e3 menus. */
+  --shadow-e1: 0 1px 2px rgba(24, 23, 27, 0.05), 0 2px 8px rgba(24, 23, 27, 0.04);
+  --shadow-e2: 0 1px 2px rgba(24, 23, 27, 0.06), 0 12px 32px -8px rgba(24, 23, 27, 0.12);
+  --shadow-e3: 0 2px 4px rgba(24, 23, 27, 0.06), 0 24px 56px -12px rgba(24, 23, 27, 0.2);
+  --shadow-cta: 0 10px 24px -8px rgba(242, 86, 29, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  --animate-bob: bob 6s ease-in-out infinite;
+  --animate-marquee: marquee 60s linear infinite;
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes bob {
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(calc(-50% - 9px));
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
 
   /* Type scale, for new/touched components to move away from bespoke
      text-[Npx] arbitrary values. */
@@ -36,8 +79,81 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-poppins);
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The logo's orange→red sweep, used for primary CTAs and accents. */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(118deg, #ff8e06 0%, #f2561d 55%, #c62020 100%);
+}
+
+@utility text-brand-gradient {
+  background-image: linear-gradient(118deg, #ff8e06 0%, #f2561d 55%, #c62020 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The ridges a notched glue trowel leaves on the floor, faded in from one
+   corner. Used as the hero backdrop and in the closing CTA. */
+@utility trowel-ridges {
+  background-image: repeating-linear-gradient(
+    -32deg,
+    transparent 0 14px,
+    rgba(242, 86, 29, 0.16) 14px 20px
+  );
+  -webkit-mask-image: radial-gradient(120% 90% at 100% 100%, #000 25%, transparent 70%);
+  mask-image: radial-gradient(120% 90% at 100% 100%, #000 25%, transparent 70%);
+}
+
+/* Faint dot grid behind white-background packshots. */
+@utility dot-grid {
+  background-color: #fff;
+  background-image: radial-gradient(rgba(24, 23, 27, 0.09) 1px, transparent 1.2px);
+  background-size: 16px 16px;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Scroll reveal. RevealOnScroll only adds .reveal to blocks that start below
+   the fold, so the first screen is always visible without JavaScript. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

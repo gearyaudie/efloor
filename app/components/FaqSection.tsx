@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Faq from "./Faq";
 import { PRICING_FAQ_ITEMS } from "../static/pricingFaq";
 
@@ -40,9 +41,11 @@ const faqs = [
   ...PRICING_FAQ_ITEMS,
 ];
 
-export default function FAQSection() {
+/** Home-page FAQ; `aside` switches it to the two-column layout. */
+export default function FAQSection({ aside }: { aside?: ReactNode }) {
   return (
     <Faq
+      aside={aside}
       items={faqs}
       sectionId="faq"
       ariaLabel="Pertanyaan yang Sering Diajukan"
