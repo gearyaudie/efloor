@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sheets": "node --experimental-strip-types --no-warnings scripts/product-sheets/build.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^11.1.0",

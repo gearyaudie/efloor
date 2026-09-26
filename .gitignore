@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Generated product-sheet PDFs (rebuild with `npm run sheets`)
+scripts/product-sheets/out/

@@ -1,0 +1,8 @@
+{
+  "_comment": "Prices (Rp per batang) printed on the product sheets. A label listed here wins over Sanity; anything not listed is taken from Sanity when it is reachable, otherwise printed as 'Tanya harga'.",
+  "siku": [
+    { "label": "L8", "price": 87000 }
+  ],
+  "plint": [],
+  "adaptasi": []
+}
