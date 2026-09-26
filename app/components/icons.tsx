@@ -94,3 +94,59 @@ export const ClockIcon = (p: IconProps) => (
     <path d="M12 7.5V12l3 2" />
   </Stroke>
 );
+export const CheckIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" strokeWidth={2.2} />
+  </Stroke>
+);
+export const XIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" strokeWidth={2} />
+  </Stroke>
+);
+export const LayersIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+    <path d="m3 13 9 5 9-5" />
+  </Stroke>
+);
+export const BoltIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" />
+  </Stroke>
+);
+export const StoreIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M4 9.5 5.5 4h13L20 9.5M4 9.5h16M4 9.5v10.5h16V9.5" />
+    <path d="M9.5 20v-5.5h5V20" />
+  </Stroke>
+);
+export const ReceiptIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" />
+    <path d="M9 8h6M9 12h6M9 16h3" />
+  </Stroke>
+);
+export const BoxIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+    <path d="m4 7.5 8 4.5 8-4.5M12 12v9" />
+  </Stroke>
+);
+export const PinIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" />
+    <circle cx="12" cy="9.5" r="2.5" />
+  </Stroke>
+);
+export const DownloadIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" strokeWidth={2} />
+  </Stroke>
+);
+export const ShieldIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M12 3 5 6v5.5c0 4.4 3 8 7 9.5 4-1.5 7-5.1 7-9.5V6l-7-3Z" />
+    <path d="m9 12 2 2 4-4" />
+  </Stroke>
+);

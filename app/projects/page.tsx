@@ -1,157 +1,64 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import { client } from "@/sanity.client";
 import { SITE_URL } from "../seo.config";
-import WhatsAppButton from "../components/WhatsAppButton";
 import Breadcrumbs from "../components/Breadcrumbs";
 import RelatedVerticals from "../components/RelatedVerticals";
 import FaqSectionProjects from "../components/FaqSectionProjects";
+import RevealOnScroll from "../components/home/RevealOnScroll";
+import ClosingCta from "../components/home/ClosingCta";
+import ProjectsHero from "../components/projects/ProjectsHero";
+import ClientStrip from "../components/projects/ClientStrip";
+import ProjectGallery from "../components/projects/ProjectGallery";
+import ProjectKit from "../components/projects/ProjectKit";
+import ProcurementFlow from "../components/projects/ProcurementFlow";
+import type { B2BProject } from "../components/projects/types";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR)
 
-export type B2BProject = {
-  _id: string;
-  type?: string;
-  namaBarang?: string;
-  namaPT?: string;
-  quantity?: string;
-  tanggal?: string;
-  photo?: {
-    asset?: {
-      url: string;
-    };
-  };
-};
-
 export default async function Projects() {
-  const projects: B2BProject[] = await client.fetch(
-    `*[_type == "b2bProject"] | order(tanggal desc){
-      _id,
-      type,
-      namaBarang,
-      namaPT,
-      quantity,
-      tanggal,
-      photo {
-        asset->{
-          url
+  let projects: B2BProject[] = [];
+  try {
+    projects = await client.fetch<B2BProject[]>(
+      `*[_type == "b2bProject"] | order(tanggal desc){
+        _id,
+        type,
+        namaBarang,
+        namaPT,
+        quantity,
+        tanggal,
+        photo {
+          asset->{
+            url
+          }
         }
-      }
-    }`,
-  );
+      }`,
+    );
+  } catch (err) {
+    console.error("Sanity fetch error:", err);
+  }
 
   return (
-    <>
+    <div className="bg-paper">
+      <RevealOnScroll />
       <Breadcrumbs
         items={[{ label: "Home", href: "/" }, { label: "Projects" }]}
       />
-      <div className="max-w-[1300px] mx-auto my-20 flex flex-col justify-center items-center px-6">
-        <h1 className="text-[40px] font-medium text-center">
-          Supplier &amp; Distributor Lem Vinyl dan <br />
-          Karpet untuk Proyek
-        </h1>
-        <h2 className="text-[#535353] text-center max-w-[700px] lg:mt-6">
-          Kami adalah distributor lem vinyl/karpet yang terpercaya. Menangani
-          segala kebutuhan projek dan procurement dengan harga yang bersaing.
-          Telah melayani kontraktor, proyek dan procurement dengan tingkat
-          kepuasan tinggi.
-        </h2>
-        <div>
-          <WhatsAppButton
-            product="penawaran harga untuk proyek"
-            source="projects-quotation"
-            variant="plain"
-            className="inline-block bg-[#FF8E06] py-3 px-4 shadow-md text-white ml-4 rounded-lg mt-8 hover:cursor-pointer"
-          >
-            Dapatkan Quotation Sekarang!
-          </WhatsAppButton>
-        </div>
-        <div>
-          <Image
-            src="/img/projects-img.png"
-            alt="Proyek pemasangan lem vinyl dan lem karpet EFLOOR untuk kontraktor dan procurement"
-            width={1293}
-            height={726}
-            className="max-w-[800px] my-12 w-[400px] lg:w-full h-auto"
-          />
-        </div>
-        <hr className="w-full max-w-[800px] py-4 border-[#ccc]" />
-        <div>
-          <h2 className="text-[28px] font-medium">
-            Lem Karpet/Vinyl Efloor Max
-          </h2>
-          <h3 className="my-4 max-w-[700px]">
-            Tersedia dalam kemasan 4 KG dan 20 KG, jenis paling populer &
-            pilihan terbaik untuk <b>procurement dan kontraktor</b>. Semua data,
-            kelengkapan dan keperluan (TDS dan MSDS), sudah lengkap, hubungi
-            Whatsapp kami untuk info lebih lanjut.
-          </h3>
-
-          <div className="flex gap-4 mt-6">
-            <a href="/docs/msds.pdf" target="_blank" rel="noopener" className="inline-block bg-[#FF8E06] py-3 px-4 shadow-md text-white rounded-lg hover:cursor-pointer">
-              Cek MSDS
-            </a>
-            <a href="/docs/tds.pdf" target="_blank" rel="noopener" className="inline-block border-1 border-[#FF8E06] py-3 px-4 shadow-md text-[#FF8E06] rounded-lg hover:cursor-pointer">
-              Cek TDS
-            </a>
-          </div>
-        </div>
-        <hr className="w-full max-w-[800px] py-4 border-[#ccc] mt-8" />
-        <div>
-          <div className="font-medium text-[30px] pb-4 max-w-[800px] mx-auto text-center">
-            History Proyek Kami
-          </div>
-          <p className="text-[#808080] text-center max-w-[700px] mx-auto mb-8">
-            Sebagian riwayat pengiriman procurement Lem Vinyl &amp; Lem Karpet
-            EFLOOR ke berbagai perusahaan dan kontraktor.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
-            {projects?.map((item) =>
-              item.photo?.asset?.url ? (
-                <div
-                  key={item._id}
-                  className="rounded-2xl border border-[#e8e8e8] overflow-hidden bg-white"
-                >
-                  <Image
-                    src={item.photo.asset.url}
-                    alt={`${item.type ?? ""} ${item.namaBarang ?? ""} untuk ${item.namaPT ?? ""}`}
-                    width={700}
-                    height={700}
-                    className="w-full h-auto"
-                  />
-                  <div className="p-4 text-left">
-                    {item.type && (
-                      <div className="text-xs font-semibold uppercase tracking-widest text-[#FF8E06] mb-1">
-                        {item.type}
-                      </div>
-                    )}
-                    <div className="font-medium text-[#1a1a1a]">
-                      {item.namaPT}
-                    </div>
-                    <div className="text-sm text-[#808080] mt-1">
-                      {item.namaBarang}
-                      {item.quantity ? ` · ${item.quantity}` : ""}
-                    </div>
-                    {item.tanggal && (
-                      <div className="text-xs text-[#808080] mt-2">
-                        {new Date(item.tanggal).toLocaleDateString("id-ID", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : null,
-            )}
-          </div>
-        </div>
+      <ProjectsHero projects={projects} />
+      <ClientStrip projects={projects} />
+      <ProcurementFlow />
+      <ProjectGallery projects={projects} />
+      <ProjectKit />
+      <div className="pt-[72px] lg:pt-[104px]">
+        <FaqSectionProjects />
       </div>
-
-      <FaqSectionProjects />
+      <ClosingCta
+        title="Punya proyek atau tender yang sedang berjalan?"
+        lede="Kirim kebutuhan volume dan lokasi proyek Anda. Kami siapkan penawaran harga beserta dokumen pendukungnya."
+        source="projects-closing"
+        product="penawaran harga untuk proyek"
+      />
       <RelatedVerticals currentHref="/projects" />
-    </>
+    </div>
   );
 }
 

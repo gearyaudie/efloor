@@ -1,147 +1,102 @@
 import { Metadata } from "next";
-import Image from "next/image";
-import WhatsAppButton from "../components/WhatsAppButton";
 import FaqSectionHPL from "../components/FaqSectionHPL";
 import { SITE_URL } from "../seo.config";
 import Breadcrumbs from "../components/Breadcrumbs";
 import RelatedVerticals from "../components/RelatedVerticals";
+import RevealOnScroll from "../components/home/RevealOnScroll";
+import ClosingCta from "../components/home/ClosingCta";
+import HplHero from "../components/hpl/HplHero";
+import SectionNav from "../components/hpl/SectionNav";
+import HplBenefits from "../components/hpl/HplBenefits";
+import HplComparison from "../components/hpl/HplComparison";
+import HplMaterials from "../components/hpl/HplMaterials";
+import HplSteps from "../components/hpl/HplSteps";
+import HplPricing from "../components/hpl/HplPricing";
+import HplSpecs from "../components/hpl/HplSpecs";
+import { HPL_PACKS } from "../static/hpl";
+
+const NAV = [
+  { id: "keunggulan", label: "Keunggulan" },
+  { id: "material", label: "Material" },
+  { id: "cara-pakai", label: "Cara pakai" },
+  { id: "harga", label: "Harga" },
+  { id: "spesifikasi", label: "Spesifikasi" },
+  { id: "faq-lem-hpl", label: "FAQ" },
+];
 
 export default function LemHPL() {
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Lem HPL EFLOOR",
+    brand: { "@type": "Brand", name: "EFLOOR" },
+    description:
+      "Lem HPL waterbased EFLOOR untuk HPL, veneer, PVC sheet, MDF, multiplek dan particle board. Daya rekat kuat, cepat tack, cukup oles satu sisi.",
+    image: HPL_PACKS.map((p) => `${SITE_URL}${p.img}`),
+    url: `${SITE_URL}/lem-hpl-pvc-sheet`,
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "IDR",
+      lowPrice: Math.min(...HPL_PACKS.map((p) => p.price)),
+      highPrice: Math.max(...HPL_PACKS.map((p) => p.price)),
+      offerCount: HPL_PACKS.length,
+      availability: "https://schema.org/InStock",
+    },
+  };
+
   return (
-    <>
-      <Breadcrumbs
-        items={[{ label: "Home", href: "/" }, { label: "Lem HPL & PVC Sheet" }]}
+    <div className="bg-paper">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
-      {/* Section 1 */}
-      <div className="flex flex-col md:flex-row items-center gap-10 px-4 my-16 md:my-20 max-w-[1200px] mx-auto">
-        <div className="flex-1 flex justify-center">
-          <Image
-            src="/img/Lem-hpl-banner.png"
-            alt="Lem HPL EFLOOR"
-            width={1200}
-            height={800}
-            className="w-full max-w-[500px] h-auto"
-          />
-        </div>
-
-        <div className="flex-1 text-center md:text-left">
-          <h1 className="text-2xl md:text-3xl mb-4 font-semibold">
-            Lem HPL EFLOOR — Daya Rekat Kuat, Cepat Kering, Mudah Diaplikasikan
-          </h1>
-          <h3 className="text-base md:text-lg leading-relaxed">
-            Lem HPL EFLOOR dirancang khusus untuk pemasangan HPL, veneer, PVC
-            sheet, MDF, multiplek, dan berbagai material interior furniture.
-            Ideal untuk kitchen set, kabinet, meja, dan produksi furniture
-            harian — cukup oles di satu sisi, lebih hemat dan lebih praktis.
-          </h3>
-          <div className="pt-8">
-            <WhatsAppButton product="Lem HPL & PVC Sheet" source="landing-hero">
-              Dapatkan Sekarang!
-            </WhatsAppButton>
-          </div>
-        </div>
-      </div>
-
+      <RevealOnScroll />
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Produk", href: "/products" },
+          { label: "Lem HPL & PVC Sheet" },
+        ]}
+      />
+      <HplHero />
+      <SectionNav
+        items={NAV}
+        source="hpl-subnav"
+        product="Lem HPL EFLOOR"
+        cta="Pesan Lem HPL"
+      />
+      <HplBenefits />
+      <HplComparison />
+      <HplMaterials />
+      <HplSteps />
+      <HplPricing />
+      <HplSpecs />
       <FaqSectionHPL />
-
-      {/* Section 2 */}
-      <div className="flex flex-col max-w-[800px] mx-auto text-center px-4 pb-12 pt-10 md:pt-16"></div>
-      <div className="bg-[#f4f4f4] p-10">
-        <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-center mb-12 mt-4">
-          Kenapa pilih kami?
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 justify-items-center max-w-[1300px] mx-auto">
-          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
-            <div>
-              <Image
-                src="/img/kpk-1.png"
-                alt="Ikon daya rekat kuat dan tahan lama"
-                width={150}
-                height={150}
-                className="w-[150px] mx-auto"
-              />
-              <h3 className="font-semibold text-center text-2xl">
-                Daya Rekat Kuat & Tahan Lama
-              </h3>
-              <div className="text-[#808080] text-center">
-                Lem HPL EFLOOR memberikan daya rekat yang kuat dan tahan lama
-                pada berbagai material interior — HPL, veneer, PVC sheet, MDF,
-                multiplek, hingga particle board. Tidak mudah mengelupas
-                meskipun digunakan setiap hari.
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
-            <Image
-              src="/img/kpk-2.png"
-              alt="Ikon cepat tack, cepat menempel"
-              width={150}
-              height={150}
-              className="w-[150px] mx-auto"
-            />
-            <h3 className="font-semibold text-center text-2xl">
-              Cepat Tack, Cepat Menempel
-            </h3>
-            <div className="text-[#808080] text-center">
-              Formula lem HPL kami memiliki waktu tack yang cepat sehingga
-              proses pemasangan lebih efisien. Cocok untuk tukang, workshop
-              furniture, dan produksi kabinet atau kitchen set berskala harian.
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
-            <Image
-              src="/img/kpk-3.png"
-              alt="Ikon cukup oles satu sisi"
-              width={150}
-              height={150}
-              className="w-[150px] mx-auto"
-            />
-            <h3 className="font-semibold text-center text-2xl">
-              Cukup Oles Satu Sisi
-            </h3>
-            <div className="text-[#808080] text-center">
-              Berbeda dengan lem lain yang harus dioleskan di dua permukaan, Lem
-              HPL EFLOOR cukup diaplikasikan pada salah satu sisi saja. Lebih
-              hemat, lebih mudah diratakan, dan tetap menghasilkan sambungan
-              yang kuat.
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white max-w-[300px] p-6 min-h-[420px] flex flex-col items-center gap-4">
-            <Image
-              src="/img/kpk-4.png"
-              alt="Ikon serbaguna untuk furniture"
-              width={150}
-              height={150}
-              className="w-[150px] mx-auto"
-            />
-            <h3 className="font-semibold text-center text-2xl">
-              Serbaguna untuk Furniture
-            </h3>
-            <div className="text-[#808080] text-center">
-              Dari kitchen set, kabinet, meja, hingga panel interior dan
-              produksi custom furniture — Lem HPL EFLOOR siap untuk semua
-              kebutuhan. Kami adalah pilihan terpercaya kontraktor dan pengrajin
-              furniture di seluruh Indonesia.
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <ClosingCta
+        title="Siap mengerjakan kitchen set berikutnya?"
+        lede="Tanya stok, harga volume, atau cara pakai Lem HPL EFLOOR. Tim kami membalas di jam kerja."
+        source="hpl-closing"
+        product="Lem HPL EFLOOR"
+      />
       <RelatedVerticals currentHref="/lem-hpl-pvc-sheet" />
-    </>
+    </div>
   );
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title:
-      "Lem HPL Berkualitas | Daya Rekat Kuat untuk Furniture & Interior - EFLOOR",
+      "Lem HPL Waterbased 1 Sisi – Harga 1, 4 & 20 KG | Daya Rekat Kuat - EFLOOR",
 
     description:
-      "Lem HPL EFLOOR: daya rekat kuat, cepat kering, cukup oles satu sisi. Cocok untuk HPL, veneer, PVC sheet, MDF, multiplek, kitchen set, kabinet, dan produksi furniture harian.",
+      "Lem HPL EFLOOR waterbased: cukup oles satu sisi, cepat tack, daya rekat kuat. Untuk HPL, veneer, PVC sheet, MDF & multiplek. Harga mulai Rp62.000 (1 KG), 4 KG & 20 KG.",
 
     keywords: [
       "lem hpl",
+      "lem hpl waterbased",
+      "lem hpl 1 sisi",
+      "harga lem hpl",
+      "lem hpl 20 kg",
       "lem hpl berkualitas",
       "lem hpl furniture",
       "lem hpl kitchen set",
@@ -152,10 +107,10 @@ export async function generateMetadata(): Promise<Metadata> {
       "lem hpl daya rekat kuat",
       "lem hpl efloor",
       "lem untuk hpl",
+      "pengganti lem kuning",
       "lem furniture indonesia",
       "lem kitchen set",
       "lem kabinet",
-      "lem interior panel",
     ],
 
     alternates: {
