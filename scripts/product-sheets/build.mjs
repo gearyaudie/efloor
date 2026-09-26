@@ -64,7 +64,9 @@ async function variantsFor(config, overrides) {
         ? []
         : [{ label: "Per batang" }];
   for (const o of overrides) {
-    const hit = base.find((v) => same(v.label, o.label));
+    // A single-variant product takes the single manual price whatever Sanity calls it.
+    const only = base.length === 1 && overrides.length === 1 ? base[0] : undefined;
+    const hit = base.find((v) => same(v.label, o.label)) ?? only;
     if (hit) hit.price = o.price;
     else base.push({ ...o });
   }
