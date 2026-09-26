@@ -150,3 +150,17 @@ export const ShieldIcon = (p: IconProps) => (
     <path d="m9 12 2 2 4-4" />
   </Stroke>
 );
+export const PaletteIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.9 1.4-1.9-.5-1.1.2-2.3 1.4-2.3H17a4 4 0 0 0 4-4c0-5.4-4-9.8-9-9.8Z" />
+    <circle cx="7.5" cy="11" r="1.2" />
+    <circle cx="10" cy="7" r="1.2" />
+    <circle cx="15" cy="7.5" r="1.2" />
+  </Stroke>
+);
+export const RulerIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="m3 16.5 13.5-13.5 4.5 4.5L7.5 21z" />
+    <path d="m7 12.5 2 2M10 9.5l1.5 1.5M13 6.5l2 2" />
+  </Stroke>
+);

@@ -6,7 +6,7 @@ import { WhatsAppDot } from "../icons";
 
 /**
  * Sticky in-page navigation under the site header, as on long product pages:
- * jump links that highlight the section in view, plus a compact buy button
+ * jump links that highlight the section being read, plus a compact buy button
  * so the CTA is never more than a tap away.
  */
 export default function SectionNav({
@@ -20,23 +20,33 @@ export default function SectionNav({
   product: string;
   cta?: string;
 }) {
-  const [current, setCurrent] = useState(items[0]?.id);
+  const [current, setCurrent] = useState<string | undefined>();
 
   useEffect(() => {
-    if (!("IntersectionObserver" in window)) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setCurrent(entry.target.id);
-        }
-      },
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    for (const { id } of items) {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    }
-    return () => observer.disconnect();
+    // The current section is the last one whose top has passed the upper
+    // ~40% of the viewport; above the first section, nothing is current.
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.4;
+      let active: string | undefined;
+      for (const { id } of items) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) active = id;
+      }
+      setCurrent(active);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [items]);
 
   return (

@@ -6,7 +6,7 @@ import RelatedVerticals from "../components/RelatedVerticals";
 import RevealOnScroll from "../components/home/RevealOnScroll";
 import ClosingCta from "../components/home/ClosingCta";
 import HplHero from "../components/hpl/HplHero";
-import SectionNav from "../components/hpl/SectionNav";
+import SectionNav from "../components/product/SectionNav";
 import HplBenefits from "../components/hpl/HplBenefits";
 import HplComparison from "../components/hpl/HplComparison";
 import HplMaterials from "../components/hpl/HplMaterials";

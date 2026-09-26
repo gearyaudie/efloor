@@ -2,6 +2,8 @@
 // list. One place to edit when the price list changes — the pricing tiers,
 // the hero size picker and the Product structured data all read it.
 
+import { rupiah } from "../lib/format";
+
 export const HPL_PRICE_UPDATED = "September 2026";
 
 export type HplPack = {
@@ -37,12 +39,7 @@ export const HPL_PACKS: HplPack[] = [
   },
 ];
 
-/** Formats rupiah as "Rp62.000" — deterministic, so server and client match. */
-export function rupiah(n: number) {
-  return `Rp${Math.round(n)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-}
+export { rupiah };
 
 export const perKg = (p: HplPack) => p.price / p.kg;
 
