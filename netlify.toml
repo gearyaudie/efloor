@@ -3,6 +3,12 @@
 # defaults to.
 [build.environment]
   NODE_VERSION = "20.9.0"
+  # The build started hitting V8's own heap ceiling ("FATAL ERROR:
+  # Ineffective mark-compacts near heap limit") once the full page redesign
+  # (many more routes, components, and static params) started actually
+  # reaching Sanity in production. This raises Node's heap budget for the
+  # build process only — it has no effect on anything at runtime.
+  NODE_OPTIONS = "--max-old-space-size=4096"
   # GOOGLE_ADS_CUSTOMER_ID is a Google Ads account number, not a credential —
   # it's already public in docs/ads/baseline-2026-09-16.md ("985-990-2435")
   # and hardcoded as googleAdsClient.ts's fallback default. Netlify's secret
