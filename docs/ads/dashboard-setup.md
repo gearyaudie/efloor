@@ -128,7 +128,11 @@ to both the Next.js runtime and standalone functions on Netlify, and to
   some name things differently), so `parseSheet.ts` resolves columns by
   header text with a keyword-matching fallback for the channel column —
   if a new month's tab comes back misclassified, that's the first place to
-  check.
+  check. A tag containing both "google" and "repeat" (e.g. "Whatsapp
+  Google Repeat") classifies as its own `google_repeat` channel — shown in
+  the channel table but **excluded from the ROAS figure**, since crediting
+  the current period's ad spend for a reorder that involved no new ad
+  click would overstate how well that spend is performing.
 - **Customer name, phone number, and notes are read from the sheet into
   the function's memory** (fetching a row necessarily fetches every
   column) but are **never written** into what gets stored in Blobs or
