@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { DashboardPayload, DateRange } from "@/app/lib/adsDashboard/aggregate";
+import type { SalesPayload } from "@/app/lib/salesData/aggregate";
 
 const SERIES_PAID = "#2a78d6"; // categorical slot 1
 const SERIES_OTHER = "#eb6834"; // categorical slot 2
@@ -373,6 +374,55 @@ function SearchTermsTable({ terms, currency }: { terms: DashboardPayload["search
   );
 }
 
+const CHANNEL_LABELS: Record<string, string> = {
+  google: "Google (tagged)",
+  shopee: "Shopee",
+  tokopedia: "Tokopedia",
+  whatsapp: "WhatsApp (other)",
+  other: "Other / unclassified",
+};
+
+function SalesChannelTable({ channels }: { channels: SalesPayload["channels"] }) {
+  if (channels.length === 0) {
+    return (
+      <p className="text-sm" style={{ color: TEXT_MUTED }}>
+        No sales logged in this range yet.
+      </p>
+    );
+  }
+  const total = channels.reduce((acc, c) => acc + c.revenueMicros, 0);
+  return (
+    <table className="w-full text-left text-sm">
+      <thead>
+        <tr style={{ color: TEXT_SECONDARY }}>
+          <th className="pb-2 font-medium">Channel</th>
+          <th className="pb-2 font-medium">Revenue</th>
+          <th className="pb-2 font-medium">Orders</th>
+          <th className="pb-2 font-medium">% of revenue</th>
+        </tr>
+      </thead>
+      <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
+        {channels.map((c) => (
+          <tr key={c.channel} className="border-t" style={{ borderColor: GRIDLINE }}>
+            <td className="py-2 pr-2" style={{ color: TEXT_PRIMARY }}>
+              {CHANNEL_LABELS[c.channel] ?? c.channel}
+            </td>
+            <td className="py-2" style={{ color: TEXT_PRIMARY }}>
+              {formatIdr(c.revenueMicros)}
+            </td>
+            <td className="py-2" style={{ color: TEXT_PRIMARY }}>
+              {formatNumber(c.orders)}
+            </td>
+            <td className="py-2" style={{ color: TEXT_PRIMARY }}>
+              {total === 0 ? "–" : formatPct(c.revenueMicros / total)}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 function CampaignTable({ campaigns, currency }: { campaigns: DashboardPayload["campaigns"]; currency: string }) {
   if (campaigns.length === 0) {
     return (
@@ -425,6 +475,7 @@ export default function Dashboard() {
   const router = useRouter();
   const [range, setRange] = useState<DateRange>("mtd");
   const [data, setData] = useState<DashboardPayload | null>(null);
+  const [sales, setSales] = useState<SalesPayload | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -439,7 +490,10 @@ export default function Dashboard() {
         return res.json();
       })
       .then((json) => {
-        if (!cancelled && json?.ok) setData(json.data);
+        if (!cancelled && json?.ok) {
+          setData(json.data);
+          setSales(json.sales);
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -620,6 +674,46 @@ export default function Dashboard() {
               <SearchTermsTable terms={data.searchTerms} currency={data.currency} />
             </div>
           </div>
+
+          {sales ? (
+            <div className="mt-6 rounded-xl border border-[rgba(11,11,11,0.10)] bg-[#fcfcfb] p-4">
+              <h2 className="text-sm font-semibold" style={{ color: TEXT_PRIMARY }}>
+                Sales by channel
+              </h2>
+              <p className="text-xs" style={{ color: TEXT_MUTED }}>
+                From the sales log spreadsheet. &quot;Google&quot; is a label someone typed in when they judged an
+                order came from a Google Ads click — it isn&apos;t matched automatically against ad clicks or ref
+                codes, so treat it as only as reliable as that manual tagging.
+              </p>
+              {sales.googleRoas ? (
+                <div className="mt-3 flex flex-wrap gap-6">
+                  <div>
+                    <p className="text-xs" style={{ color: TEXT_SECONDARY }}>
+                      Revenue tagged &quot;Google&quot;
+                    </p>
+                    <p className="text-lg font-semibold" style={{ color: TEXT_PRIMARY }}>
+                      {formatIdr(sales.googleRoas.revenueMicros)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs" style={{ color: TEXT_SECONDARY }}>
+                      Google Ads ROAS
+                    </p>
+                    <p className="text-lg font-semibold" style={{ color: TEXT_PRIMARY }}>
+                      {sales.googleRoas.roas.toFixed(2)}x
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <p className="mt-3 text-sm" style={{ color: TEXT_MUTED }}>
+                  No ad spend for this range yet, so ROAS can&apos;t be computed.
+                </p>
+              )}
+              <div className="mt-4 overflow-x-auto">
+                <SalesChannelTable channels={sales.channels} />
+              </div>
+            </div>
+          ) : null}
         </>
       )}
     </div>
