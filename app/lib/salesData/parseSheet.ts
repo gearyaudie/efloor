@@ -16,6 +16,7 @@ function findColumn(headerRow: unknown[], test: (normalized: string) => boolean)
 
 export function classifyChannel(rawChannel: string): SalesChannel {
   const text = rawChannel.toLowerCase();
+  if (text.includes("google") && text.includes("repeat")) return "google_repeat";
   if (text.includes("google")) return "google";
   if (text.includes("shopee")) return "shopee";
   if (text.includes("tokopedia")) return "tokopedia";

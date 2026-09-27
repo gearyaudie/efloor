@@ -376,6 +376,7 @@ function SearchTermsTable({ terms, currency }: { terms: DashboardPayload["search
 
 const CHANNEL_LABELS: Record<string, string> = {
   google: "Google (tagged)",
+  google_repeat: "Google (repeat order, excluded from ROAS)",
   shopee: "Shopee",
   tokopedia: "Tokopedia",
   whatsapp: "WhatsApp (other)",
@@ -683,7 +684,10 @@ export default function Dashboard() {
               <p className="text-xs" style={{ color: TEXT_MUTED }}>
                 From the sales log spreadsheet. &quot;Google&quot; is a label someone typed in when they judged an
                 order came from a Google Ads click — it isn&apos;t matched automatically against ad clicks or ref
-                codes, so treat it as only as reliable as that manual tagging.
+                codes, so treat it as only as reliable as that manual tagging. Repeat orders from a
+                Google-acquired customer are shown separately and excluded from the ROAS figure below, since
+                crediting this period&apos;s ad spend for a reorder that involved no new ad click would
+                overstate it.
               </p>
               {sales.googleRoas ? (
                 <div className="mt-3 flex flex-wrap gap-6">

@@ -21,8 +21,15 @@ export type SalesRow = {
  * Ads click — it is not verified against an actual ad click or ref code, so
  * treat any Google-attributed revenue/ROAS as only as reliable as that
  * manual tagging.
+ *
+ * "google_repeat" is a separate bucket for orders tagged as a repeat
+ * purchase from a customer originally acquired via Google (e.g. "Whatsapp
+ * Google Repeat") — shown in the channel breakdown but deliberately
+ * excluded from the Google Ads ROAS figure, since crediting the *current*
+ * period's ad spend for revenue from a repeat order that involved no new
+ * ad click would overstate how well that spend is performing.
  */
-export type SalesChannel = "google" | "shopee" | "tokopedia" | "whatsapp" | "other";
+export type SalesChannel = "google" | "google_repeat" | "shopee" | "tokopedia" | "whatsapp" | "other";
 
 export type SalesSnapshot = {
   fetchedAt: string; // ISO timestamp
