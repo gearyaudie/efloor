@@ -8,8 +8,8 @@ const toMinutes = (hhmm: string) => {
   return h * 60 + m;
 };
 
-/** "Buka sekarang" / "Tutup" badge in Jakarta time. Renders nothing until
- * mounted, so the static HTML never shows a stale status. */
+/** "Buka sekarang" / "Tutup" badge in Jakarta time. Renders an empty
+ * placeholder until mounted, so the static HTML never shows a stale status. */
 export default function OpenStatus() {
   const [open, setOpen] = useState<boolean | null>(null);
 
@@ -35,10 +35,11 @@ export default function OpenStatus() {
     return () => window.clearInterval(id);
   }, []);
 
-  if (open === null) return null;
+  // Same box before the check runs, so the heading below never shifts.
+  if (open === null) return <span aria-hidden="true" className="inline-block h-[26px]" />;
   return (
     <span
-      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[12.5px] font-semibold ${
+      className={`inline-flex items-center gap-2 h-[26px] px-3 rounded-full text-[12.5px] font-semibold ${
         open ? "bg-wa/10 text-wa" : "bg-surface text-muted"
       }`}
     >

@@ -64,11 +64,10 @@ export default async function Projects() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title:
-      "Procurement Lem Vinyl & Lem Karpet | Distributor Grosir untuk Kontraktor & Proyek PT – EFLOOR",
+    title: "Supplier Lem Vinyl & Karpet untuk Proyek & Procurement | EFLOOR",
 
     description:
-      "EFLOOR adalah distributor lem vinyl dan lem karpet khusus untuk kebutuhan procurement, kontraktor, dan proyek skala besar. Melayani bulk purchase lem vinyl putih dan lem karpet untuk tender PT, gedung perkantoran, hotel, rumah sakit, dan proyek interior. Produk industri: Lem Vinyl Putih EFLOOR MAX dan Lem Karpet kualitas proyek dengan harga grosir Jakarta.",
+      "Distributor lem vinyl dan lem karpet untuk kontraktor, procurement, dan tender PT. Harga proyek, TDS & MSDS lengkap, dan pengiriman ke lokasi proyek.",
 
     keywords: [
       // Core procurement intent

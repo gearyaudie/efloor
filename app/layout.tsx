@@ -29,6 +29,9 @@ const plexMono = IBM_Plex_Mono({
   weight: ["500"],
   variable: "--font-plex-mono",
   display: "swap",
+  // Only small spec figures use it; don't let it compete with Poppins and
+  // the CSS for the first paint.
+  preload: false,
 });
 
 export const metadata: Metadata = {
