@@ -9,6 +9,7 @@ import ProductSlider from "../components/ProductSlider";
 import VariantSelector from "../components/VariantSelector";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import Link from "next/link";
+import { parseIdrAmount } from "@/app/lib/parseIdrAmount";
 
 // Sanity "desc"/"content" fields have been observed as either a plain string
 // or an array of portable text blocks depending on the document, so accept
@@ -31,18 +32,6 @@ function portableTextToPlainText(value: unknown, maxLength = 155): string {
   return text.length > maxLength
     ? `${text.slice(0, maxLength).trim()}...`
     : text;
-}
-
-// Sanity's priceVariants[].price has been observed as either a plain number
-// or a formatted string (e.g. "Rp150.000") depending on how it was entered —
-// same defensive-shape reasoning as portableTextToPlainText above.
-function parsePriceMicros(value: unknown): number | null {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string") {
-    const digits = value.replace(/[^0-9]/g, "");
-    if (digits) return Number(digits);
-  }
-  return null;
 }
 
 type PageProps = {
@@ -112,7 +101,7 @@ export default async function ProductsPage(props: PageProps) {
     portableTextToPlainText(product.desc) || portableTextToPlainText(product.content);
 
   const prices = (product.priceVariants ?? [])
-    .map((v: { price?: unknown }) => parsePriceMicros(v?.price))
+    .map((v: { price?: unknown }) => parseIdrAmount(v?.price))
     .filter((p: number | null): p is number => p !== null);
 
   let offers: Record<string, unknown> | undefined;
