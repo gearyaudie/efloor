@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Faq from "./Faq";
 
 const faqs = [
@@ -48,7 +49,7 @@ const faqs = [
   },
 ];
 
-export default function FaqSectionRumahSakit() {
+export default function FaqSectionRumahSakit({ aside }: { aside?: ReactNode } = {}) {
   return (
     <Faq
       items={faqs}
@@ -56,6 +57,7 @@ export default function FaqSectionRumahSakit() {
       ariaLabel="Pertanyaan yang Sering Diajukan tentang Lem Vinyl Rumah Sakit"
       title="Pertanyaan Seputar Lem Vinyl untuk Rumah Sakit"
       subtitle="Temukan jawaban lengkap seputar penggunaan Lem Vinyl EFLOOR di rumah sakit — keamanan, cara pakai, jenis vinyl, hingga pembelian."
+      aside={aside}
     />
   );
 }

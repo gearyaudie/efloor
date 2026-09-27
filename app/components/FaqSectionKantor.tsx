@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Faq from "./Faq";
 import { PRICING_FAQ_ITEMS } from "../static/pricingFaq";
 
@@ -37,7 +38,7 @@ const faqs = [
   ...PRICING_FAQ_ITEMS,
 ];
 
-export default function FaqSectionKantor() {
+export default function FaqSectionKantor({ aside }: { aside?: ReactNode } = {}) {
   return (
     <Faq
       items={faqs}
@@ -45,6 +46,7 @@ export default function FaqSectionKantor() {
       ariaLabel="Pertanyaan yang Sering Diajukan tentang Lem Karpet Kantor"
       title="Pertanyaan Seputar Lem Karpet Kantor EFLOOR"
       subtitle="Temukan jawaban lengkap seputar Lem Karpet Kantor EFLOOR — keunggulan, cara pakai, hingga cara pembelian."
+      aside={aside}
     />
   );
 }

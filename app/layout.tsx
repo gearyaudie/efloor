@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import { IBM_Plex_Mono, Poppins } from "next/font/google";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
@@ -12,6 +12,7 @@ import {
 } from "./lib/tracking-config";
 import Header from "./layout/Header";
 import PromoBanner from "./components/PromoBanner";
+import FloatingWhatsapp from "./components/FloatingWhatsapp";
 import Footer from "./layout/Footer";
 import AttributionCapture from "./components/AttributionCapture";
 
@@ -19,6 +20,14 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"], // choose what you need
   variable: "--font-poppins",
+  display: "swap",
+});
+
+// Spec figures (m²/kg, pack sizes) are set in mono, like a data sheet.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -53,13 +62,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" className={`${poppins.variable} ${plexMono.variable}`}>
       <body>
         <AttributionCapture />
-        <Header />
-        {/* Promo Banner */}
         <PromoBanner />
-        <div className={poppins.variable}>
+        {/* Outside the header: its backdrop blur would otherwise become the
+            containing block for this fixed button. */}
+        <FloatingWhatsapp />
+        <Header />
+        <div>
           {children}
 
           {TRACKING_ENABLED && (

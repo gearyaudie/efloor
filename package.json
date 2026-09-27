@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sheets": "node --experimental-strip-types --no-warnings scripts/product-sheets/build.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^11.1.0",
@@ -19,6 +20,7 @@
     "googleapis": "^182.0.0",
     "next": "^16.1.6",
     "next-sanity": "^11.5.5",
+    "pdf-lib": "^1.17.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "swiper": "^12.0.2",

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Faq from "./Faq";
 import { PRICING_FAQ_ITEMS } from "../static/pricingFaq";
 
@@ -33,7 +34,7 @@ const faqs = [
   ...PRICING_FAQ_ITEMS,
 ];
 
-export default function FaqSectionTangerang() {
+export default function FaqSectionTangerang({ aside }: { aside?: ReactNode } = {}) {
   return (
     <Faq
       items={faqs}
@@ -41,6 +42,7 @@ export default function FaqSectionTangerang() {
       ariaLabel="Pertanyaan yang Sering Diajukan tentang Lem Vinyl dan Lem Karpet di Tangerang"
       title="Pertanyaan Seputar Lem Vinyl & Lem Karpet EFLOOR di Tangerang"
       subtitle="Temukan jawaban lengkap seputar Lem Vinyl & Lem Karpet EFLOOR untuk kebutuhan distributor, pabrik, dan procurement di Tangerang."
+      aside={aside}
     />
   );
 }

@@ -1,4 +1,7 @@
 import Faq from "./Faq";
+import WhatsAppButton from "./WhatsAppButton";
+import { WhatsAppDot } from "./icons";
+import { HPL_PACKS, HPL_PRICE_UPDATED, rupiah } from "../static/hpl";
 
 const faqs = [
   {
@@ -38,6 +41,17 @@ const faqs = [
       "Ya. Lem HPL EFLOOR dirancang untuk memenuhi kebutuhan tukang, workshop furniture, maupun produksi skala besar. Dengan formula cepat tack, mudah diratakan, dan hemat pemakaian karena cukup satu sisi, produktivitas pengerjaan furniture menjadi lebih tinggi.",
   },
   {
+    question: "Berapa harga Lem HPL EFLOOR?",
+    answer: `Harga toko (offline) per ${HPL_PRICE_UPDATED}: ${HPL_PACKS.map(
+      (p) => `${p.label} ${rupiah(p.price)}`,
+    ).join(", ")}. Kemasan yang lebih besar lebih hemat per kilogram. Untuk pembelian volume/produksi rutin, hubungi kami via WhatsApp untuk harga khusus.`,
+  },
+  {
+    question: "Apa bedanya Lem HPL EFLOOR dengan lem kuning biasa?",
+    answer:
+      "Lem kuning umumnya berbasis solvent, berbau menyengat, dan harus dioleskan di dua permukaan. Lem HPL EFLOOR berbasis air (waterbased), minim bau, dan cukup dioleskan di satu sisi — sehingga lebih hemat lem, lebih cepat dikerjakan, dan lebih nyaman dipakai di ruang tertutup.",
+  },
+  {
     question: "Di mana bisa membeli Lem HPL EFLOOR?",
     answer:
       "Lem HPL EFLOOR tersedia melalui WhatsApp kami, kunjungan langsung ke toko, atau melalui Shopee dan Tokopedia dengan nama toko efloor.id. Untuk kebutuhan volume besar seperti produksi furniture atau proyek interior, hubungi tim kami via WhatsApp untuk konsultasi dan harga terbaik.",
@@ -51,7 +65,28 @@ export default function FaqSectionHPL() {
       sectionId="faq-lem-hpl"
       ariaLabel="Pertanyaan yang Sering Diajukan tentang Lem HPL"
       title="Pertanyaan Seputar Lem HPL EFLOOR"
-      subtitle="Temukan jawaban lengkap seputar Lem HPL EFLOOR — keunggulan, cara pakai, material yang cocok, hingga cara pembelian."
+      subtitle="Keunggulan, cara pakai, material yang cocok, hingga harga dan cara pembelian."
+      aside={<HplFaqAside />}
     />
+  );
+}
+
+function HplFaqAside() {
+  return (
+    <div className="mt-8 p-6 rounded-[28px] bg-white shadow-e1">
+      <b className="block text-[17px]">Masih ragu soal material Anda?</b>
+      <p className="text-muted text-[14.5px] mt-1 mb-4">
+        Kirim foto atau detail pekerjaan, tim kami bantu cek kecocokannya.
+      </p>
+      <WhatsAppButton
+        source="hpl-faq"
+        product="Lem HPL EFLOOR"
+        variant="plain"
+        className="inline-flex items-center gap-2.5 h-[42px] px-[18px] rounded-full bg-brand-gradient text-white text-sm font-semibold shadow-cta hover:-translate-y-0.5 transition-transform"
+      >
+        <WhatsAppDot />
+        Konsultasi gratis
+      </WhatsAppButton>
+    </div>
   );
 }
