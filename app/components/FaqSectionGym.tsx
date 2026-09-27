@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Faq from "./Faq";
 
 const faqs = [
@@ -34,7 +35,7 @@ const faqs = [
   },
 ];
 
-export default function FaqSectionGym() {
+export default function FaqSectionGym({ aside }: { aside?: ReactNode } = {}) {
   return (
     <Faq
       items={faqs}
@@ -42,6 +43,7 @@ export default function FaqSectionGym() {
       ariaLabel="Pertanyaan yang Sering Diajukan tentang Lem Karpet Gym"
       title="Pertanyaan Seputar Lem Karpet Gym EFLOOR"
       subtitle="Temukan jawaban lengkap seputar Lem Karpet Gym EFLOOR — keunggulan, cara pakai, hingga cara pembelian."
+      aside={aside}
     />
   );
 }

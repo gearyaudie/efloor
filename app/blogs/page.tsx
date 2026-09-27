@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { client } from "@/sanity.client";
 import Image from "next/image";
 import Link from "next/link";
-import RecentArticle from "../components/RecentArticles";
+import { client } from "@/sanity.client";
+import Breadcrumbs from "../components/Breadcrumbs";
+import RevealOnScroll from "../components/home/RevealOnScroll";
+import ClosingCta from "../components/home/ClosingCta";
+import PostCard, { type PostCardData } from "../components/blog/PostCard";
+import { ArrowIcon } from "../components/icons";
+import { formatPostDate, readingMinutes } from "../lib/blog";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Artikel & Tips Lem Vinyl, Lem Karpet | EFLOOR",
@@ -20,66 +27,138 @@ export type Post = {
   content: any[];
   img: any;
   excerpt: string;
+  _createdAt?: string;
 };
 
-export default async function Blogs() {
-  const posts: Post[] = await client.fetch(
-    `*[_type == "post"]{
-      _id,
-      title,
-      slug,
-      content,
-      excerpt,
-      img {
-        asset->{
-          url
-        }
-      }
-    }`,
-  );
+const TOPICS = [
+  { href: "/harga-lem-vinyl-karpet", label: "Daftar harga lem" },
+  { href: "/lem-vinyl-rumah-sakit", label: "Lem vinyl rumah sakit" },
+  { href: "/lem-karpet-kantor", label: "Lem karpet kantor" },
+  { href: "/list-siku-step-nosing", label: "List siku & step nosing" },
+  { href: "/lem-hpl-pvc-sheet", label: "Lem HPL" },
+];
 
-  // Get the latest post (first one)
-  const latestPost = posts.length > 0 ? posts[0] : null;
-  // Exclude latest from the rest
-  const recentPosts = posts.slice(1);
+export default async function Blogs() {
+  let posts: Post[] = [];
+  try {
+    posts = await client.fetch<Post[]>(
+      `*[_type == "post" && defined(slug.current)] | order(_createdAt desc){
+        _id,
+        title,
+        slug,
+        content,
+        excerpt,
+        _createdAt,
+        img {
+          asset->{
+            url
+          }
+        }
+      }`,
+    );
+  } catch (err) {
+    console.error("Sanity fetch error:", err);
+  }
+
+  const cards: PostCardData[] = posts.map((p) => ({
+    slug: p.slug.current,
+    title: p.title,
+    excerpt: p.excerpt,
+    img: p.img?.asset?.url,
+    date: formatPostDate(p._createdAt),
+    minutes: readingMinutes(p.content),
+  }));
+  const [latest, ...rest] = cards;
 
   return (
-    <div className="p-4 text-black text-center mx-auto max-w-[1300px]">
-      {/* Main article */}
-      {latestPost && (
-        <div className="flex justify-center items-center my-20 gap-10 flex-col px-4 md:flex-row lg:flex-row">
-          <div className="flex-1">
-            <Link href={`/blogs/${latestPost.slug.current}`}>
-              <div className="relative w-full aspect-video rounded-[20px] overflow-hidden hover:opacity-90 transition-all duration-300 cursor-pointer">
-                <Image
-                  src={latestPost.img?.asset?.url}
-                  alt={latestPost.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+    <div className="bg-paper">
+      <RevealOnScroll />
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Artikel" }]} />
+
+      <section className="max-w-[1200px] mx-auto px-4 md:px-8 pt-8 pb-12 lg:pt-12">
+        <span className="inline-flex items-center gap-2 text-[12.5px] font-semibold uppercase tracking-[0.12em] text-brand-flame">
+          <span className="w-[18px] h-0.5 rounded-full bg-brand-gradient" aria-hidden="true" />
+          Artikel &amp; panduan
+        </span>
+        <h1 className="mt-3.5 text-[34px] md:text-[46px] leading-[1.06] font-bold tracking-[-0.035em] max-w-[18ch]">
+          Tips pemasangan lantai dari tim <span className="text-brand-gradient">EFLOOR</span>
+        </h1>
+        <p className="mt-4 text-base md:text-lg text-muted max-w-[58ch]">
+          Cara pakai lem vinyl dan karpet, memilih list yang tepat, dan panduan
+          untuk kontraktor dan procurement.
+        </p>
+        <nav aria-label="Topik populer" className="mt-7 flex flex-wrap gap-2">
+          {TOPICS.map((t) => (
+            <Link
+              key={t.href}
+              href={t.href}
+              className="px-3.5 py-1.5 rounded-full bg-white shadow-e1 text-[13.5px] font-medium text-ink-soft hover:text-ink hover:shadow-e2 transition-shadow"
+            >
+              {t.label}
             </Link>
-          </div>
-          <div className="flex-1 flex flex-col text-left">
-            <div className="text-[#535353] text-[16px]">
-              Home & Decor | 5 min read
+          ))}
+        </nav>
+      </section>
+
+      {latest ? (
+        <section className="max-w-[1200px] mx-auto px-4 md:px-8">
+          <Link
+            href={`/blogs/${latest.slug}`}
+            className="group grid lg:grid-cols-[1.15fr_0.85fr] rounded-[28px] md:rounded-[36px] bg-white shadow-e1 hover:shadow-e2 transition-shadow overflow-hidden"
+          >
+            <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[380px] bg-surface overflow-hidden">
+              <Image
+                src={latest.img ?? "/img/blog-placeholder.png"}
+                alt={latest.title}
+                fill
+                priority
+                sizes="(min-width: 1024px) 660px, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
             </div>
-            <Link href={`/blogs/${latestPost.slug.current}`}>
-              <div className="text-[28px] font-medium pt-2 hover:underline cursor-pointer md:text-[32px] lg:text-[32px]">
-                {latestPost.title}
+            <div className="flex flex-col p-6 md:p-10">
+              <span className="self-start px-2.5 py-0.5 rounded-full bg-orange-tint text-brand-flame text-[12px] font-semibold">
+                Artikel terbaru
+              </span>
+              <h2 className="mt-4 text-[24px] md:text-[32px] font-semibold leading-[1.15] tracking-[-0.02em] group-hover:text-brand-flame transition-colors">
+                {latest.title}
+              </h2>
+              {latest.excerpt && <p className="mt-3 text-[15.5px] md:text-[17px] text-muted leading-relaxed line-clamp-4">{latest.excerpt}</p>}
+              <div className="mt-auto pt-6 flex items-center justify-between gap-4">
+                <span className="font-mono text-[12.5px] text-muted">
+                  {[latest.date, `${latest.minutes} menit baca`].filter(Boolean).join(" · ")}
+                </span>
+                <span className="w-11 h-11 rounded-full grid place-items-center bg-ink text-white shrink-0">
+                  <ArrowIcon className="w-5 h-5" />
+                </span>
               </div>
-            </Link>
-            <div className="text-[#535353] text-[20px] pt-4">
-              {latestPost.excerpt?.length > 150
-                ? latestPost.excerpt.slice(0, 150) + "..."
-                : latestPost.excerpt}
             </div>
-          </div>
-        </div>
+          </Link>
+        </section>
+      ) : (
+        <p className="max-w-[1200px] mx-auto px-4 md:px-8 text-muted">Artikel akan segera hadir.</p>
       )}
 
-      {/* Recent Articles */}
-      <RecentArticle posts={recentPosts} />
+      {rest.length > 0 && (
+        <section className="max-w-[1200px] mx-auto px-4 md:px-8 py-[72px] lg:py-[96px]">
+          <h2 className="text-[24px] md:text-[30px] font-semibold tracking-[-0.02em]">Artikel lainnya</h2>
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+            {rest.map((p) => (
+              <li key={p.slug} data-reveal>
+                <PostCard post={p} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <div className={rest.length ? "" : "pt-[72px]"}>
+        <ClosingCta
+          title="Punya pertanyaan soal pemasangan?"
+          lede="Tanya langsung ke tim kami — dari pilihan lem sampai hitungan kebutuhan proyek."
+          source="blog-closing"
+        />
+      </div>
     </div>
   );
 }

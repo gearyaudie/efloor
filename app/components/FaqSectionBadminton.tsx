@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Faq from "./Faq";
 
 const faqs = [
@@ -36,7 +37,7 @@ const faqs = [
   },
 ];
 
-export default function FaqSectionBadminton() {
+export default function FaqSectionBadminton({ aside }: { aside?: ReactNode } = {}) {
   return (
     <Faq
       items={faqs}
@@ -44,6 +45,7 @@ export default function FaqSectionBadminton() {
       ariaLabel="Pertanyaan yang Sering Diajukan tentang Lem Lapangan Badminton"
       title="Pertanyaan Seputar Lem Lapangan Badminton EFLOOR"
       subtitle="Temukan jawaban lengkap seputar Lem Lapangan Badminton EFLOOR — keunggulan, cara pakai, hingga cara pembelian."
+      aside={aside}
     />
   );
 }

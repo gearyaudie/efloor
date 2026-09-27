@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Faq from "./Faq";
 import { PRICING_FAQ_ITEMS } from "../static/pricingFaq";
 
@@ -38,7 +39,7 @@ const faqs = [
   ...PRICING_FAQ_ITEMS,
 ];
 
-export default function FaqSectionMasjid() {
+export default function FaqSectionMasjid({ aside }: { aside?: ReactNode } = {}) {
   return (
     <Faq
       items={faqs}
@@ -46,6 +47,7 @@ export default function FaqSectionMasjid() {
       ariaLabel="Pertanyaan yang Sering Diajukan tentang Lem Karpet Masjid"
       title="Pertanyaan Seputar Lem Karpet Masjid EFLOOR"
       subtitle="Temukan jawaban lengkap seputar Lem Karpet Masjid EFLOOR — keunggulan, cara pakai, hingga cara pembelian."
+      aside={aside}
     />
   );
 }

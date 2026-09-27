@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getRelatedVerticals } from "../static/verticals";
+import { ArrowUpRightIcon } from "./icons";
 
 export default function RelatedVerticals({
   currentHref,
@@ -9,19 +10,21 @@ export default function RelatedVerticals({
   const related = getRelatedVerticals(currentHref);
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 py-12 text-center">
-      <h2 className="text-xl md:text-2xl font-semibold mb-6">Lihat Juga</h2>
-      <div className="flex flex-wrap justify-center gap-3">
+    <nav aria-label="Halaman terkait" className="max-w-[1200px] mx-auto px-4 md:px-8 pb-[72px] lg:pb-[88px]">
+      <h2 className="text-[12.5px] font-semibold uppercase tracking-[0.12em] text-muted">Lihat juga</h2>
+      <ul className="grid gap-3 sm:grid-cols-3 mt-4">
         {related.map((page) => (
-          <Link
-            key={page.href}
-            href={page.href}
-            className="px-5 py-3 rounded-2xl border border-[#e8e8e8] text-sm font-medium text-[#4D4D4D] hover:border-[#FF8E06] hover:text-[#FF8E06] transition-colors"
-          >
-            {page.label}
-          </Link>
+          <li key={page.href}>
+            <Link
+              href={page.href}
+              className="group flex items-center justify-between gap-4 h-full px-5 py-4 rounded-[20px] bg-white shadow-e1 hover:shadow-e2 transition-shadow text-[15px] font-semibold text-ink"
+            >
+              {page.label}
+              <ArrowUpRightIcon className="w-5 h-5 text-muted group-hover:text-brand-flame transition-colors shrink-0" />
+            </Link>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </nav>
   );
 }

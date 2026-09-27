@@ -1,10 +1,16 @@
-// Lem HPL packs and their offline (in-store) prices, from the EFLOOR price
-// list. One place to edit when the price list changes — the pricing tiers,
-// the hero size picker and the Product structured data all read it.
+// Lem HPL packs for the HPL page. Prices come from the shared price list
+// (static/priceList.ts); this file adds the page-specific copy per pack.
 
 import { rupiah } from "../lib/format";
+import { PRICE_LIST_UPDATED, priceProduct } from "./priceList";
 
-export const HPL_PRICE_UPDATED = "September 2026";
+export const HPL_PRICE_UPDATED = PRICE_LIST_UPDATED;
+
+const hplPrice = (label: string) => {
+  const size = priceProduct("hpl").sizes.find((s) => s.label === label);
+  if (!size) throw new Error(`Lem HPL ${label} missing from the price list`);
+  return size.price;
+};
 
 export type HplPack = {
   kg: number;
@@ -19,21 +25,21 @@ export const HPL_PACKS: HplPack[] = [
   {
     kg: 1,
     label: "1 KG",
-    price: 62_000,
+    price: hplPrice("1 KG"),
     img: "/img/lem-hpl-1kg-cutout.png",
     fit: "Perbaikan, DIY & satu-dua panel",
   },
   {
     kg: 4,
     label: "4 KG",
-    price: 230_000,
+    price: hplPrice("4 KG"),
     img: "/img/lem-hpl-4kg-cutout.png",
     fit: "Tukang & pengerjaan kitchen set",
   },
   {
     kg: 20,
     label: "20 KG",
-    price: 1_125_000,
+    price: hplPrice("20 KG"),
     img: "/img/lem-hpl-20kg-cutout.png",
     fit: "Workshop & produksi furniture harian",
   },

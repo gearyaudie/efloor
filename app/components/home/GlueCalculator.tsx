@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { openWhatsApp } from "../../lib/openWhatsApp";
 import { WhatsAppDot } from "../icons";
+import { rupiah } from "../../lib/format";
+import { priceProduct } from "../../static/priceList";
 
 // Coverage from the product data sheet: 1 kg spreads over 8–10 m².
 const M2_PER_KG_MIN = 8;
@@ -39,12 +41,21 @@ export function suggestPacks(kg: number) {
 
 const fmt = (n: number) => n.toLocaleString("id-ID", { maximumFractionDigits: 1 });
 
-export default function GlueCalculator() {
+export default function GlueCalculator({
+  showPrice = false,
+  source = "home-calculator",
+}: {
+  /** Also estimate the cost of the suggested packs from the price list. */
+  showPrice?: boolean;
+  source?: string;
+} = {}) {
   const [area, setArea] = useState(120);
   const safeArea = Math.max(1, Math.min(100000, area || 1));
   const kgMin = safeArea / M2_PER_KG_MAX;
   const kgMax = safeArea / M2_PER_KG_MIN;
   const packs = suggestPacks(kgMax);
+  const priceOf = (label: string) => priceProduct("vinyl").sizes.find((s) => s.label === label)?.price ?? 0;
+  const total = packs.reduce((sum, p) => sum + p.count * priceOf(p.label), 0);
 
   return (
     <aside
@@ -105,13 +116,19 @@ export default function GlueCalculator() {
             </span>
           ))}
         </div>
+        {showPrice && total > 0 && (
+          <div className="flex items-baseline justify-between gap-3 mt-4 pt-4 border-t border-line">
+            <span className="text-[13px] text-muted">Estimasi harga toko</span>
+            <span className="text-[22px] font-bold tracking-[-0.02em] tabular-nums">{rupiah(total)}</span>
+          </div>
+        )}
       </div>
 
       <button
         type="button"
         onClick={() =>
           openWhatsApp({
-            source: "home-calculator",
+            source,
             product: `Lem Vinyl & Karpet untuk ${safeArea.toLocaleString("id-ID")} m² (±${fmt(kgMax)} kg)`,
           })
         }
