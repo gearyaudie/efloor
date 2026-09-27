@@ -43,8 +43,7 @@ check doesn't require a fresh round of GAQL queries each time (see
 | `GOOGLE_ADS_CUSTOMER_ID` | Target account, digits only — defaults to `9859902435` if unset |
 | `ADS_DASHBOARD_PASSWORD` | The shared password for `/internal/ads-dashboard` |
 | `ADS_DASHBOARD_SECRET` | Random string (e.g. `openssl rand -hex 32`) used to sign the login session cookie — not the same as the password |
-| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | The service account's `...@...iam.gserviceaccount.com` email, from its JSON key file's `client_email` field |
-| `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY` | The service account's private key, from the same JSON key's `private_key` field — paste it with its `\n` sequences intact (as one line); the code un-escapes them |
+| `GOOGLE_SERVICE_ACCOUNT_KEY_JSON` | The **entire, unmodified contents** of the downloaded service account JSON key file, pasted as one env var — not split into separate email/key vars. `JSON.parse()`-ing the whole file keeps the private key's newlines exactly as Google generated them, avoiding the classic "paste a PEM key into a single-line field" mangling (a hand-split `\n`-escaped key produces an opaque `DECODER routines::unsupported` / `ERR_OSSL_UNSUPPORTED` error at runtime — that's what this avoids) |
 | `GOOGLE_SHEETS_SALES_SPREADSHEET_ID` | The "efloor masterdata" sheet's ID — defaults to `1-kklLwzQRFcB5aGrmOLslv94muIKckGcDOa17-5vZ-M` if unset |
 
 ### Setting up the Google service account (for the sales sheet)
@@ -60,8 +59,10 @@ check doesn't require a fresh round of GAQL queries each time (see
    account's email (from the JSON's `client_email`) with **Viewer** access.
    This is what actually grants read access — the spreadsheet ID alone
    grants nothing.
-5. Set `GOOGLE_SERVICE_ACCOUNT_EMAIL` and `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`
-   in Netlify from the JSON's `client_email` and `private_key` fields.
+5. Open the downloaded JSON file, select all, copy the entire file contents
+   (the full `{ "type": "service_account", ... }` object), and paste it as
+   the value of `GOOGLE_SERVICE_ACCOUNT_KEY_JSON` in Netlify — don't retype
+   or reformat it, and don't extract individual fields by hand.
 
 Netlify Blobs needs no separate provisioning — it's automatically available
 to both the Next.js runtime and standalone functions on Netlify, and to
