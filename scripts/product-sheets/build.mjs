@@ -6,7 +6,8 @@
 //
 // Prices: a label in prices.json wins; anything else comes from the product's
 // Sanity priceVariants when Sanity is reachable; otherwise "Tanya harga".
-// PDFs are written to scripts/product-sheets/out/ (or the path in $OUT_DIR).
+// PDFs are written to public/katalog/ (or the path in $OUT_DIR), so after a
+// deploy they are live at efloor.id/katalog/<name>.pdf.
 
 import { readFile, mkdir } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -15,7 +16,7 @@ import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "../..");
-const outDir = process.env.OUT_DIR ?? path.join(here, "out");
+const outDir = process.env.OUT_DIR ?? path.join(root, "public/katalog");
 
 const { TRIMS } = await import(path.join(root, "app/static/trims.ts"));
 const { PRICE_LIST_UPDATED, priceProduct } = await import(path.join(root, "app/static/priceList.ts"));
@@ -447,7 +448,7 @@ table { width: 100%; border-collapse: collapse; }
 .floors span { background: #fff; border-radius: 3.5mm; padding: 3mm 4mm; box-shadow: 0 0 0 1px #e8e5de inset; font-weight: 600; font-size: 9.5pt; }
 `;
 
-const FILES = { siku: "EFLOOR-List-Siku-L.pdf", plint: "EFLOOR-List-Plint-Skirting.pdf", adaptasi: "EFLOOR-List-Adaptasi.pdf" };
+const FILES = { siku: "list-siku-l.pdf", plint: "list-plint-skirting.pdf", adaptasi: "list-adaptasi.pdf" };
 
 const prices = JSON.parse(await readFile(path.join(here, "prices.json"), "utf8"));
 const pw = await loadPlaywright();
@@ -518,7 +519,7 @@ for (const key of Object.keys(FILES)) {
 
 {
   console.log("Lem Karpet & Vinyl ECO");
-  const file = path.join(outDir, "EFLOOR-Lem-Karpet-Vinyl-ECO.pdf");
+  const file = path.join(outDir, "lem-karpet-vinyl-eco.pdf");
   await renderPdf("Lem ECO", ecoSheet({ logo, hero: await dataUri("img/lem-eco-4kg.webp") }), file);
   console.log(`  ${priceProduct("eco").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}\n  → ${path.relative(root, file)}`);
 }
