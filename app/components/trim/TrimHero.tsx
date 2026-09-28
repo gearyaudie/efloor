@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { openWhatsApp } from "../../lib/openWhatsApp";
+import { useWarm } from "../../lib/useWarm";
 import { fmtCm, rupiah } from "../../lib/format";
 import type { TrimConfig } from "../../static/trims";
 import { MarketplaceLinks } from "../OutboundLinks";
@@ -26,6 +27,7 @@ export default function TrimHero({
 }) {
   const gallery = config.gallery;
   const [photo, setPhoto] = useState(0);
+  const { warm, warmProps } = useWarm();
   const [variant, setVariant] = useState(() => {
     // Start on the variant pictured first, else the first one.
     const i = variants.findIndex((v) => sameLabel(v.label, gallery[0]?.variant));
@@ -48,7 +50,7 @@ export default function TrimHero({
   const profile = config.profiles?.find((p) => sameLabel(p.variant, current?.label));
 
   return (
-    <section className="relative overflow-clip">
+    <section className="relative overflow-clip" {...warmProps}>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-[25%] -left-[15%] w-[70%] h-[760px] bg-[radial-gradient(closest-side,rgba(255,142,6,0.14),rgba(255,142,6,0))]"
@@ -58,21 +60,24 @@ export default function TrimHero({
         <div className="lg:sticky lg:top-28">
           <div className="relative aspect-square rounded-[32px] md:rounded-[40px] overflow-hidden isolate bg-surface">
             <div aria-hidden="true" className="absolute inset-0 -z-10 dot-grid opacity-70" />
-            {gallery.map((g, i) => (
-              <Image
-                key={g.src}
-                src={g.src}
-                alt={g.alt}
-                fill
-                priority={i === 0}
-                sizes="(min-width: 1024px) 560px, 92vw"
-                className={`transition-[opacity,scale] duration-500 ${
-                  g.kind === "packshot"
-                    ? "object-contain p-[10%] drop-shadow-[0_24px_30px_rgba(60,35,10,0.25)]"
-                    : "object-cover"
-                } ${photo === i ? "opacity-100 scale-100" : "opacity-0 scale-[0.97]"}`}
-              />
-            ))}
+            {gallery.map(
+              (g, i) =>
+                (warm || photo === i) && (
+                  <Image
+                    key={g.src}
+                    src={g.src}
+                    alt={g.alt}
+                    fill
+                    priority={i === 0}
+                    sizes="(min-width: 1024px) 560px, 92vw"
+                    className={`transition-[opacity,scale] duration-500 ${
+                      g.kind === "packshot"
+                        ? "object-contain p-[10%] drop-shadow-[0_24px_30px_rgba(60,35,10,0.25)]"
+                        : "object-cover"
+                    } ${photo === i ? "opacity-100 scale-100" : "opacity-0 scale-[0.97]"}`}
+                  />
+                ),
+            )}
             <span className="absolute top-5 left-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-e1 text-[12.5px] font-semibold text-ink-soft">
               <RulerIcon className="w-4 h-4 text-brand-flame" />
               {config.lengthCm} cm / batang

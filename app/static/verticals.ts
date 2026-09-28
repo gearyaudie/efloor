@@ -1,4 +1,5 @@
-// Single source of truth for the 8 vertical/city "Lem Vinyl" landing pages —
+// Single source of truth for the glue landing pages (use cases, cities, and
+// the HPL and ECO product pages) —
 // used to build the header dropdown, sitemap, and (via getRelatedVerticals)
 // the cross-linking shown on each page, so a new vertical only needs adding
 // here once.
@@ -8,6 +9,7 @@ export const VERTICAL_PAGES = [
   { label: "Lem Lapangan Badminton", href: "/lem-lapangan-badminton" },
   { label: "Lem Karpet Gym", href: "/lem-karpet-gym" },
   { label: "Lem HPL & PVC Sheet", href: "/lem-hpl-pvc-sheet" },
+  { label: "Lem Karpet & Vinyl ECO", href: "/lem-karpet-vinyl-eco" },
   {
     label: "Lem Vinyl & Karpet Tangerang",
     href: "/lem-vinyl-karpet-tangerang",

@@ -44,18 +44,22 @@ const fmt = (n: number) => n.toLocaleString("id-ID", { maximumFractionDigits: 1 
 export default function GlueCalculator({
   showPrice = false,
   source = "home-calculator",
+  productId = "vinyl",
 }: {
   /** Also estimate the cost of the suggested packs from the price list. */
   showPrice?: boolean;
   source?: string;
+  /** Price-list product whose prices and tubs to show (same 8–10 m²/kg). */
+  productId?: string;
 } = {}) {
+  const product = priceProduct(productId);
+  const sizeOf = (label: string) => product.sizes.find((s) => s.label === label);
   const [area, setArea] = useState(120);
   const safeArea = Math.max(1, Math.min(100000, area || 1));
   const kgMin = safeArea / M2_PER_KG_MAX;
   const kgMax = safeArea / M2_PER_KG_MIN;
-  const packs = suggestPacks(kgMax);
-  const priceOf = (label: string) => priceProduct("vinyl").sizes.find((s) => s.label === label)?.price ?? 0;
-  const total = packs.reduce((sum, p) => sum + p.count * priceOf(p.label), 0);
+  const packs = suggestPacks(kgMax).map((p) => ({ ...p, img: sizeOf(p.label)?.img ?? p.img }));
+  const total = packs.reduce((sum, p) => sum + p.count * (sizeOf(p.label)?.price ?? 0), 0);
 
   return (
     <aside
@@ -129,7 +133,7 @@ export default function GlueCalculator({
         onClick={() =>
           openWhatsApp({
             source,
-            product: `Lem Vinyl & Karpet untuk ${safeArea.toLocaleString("id-ID")} m² (±${fmt(kgMax)} kg)`,
+            product: `${product.name} untuk ${safeArea.toLocaleString("id-ID")} m² (±${fmt(kgMax)} kg)`,
           })
         }
         className="w-full mt-[18px] inline-flex items-center justify-center gap-2.5 min-h-[52px] px-6 py-2 rounded-full bg-brand-gradient text-white font-semibold text-[15px] shadow-cta hover:-translate-y-0.5 transition-transform cursor-pointer"

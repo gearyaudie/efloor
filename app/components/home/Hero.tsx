@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { openWhatsApp } from "../../lib/openWhatsApp";
+import { useWarm } from "../../lib/useWarm";
 import {
   AreaIcon,
   ArrowIcon,
@@ -27,9 +28,10 @@ const FLOATS = [
 
 export default function Hero() {
   const [size, setSize] = useState(2);
+  const { warm, warmProps } = useWarm();
 
   return (
-    <section className="relative overflow-clip">
+    <section className="relative overflow-clip" {...warmProps}>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-[20%] left-[45%] -right-[10%] h-[780px] bg-[radial-gradient(closest-side,rgba(255,142,6,0.18),rgba(255,142,6,0))]"
@@ -83,20 +85,23 @@ export default function Hero() {
         <div className="relative w-full max-w-[560px] aspect-[1/1.02] justify-self-center lg:justify-self-end rounded-[36px] bg-surface overflow-hidden isolate">
           <div aria-hidden="true" className="absolute inset-0 -z-10 trowel-ridges" />
           <div className="absolute left-1/2 top-[48%] w-[72%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-e3">
-            {SIZES.map((s, i) => (
-              <Image
-                key={s.img}
-                src={s.img}
-                alt={`Ember Lem Vinyl & Karpet EFLOOR ${s.label}`}
-                width={700}
-                height={700}
-                priority={i === 2}
-                sizes="(min-width: 1024px) 400px, 70vw"
-                className={`absolute inset-[6%] w-[88%] h-[88%] object-contain transition-[opacity,scale] duration-300 ${
-                  size === i ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                }`}
-              />
-            ))}
+            {SIZES.map(
+              (s, i) =>
+                (warm || size === i) && (
+                  <Image
+                    key={s.img}
+                    src={s.img}
+                    alt={`Ember Lem Vinyl & Karpet EFLOOR ${s.label}`}
+                    width={700}
+                    height={700}
+                    priority={i === 2}
+                    sizes="(min-width: 1024px) 400px, 70vw"
+                    className={`absolute inset-[6%] w-[88%] h-[88%] object-contain transition-[opacity,scale] duration-300 ${
+                      size === i ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    }`}
+                  />
+                ),
+            )}
           </div>
 
           {FLOATS.map(({ icon: Icon, value, label, pos, delay }) => (

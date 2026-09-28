@@ -4,6 +4,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import WhatsAppButton from "../components/WhatsAppButton";
 import PhoneLink from "../components/PhoneLink";
 import OpenStatus from "../components/OpenStatus";
+import MapEmbed from "../components/MapEmbed";
 import { DirectionsLink, MarketplaceLinks } from "../components/OutboundLinks";
 import { ArrowIcon, ArrowUpRightIcon, ClockIcon, PinIcon, StoreIcon, WhatsAppIcon } from "../components/icons";
 import { SITE_URL } from "../seo.config";
@@ -12,7 +13,6 @@ import {
   BUSINESS_ADDRESS,
   BUSINESS_ADDRESS_DISPLAY,
   BUSINESS_GEO,
-  MAPS_EMBED_URL,
   MARKETPLACES,
   OPENING_HOURS_DISPLAY,
   OPENING_HOURS_SPEC,
@@ -160,13 +160,7 @@ export default function Kontak() {
               </DirectionsLink>
             </div>
           </div>
-          <iframe
-            title="Lokasi toko EFLOOR di Kelapa Gading, Jakarta Utara"
-            src={MAPS_EMBED_URL}
-            className="w-full h-[320px] lg:h-full min-h-[360px] border-0 bg-surface"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+          <MapEmbed className="w-full h-[320px] lg:h-full min-h-[360px]" />
         </div>
       </section>
 

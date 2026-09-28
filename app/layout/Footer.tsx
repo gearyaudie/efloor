@@ -12,6 +12,7 @@ import {
 const PRODUCT_LINKS = [
   { href: "/products/lem-vinyl-efloor", label: "Lem Vinyl & Karpet" },
   { href: "/products/lem-efloor-max", label: "Lem EFLOOR Max" },
+  { href: "/lem-karpet-vinyl-eco", label: "Lem Karpet & Vinyl ECO" },
   { href: "/list-siku-step-nosing", label: "List Siku L & Step Nosing" },
   { href: "/list-plint-skirting-pvc", label: "List Plint / Skirting" },
   { href: "/list-adaptasi-transisi", label: "List Adaptasi / Transisi" },

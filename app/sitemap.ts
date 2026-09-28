@@ -1,41 +1,36 @@
 import { client } from "@/sanity.client";
 import { MetadataRoute } from "next";
-import { Post } from "./blogs/page";
 import { SITE_URL } from "./seo.config";
 import { VERTICAL_PAGES } from "./static/verticals";
 import { ACCESSORY_PAGES } from "./static/accessories";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts: (Post & { _updatedAt?: string })[] = await client.fetch(
-    `*[_type == "post"]{
-        _id,
-        title,
-        slug,
-        content,
-        excerpt,
-        _updatedAt,
-        img {
-          asset->{
-            url
-          }
-        }
-      }`,
-  );
+// Rebuilt hourly, so new articles and products reach Google without a deploy.
+export const revalidate = 3600;
 
-  // Fetch all blogs, to be put inside sitemap
+type Entry = { slug: string; _updatedAt?: string };
+
+// Only slugs and dates: the sitemap never needs article bodies.
+async function fetchEntries(type: "post" | "product"): Promise<Entry[]> {
+  try {
+    return await client.fetch<Entry[]>(
+      `*[_type == $type && defined(slug.current)]{ "slug": slug.current, _updatedAt }`,
+      { type },
+    );
+  } catch (err) {
+    // A Sanity outage must not take the whole sitemap down with it: fall back
+    // to the static pages rather than returning an error to Google.
+    console.error("Sanity fetch error:", err);
+    return [];
+  }
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [posts, products] = await Promise.all([fetchEntries("post"), fetchEntries("product")]);
+
   const blogUrls = posts.map((post) => ({
-    url: `${SITE_URL}/blogs/${post.slug.current}`,
+    url: `${SITE_URL}/blogs/${post.slug}`,
     lastModified: post._updatedAt ? new Date(post._updatedAt) : new Date(),
   }));
-
-  // Fetch all products live from Sanity instead of hardcoding slugs, so the
-  // sitemap can never drift out of sync with what actually exists.
-  const products: { slug: string; _updatedAt?: string }[] = await client.fetch(
-    `*[_type == "product" && defined(slug.current)]{
-      "slug": slug.current,
-      _updatedAt
-    }`,
-  );
 
   const productUrls = products.map((product) => ({
     url: `${SITE_URL}/products/${product.slug}`,

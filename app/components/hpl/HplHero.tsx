@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { openWhatsApp } from "../../lib/openWhatsApp";
+import { useWarm } from "../../lib/useWarm";
 import { HPL_PACKS, perKg, rupiah, savingVsSmallest } from "../../static/hpl";
 import { MarketplaceLinks } from "../OutboundLinks";
 import { CheckIcon, LeafIcon, StoreIcon, WhatsAppDot } from "../icons";
@@ -19,11 +20,12 @@ const TICKS = [
  */
 export default function HplHero() {
   const [active, setActive] = useState(1);
+  const { warm, warmProps } = useWarm();
   const pack = HPL_PACKS[active];
   const saving = savingVsSmallest(pack);
 
   return (
-    <section className="relative overflow-clip">
+    <section className="relative overflow-clip" {...warmProps}>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-[25%] -left-[15%] w-[70%] h-[760px] bg-[radial-gradient(closest-side,rgba(255,142,6,0.16),rgba(255,142,6,0))]"
@@ -46,20 +48,23 @@ export default function HplHero() {
               className="absolute -z-10 inset-x-0 bottom-[37%] h-[3%] bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.9)_0_6px,rgba(242,86,29,0.18)_6px_9px)] opacity-70"
             />
 
-            {HPL_PACKS.map((p, i) => (
-              <Image
-                key={p.img}
-                src={p.img}
-                alt={`Lem HPL EFLOOR kemasan ${p.label}`}
-                width={520}
-                height={520}
-                priority={i === 1}
-                sizes="(min-width: 1024px) 560px, 92vw"
-                className={`absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-1/2 w-[78%] h-auto drop-shadow-[0_30px_40px_rgba(90,50,10,0.28)] transition-[opacity,scale] duration-500 ${
-                  active === i ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                }`}
-              />
-            ))}
+            {HPL_PACKS.map(
+              (p, i) =>
+                (warm || active === i) && (
+                  <Image
+                    key={p.img}
+                    src={p.img}
+                    alt={`Lem HPL EFLOOR kemasan ${p.label}`}
+                    width={520}
+                    height={520}
+                    priority={i === 1}
+                    sizes="(min-width: 1024px) 560px, 92vw"
+                    className={`absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-1/2 w-[78%] h-auto drop-shadow-[0_30px_40px_rgba(90,50,10,0.28)] transition-[opacity,scale] duration-500 ${
+                      active === i ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    }`}
+                  />
+                ),
+            )}
 
             <span className="absolute top-5 left-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-e1 text-[12.5px] font-semibold text-ink-soft">
               <LeafIcon className="w-4 h-4 text-wa" />
