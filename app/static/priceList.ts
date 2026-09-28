@@ -43,12 +43,14 @@ export const PRICE_LIST: PriceProduct[] = [
   },
   {
     id: "eco",
-    name: "Lem Vinyl / Karpet ECO",
-    note: "Pilihan ekonomis untuk lem vinyl & karpet.",
+    name: "Lem Karpet & Vinyl ECO",
+    note: "Versi hemat lem karpet & vinyl: waterbased, oles satu sisi, daya sebar 8–10 m²/kg.",
+    href: "/lem-karpet-vinyl-eco",
+    coverage: [8, 10],
     sizes: [
-      { label: "1 KG", kg: 1, price: 75_000 },
-      { label: "4 KG", kg: 4, price: 275_000 },
-      { label: "20 KG", kg: 20, price: 1_325_000 },
+      { label: "1 KG", kg: 1, price: 75_000, img: "/img/lem-eco-1kg.webp" },
+      { label: "4 KG", kg: 4, price: 275_000, img: "/img/lem-eco-4kg.webp" },
+      { label: "20 KG", kg: 20, price: 1_325_000, img: "/img/lem-eco-20kg.webp" },
     ],
   },
   {

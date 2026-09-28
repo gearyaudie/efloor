@@ -7,7 +7,7 @@ import { WhatsAppDot } from "../icons";
 const PRODUCTS = [
   "Lem MAX EFLOOR",
   "Lem Vinyl / Karpet EFLOOR",
-  "Lem Vinyl / Karpet ECO",
+  "Lem Karpet & Vinyl ECO",
   "Lem HPL EFLOOR",
   "Lem Kayu Tahan Air",
   "Lem PU",
