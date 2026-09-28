@@ -25,6 +25,12 @@ check doesn't require a fresh round of GAQL queries each time (see
   the dashboard page fetches once authenticated.
 - **`app/internal/ads-dashboard/`** — the page itself (`page.tsx` server-side
   cookie check, `LoginForm.tsx`, `Dashboard.tsx`).
+- **`netlify/functions/sales-snapshot.ts`** — scheduled function (daily,
+  15 minutes after `ads-snapshot`) that reads every monthly sales tab from
+  the "efloor masterdata" Google Sheet via a service account, and caches
+  the parsed rows in Netlify Blobs (`ads-dashboard-sales` store). Customer
+  name/phone/notes columns are never written into what gets stored —
+  only date, channel, product, quantity, and revenue figures.
 
 ## Required environment variables (set in Netlify → Site configuration → Environment variables)
 
@@ -37,6 +43,26 @@ check doesn't require a fresh round of GAQL queries each time (see
 | `GOOGLE_ADS_CUSTOMER_ID` | Target account, digits only — defaults to `9859902435` if unset |
 | `ADS_DASHBOARD_PASSWORD` | The shared password for `/internal/ads-dashboard` |
 | `ADS_DASHBOARD_SECRET` | Random string (e.g. `openssl rand -hex 32`) used to sign the login session cookie — not the same as the password |
+| `GOOGLE_SERVICE_ACCOUNT_KEY_JSON` | The **entire, unmodified contents** of the downloaded service account JSON key file, pasted as one env var — not split into separate email/key vars. `JSON.parse()`-ing the whole file keeps the private key's newlines exactly as Google generated them, avoiding the classic "paste a PEM key into a single-line field" mangling (a hand-split `\n`-escaped key produces an opaque `DECODER routines::unsupported` / `ERR_OSSL_UNSUPPORTED` error at runtime — that's what this avoids) |
+| `GOOGLE_SHEETS_SALES_SPREADSHEET_ID` | The "efloor masterdata" sheet's ID — defaults to `1-kklLwzQRFcB5aGrmOLslv94muIKckGcDOa17-5vZ-M` if unset |
+
+### Setting up the Google service account (for the sales sheet)
+
+1. In a Google Cloud project (can be the same one the Ads API OAuth client
+   lives in, or a new one) → **IAM & Admin → Service Accounts → Create
+   Service Account**. No roles need granting at the project level.
+2. Open the new service account → **Keys → Add Key → Create new key →
+   JSON**. Download it.
+3. Enable the **Google Sheets API** for that project (APIs & Services →
+   Library), if not already enabled.
+4. Open the "efloor masterdata" sheet → **Share** → add the service
+   account's email (from the JSON's `client_email`) with **Viewer** access.
+   This is what actually grants read access — the spreadsheet ID alone
+   grants nothing.
+5. Open the downloaded JSON file, select all, copy the entire file contents
+   (the full `{ "type": "service_account", ... }` object), and paste it as
+   the value of `GOOGLE_SERVICE_ACCOUNT_KEY_JSON` in Netlify — don't retype
+   or reformat it, and don't extract individual fields by hand.
 
 Netlify Blobs needs no separate provisioning — it's automatically available
 to both the Next.js runtime and standalone functions on Netlify, and to
@@ -52,6 +78,9 @@ to both the Next.js runtime and standalone functions on Netlify, and to
 3. Leads only start accumulating from the deploy where `logLeadEvent` first
    ships — there's no backfill for WhatsApp clicks before that.
 4. Visit `/internal/ads-dashboard` and sign in with `ADS_DASHBOARD_PASSWORD`.
+5. Same first-run gap applies to `sales-snapshot`: trigger it manually from
+   the Functions tab once, rather than waiting up to a day for "Sales by
+   channel" to populate.
 
 ## What the numbers mean (and don't)
 
@@ -88,9 +117,32 @@ to both the Next.js runtime and standalone functions on Netlify, and to
   terms and legitimate "lem …" queries that a naive heuristic would get
   wrong.
 
+- **"Sales by channel" and Google Ads ROAS** come from the sales-log
+  spreadsheet's own channel column (e.g. "Shopee - efloor.id", "Tokopedia -
+  efloor.id", "Whatsapp (Offline)", or "Google"). The "Google" tag is
+  **typed in by a person** when they judge an order came from a Google Ads
+  click — it is not matched against an actual ad click, `gclid`, or the
+  `ref` code written into WhatsApp messages. Treat this ROAS as only as
+  accurate as that manual tagging, not as a verified attribution. Column
+  layout drifts between monthly tabs (some months have extra fee columns,
+  some name things differently), so `parseSheet.ts` resolves columns by
+  header text with a keyword-matching fallback for the channel column —
+  if a new month's tab comes back misclassified, that's the first place to
+  check. A tag containing both "google" and "repeat" (e.g. "Whatsapp
+  Google Repeat") classifies as its own `google_repeat` channel — shown in
+  the channel table but **excluded from the ROAS figure**, since crediting
+  the current period's ad spend for a reorder that involved no new ad
+  click would overstate how well that spend is performing.
+- **Customer name, phone number, and notes are read from the sheet into
+  the function's memory** (fetching a row necessarily fetches every
+  column) but are **never written** into what gets stored in Blobs or
+  rendered on the dashboard — only date, channel, product, quantity, and
+  revenue survive into `SalesRow`.
+
 ## Extending this later
 
 If sales ever get logged against the `ref` code written into each WhatsApp
-message (the `G-XXXXXX` / `W-XXXXXX` codes from `attribution.ts`), a real
-lead → sale conversion view becomes possible by joining that log against
+message (the `G-XXXXXX` / `W-XXXXXX` codes from `attribution.ts`) instead
+of (or alongside) the manual "Google" channel tag, a verified lead → sale
+conversion view becomes possible by joining that log against
 `ads-dashboard-leads`. Nothing here assumes that yet.

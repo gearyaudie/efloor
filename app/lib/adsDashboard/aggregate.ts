@@ -84,7 +84,7 @@ function addDays(d: Date, days: number): Date {
 }
 
 /** [start, end] inclusive, both as YYYY-MM-DD, for the requested range and its like-for-like comparison period. */
-function resolveWindow(range: DateRange, today: Date) {
+export function resolveWindow(range: DateRange, today: Date) {
   const end = today;
   let start: Date;
   if (range === "mtd") {
@@ -114,7 +114,7 @@ function resolveWindow(range: DateRange, today: Date) {
   };
 }
 
-function inRange(date: string, start: string, end: string): boolean {
+export function inRange(date: string, start: string, end: string): boolean {
   return date >= start && date <= end;
 }
 
