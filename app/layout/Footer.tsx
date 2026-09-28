@@ -18,6 +18,7 @@ const PRODUCT_LINKS = [
   { href: "/list-adaptasi-transisi", label: "List Adaptasi / Transisi" },
   { href: "/products", label: "Semua Produk" },
   { href: "/harga-lem-vinyl-karpet", label: "Daftar Harga" },
+  { href: "/katalog", label: "Katalog PDF" },
 ];
 
 const COMPANY_LINKS = [

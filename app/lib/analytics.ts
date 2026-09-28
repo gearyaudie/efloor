@@ -109,3 +109,9 @@ export function trackDirectionsClick(context: { source?: string } = {}) {
     ...(context.source ? { source: context.source } : {}),
   });
 }
+
+/** Reports an open, download, share or copy of a /katalog PDF (GA4 only). */
+export function trackCatalogAction(action: "open" | "download" | "share" | "copy_link", catalog: string) {
+  if (!TRACKING_ENABLED || typeof window === "undefined") return;
+  sendGAEvent("event", "catalog_action", { action, catalog });
+}

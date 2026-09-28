@@ -9,7 +9,7 @@
 // PDFs are written to public/katalog/ (or the path in $OUT_DIR), so after a
 // deploy they are live at efloor.id/katalog/<name>.pdf.
 
-import { readFile, mkdir } from "node:fs/promises";
+import { readFile, readdir, mkdir } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,6 +20,7 @@ const outDir = process.env.OUT_DIR ?? path.join(root, "public/katalog");
 
 const { TRIMS } = await import(path.join(root, "app/static/trims.ts"));
 const { PRICE_LIST_UPDATED, priceProduct } = await import(path.join(root, "app/static/priceList.ts"));
+const { CATALOGS } = await import(path.join(root, "app/static/catalogs.ts"));
 
 const SITE_URL = "https://efloor.id";
 const WHATSAPP_NUMBER = "628561153725";
@@ -448,14 +449,21 @@ table { width: 100%; border-collapse: collapse; }
 .floors span { background: #fff; border-radius: 3.5mm; padding: 3mm 4mm; box-shadow: 0 0 0 1px #e8e5de inset; font-weight: 600; font-size: 9.5pt; }
 `;
 
-const FILES = { siku: "list-siku-l.pdf", plint: "list-plint-skirting.pdf", adaptasi: "list-adaptasi.pdf" };
 
 const prices = JSON.parse(await readFile(path.join(here, "prices.json"), "utf8"));
 const pw = await loadPlaywright();
 const browser = await pw.chromium.launch(
   process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
 );
-await mkdir(outDir, { recursive: true });
+await mkdir(path.join(outDir, "preview"), { recursive: true });
+
+// The /katalog page lists app/static/catalogs.ts, so a PDF that isn't in it
+// would be hosted but invisible. Catch that before building anything.
+const listed = new Set(CATALOGS.map((c) => `${c.slug}.pdf`));
+const unlisted = (await readdir(outDir)).filter((f) => f.endsWith(".pdf") && !listed.has(f));
+if (unlisted.length) {
+  throw new Error(`Add these PDFs to app/static/catalogs.ts so they show on /katalog: ${unlisted.join(", ")}`);
+}
 
 const logo = await dataUri("img/header-logo.png");
 const swatches = await Promise.all(
@@ -495,32 +503,33 @@ ${body}</body></html>`;
     throw new Error(`${name}: content overflows the page by ${overflow.map((px) => `${px}px`).join(" / ")}`);
   }
   await page.pdf({ path: file, format: "A4", printBackground: true, preferCSSPageSize: true });
+  // Cover image for the /katalog page: page 1 at half size.
+  const cover = path.join(path.dirname(file), "preview", path.basename(file).replace(".pdf", ".jpg"));
+  await page.setViewportSize({ width: 794, height: 1123 });
+  await page.locator(".page").first().screenshot({ path: cover, type: "jpeg", quality: 82, scale: "css" });
   if (process.env.PREVIEW) await page.screenshot({ path: file.replace(".pdf", ".png"), fullPage: true });
   await page.close();
 }
 
-for (const key of Object.keys(FILES)) {
-  const config = TRIMS[key];
-  console.log(`${config.name}`);
-  const variants = await variantsFor(config, prices[key] ?? []);
-  const img = {
-    logo,
-    hero: await dataUri(config.gallery[0].src),
-    swatches,
-    shape:
-      key === "plint"
-        ? { cut: await dataUri(path.join(here, "img/plint-penampang.webp")) }
-        : undefined,
-  };
-  const file = path.join(outDir, FILES[key]);
-  await renderPdf(config.name, sheet(config, variants, img), file);
-  console.log(`  ${variants.map((v) => `${v.label}: ${v.price ? rupiah(v.price) : "Tanya harga"}`).join(", ")}\n  → ${path.relative(root, file)}`);
-}
-
-{
-  console.log("Lem Karpet & Vinyl ECO");
-  const file = path.join(outDir, "lem-karpet-vinyl-eco.pdf");
-  await renderPdf("Lem ECO", ecoSheet({ logo, hero: await dataUri("img/lem-eco-4kg.webp") }), file);
-  console.log(`  ${priceProduct("eco").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}\n  → ${path.relative(root, file)}`);
+for (const catalog of CATALOGS.filter((c) => c.sheet)) {
+  const file = path.join(outDir, `${catalog.slug}.pdf`);
+  console.log(catalog.title);
+  if (catalog.sheet === "eco") {
+    await renderPdf(catalog.title, ecoSheet({ logo, hero: await dataUri("img/lem-eco-4kg.webp") }), file);
+    console.log(`  ${priceProduct("eco").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}`);
+  } else {
+    const key = catalog.sheet;
+    const config = TRIMS[key];
+    const variants = await variantsFor(config, prices[key] ?? []);
+    const img = {
+      logo,
+      hero: await dataUri(config.gallery[0].src),
+      swatches,
+      shape: key === "plint" ? { cut: await dataUri(path.join(here, "img/plint-penampang.webp")) } : undefined,
+    };
+    await renderPdf(catalog.title, sheet(config, variants, img), file);
+    console.log(`  ${variants.map((v) => `${v.label}: ${v.price ? rupiah(v.price) : "Tanya harga"}`).join(", ")}`);
+  }
+  console.log(`  → ${path.relative(root, file)}`);
 }
 await browser.close();

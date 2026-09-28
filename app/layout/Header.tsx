@@ -18,6 +18,7 @@ const MENUS = [
 // Plain links after the dropdowns.
 const LINKS = [
   { href: "/harga-lem-vinyl-karpet", label: "Harga" },
+  { href: "/katalog", label: "Katalog" },
   { href: "/projects", label: "Proyek" },
   { href: "/blogs", label: "Artikel" },
 ];
