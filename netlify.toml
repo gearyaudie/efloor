@@ -47,6 +47,13 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Product sheets are regenerated when prices change but keep their URLs, so
+# browsers and WhatsApp previews should check back within the hour.
+[[headers]]
+  for = "/katalog/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
 [[headers]]
   for = "/img/*"
   [headers.values]
