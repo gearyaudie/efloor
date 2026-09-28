@@ -1,6 +1,6 @@
 // Builds the printable/shareable A4 product sheets for the three PVC trims
-// (List Siku L, List Plint, List Adaptasi) from the same content as their
-// web pages (app/static/trims.ts).
+// (List Siku L, List Plint, List Adaptasi) and Lem Karpet & Vinyl ECO, from
+// the same content as their web pages (app/static/trims.ts, priceList.ts).
 //
 //   node --experimental-strip-types scripts/product-sheets/build.mjs
 //
@@ -18,6 +18,7 @@ const root = path.resolve(here, "../..");
 const outDir = process.env.OUT_DIR ?? path.join(here, "out");
 
 const { TRIMS } = await import(path.join(root, "app/static/trims.ts"));
+const { PRICE_LIST_UPDATED, priceProduct } = await import(path.join(root, "app/static/priceList.ts"));
 
 const SITE_URL = "https://efloor.id";
 const WHATSAPP_NUMBER = "628561153725";
@@ -210,6 +211,146 @@ function sheet(config, variants, img) {
 </section>`;
 }
 
+// Lem Karpet & Vinyl ECO. Prices come from app/static/priceList.ts (the same
+// file the website reads); every claim is from the tub label or ECO banner.
+function ecoSheet(img) {
+  const eco = priceProduct("eco");
+  const vinyl = priceProduct("vinyl");
+  const max = priceProduct("max");
+  const [lo, hi] = eco.coverage;
+  const url = `${SITE_URL}${eco.href}`;
+  const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Halo EFLOOR, saya tertarik dengan Lem Karpet & Vinyl ECO.")}`;
+  const today = new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric", timeZone: "Asia/Jakarta" });
+  const perKg = (s) => s.price / s.kg;
+  const best = eco.sizes.length - 1;
+  const rows = eco.sizes
+    .map(
+      (s, i) => `<tr>
+        <td><div class="var"><b>${esc(s.label)}</b>${i === best ? '<span class="tag">Paling hemat</span>' : ""}</div></td>
+        <td class="mono">±${lo * s.kg}–${hi * s.kg} m²</td>
+        <td class="price">${rupiah(s.price)}</td>
+        <td class="mono muted">${rupiah(perKg(s))}/kg</td>
+      </tr>`,
+    )
+    .join("");
+  const compare = [
+    [eco, "Paling hemat", "Rumah, kos, kantor & renovasi hemat"],
+    [vinyl, "Paling populer", "Kantor, rumah sakit, sekolah"],
+    [max, "Daya rekat ekstra", "Gym, masjid, lapangan olahraga"],
+  ]
+    .map(
+      ([p, tag, fit], i) => `<tr${i === 0 ? ' class="hl"' : ""}>
+        <td><b>${esc(p.name)}</b><small>${esc(tag)}</small></td>
+        <td class="small2">${esc(fit)}</td>
+        <td class="mono">${p.sizes.map((s) => rupiah(s.price)).join(" · ")}</td>
+      </tr>`,
+    )
+    .join("");
+  const floors = ["Vinyl tile", "Vinyl roll", "Karpet tile", "Karpet roll"];
+  const benefits = [
+    ["Waterbased", "Berbasis air dan mudah dibersihkan selama lem belum kering."],
+    ["Ramah lingkungan", "Aman dipakai di rumah dan kantor."],
+    ["Tidak berbau menyengat", "Nyaman saat pemasangan, bahkan di ruang tertutup."],
+    [`±${lo}–${hi} m² per kg`, `Oles satu sisi saja — 20 KG cukup untuk ±${lo * 20}–${hi * 20} m².`],
+  ];
+  const steps = [
+    ["Bersihkan area", "Bersihkan lantai dari debu, minyak, dan kotoran."],
+    ["Oles satu sisi", "Ratakan lem di permukaan lantai memakai kape bergerigi."],
+    ["Tunggu bening", "Tunggu lem berubah dari putih menjadi bening, ±45 menit – 1 jam."],
+    ["Tempel & tekan", "Setelah bening, tempelkan karpet atau vinyl dengan rapat dan rapi."],
+  ];
+  const specs = [
+    ["Jenis", "Lem waterbased (berbasis air)"],
+    ["Untuk", "Karpet tile, karpet roll, vinyl tile, vinyl roll"],
+    ["Aplikasi", "Oles satu sisi di permukaan lantai"],
+    ["Daya sebar", `±${lo}–${hi} m² per kg`],
+    ["Waktu tunggu", "Sampai lem bening, ±45 menit – 1 jam"],
+    ["Kemasan", eco.sizes.map((s) => s.label).join(" · ")],
+    ["Penyimpanan", "Tutup rapat, simpan di tempat sejuk & kering, hindari sinar matahari, jauhkan dari anak-anak"],
+  ];
+
+  return `
+<section class="page eco">
+  <header class="top">
+    <img class="logo" src="${img.logo}" alt="EFLOOR">
+    <div class="meta">Info Produk · ${esc(today)}</div>
+  </header>
+
+  <div class="title">
+    <span class="chip">Harga hemat</span><span class="tags">Karpet tile · Karpet roll · Vinyl</span>
+    <h1>Lem Karpet &amp; Vinyl <span class="grad">ECO</span></h1>
+    <p class="intro">Lem karpet dan vinyl waterbased dari EFLOOR dengan harga lebih hemat. Oles di satu sisi, tunggu bening, lalu tempel — untuk rumah, kantor, dan proyek renovasi.</p>
+  </div>
+
+  <div class="hero">
+    <div class="shot packshot"><img src="${img.hero}" alt=""></div>
+    <div class="facts">
+      <h3>Sekilas</h3>
+      <ul class="ticks">
+        <li>Untuk karpet tile, karpet roll &amp; lantai vinyl</li>
+        <li>Waterbased, tidak berbau menyengat</li>
+        <li>Daya sebar ±${lo}–${hi} m² per kg, oles satu sisi</li>
+      </ul>
+      <div class="kv">
+        <div><small>Mulai</small><b>${rupiah(eco.sizes[0].price)}</b></div>
+        <div><small>Kemasan</small><b>${eco.sizes.map((s) => s.label.replace(" KG", "")).join(" · ")} kg</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="bar"></span>Kemasan &amp; harga</h2>
+  <table class="prices">
+    <thead><tr><th>Kemasan</th><th>Cukup untuk</th><th>Harga</th><th>Per kg</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <p class="note">Harga toko per ${esc(PRICE_LIST_UPDATED)}, dapat berubah sewaktu-waktu. Proyek &amp; grosir: minta harga khusus via WhatsApp.</p>
+
+  <h2><span class="bar"></span>Bandingkan dengan lem EFLOOR lain</h2>
+  <table class="compare">
+    <thead><tr><th>Produk</th><th>Cocok untuk</th><th>Harga 1 · 4 · 20 KG</th></tr></thead>
+    <tbody>${compare}</tbody>
+  </table>
+
+  <h2><span class="bar"></span>Cocok untuk</h2>
+  <div class="floors">${floors.map((f) => `<span>✓ ${esc(f)}</span>`).join("")}</div>
+</section>
+
+<section class="page eco">
+  <header class="top">
+    <img class="logo" src="${img.logo}" alt="EFLOOR">
+    <div class="meta">Lem Karpet &amp; Vinyl ECO · halaman 2</div>
+  </header>
+
+  <div class="signature">
+    <h3>Kualitas lem karpet EFLOOR, harga lebih hemat.</h3>
+    <p>Cara pakai dan daya sebar yang sama dengan lem karpet &amp; vinyl EFLOOR — pilihan tepat saat anggaran jadi pertimbangan utama.</p>
+  </div>
+
+  <h2><span class="bar"></span>Keunggulan</h2>
+  <div class="benefits">${benefits.map(([t, d]) => `<div><b>${esc(t)}</b><span>${esc(d)}</span></div>`).join("")}</div>
+
+  <h2><span class="bar"></span>Cara pakai</h2>
+  <ol class="steps">${steps.map(([t, d], i) => `<li><span class="n">0${i + 1}</span><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ol>
+  <p class="small">*Waktu tunggu bisa lebih lama saat kondisi lembap atau dingin.</p>
+
+  <h2><span class="bar"></span>Spesifikasi</h2>
+  <table class="specs">${specs.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+
+  <footer class="contact">
+    <div class="cta">
+      <b>Pesan atau tanya stok</b>
+      <a href="${wa}">WhatsApp ${PHONE_DISPLAY}</a>
+      <a href="${url}">${esc(url.replace("https://", ""))}</a>
+    </div>
+    <div class="addr">
+      <small>Toko</small>${esc(ADDRESS)}
+      <small>Jam buka</small>${esc(HOURS)}
+      <small>Marketplace</small>Shopee &amp; Tokopedia: efloor.id
+    </div>
+  </footer>
+</section>`;
+}
+
 const CSS = `
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -292,6 +433,18 @@ table { width: 100%; border-collapse: collapse; }
 .addr { font-size: 8pt; line-height: 1.35; background: rgba(255,255,255,.15); border-radius: 3.5mm; padding: 3mm 4mm; }
 .addr small { display: block; font-size: 6.6pt; text-transform: uppercase; letter-spacing: .1em; opacity: .85; font-weight: 600; margin-top: 1.4mm; }
 .addr small:first-child { margin-top: 0; }
+.eco .grad { color: #2f7a22; }
+.eco .chip { background: #e4efdc; color: #2f6b22; }
+.compare { background: #fff; border-radius: 4mm; overflow: hidden; box-shadow: 0 0 0 1px #e8e5de inset; font-size: 9pt; }
+.compare th { text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6a70; font-weight: 600; padding: 2.6mm 4mm; background: #f2f0eb; }
+.compare td { padding: 2.1mm 4mm; border-top: 1px solid #e8e5de; vertical-align: middle; }
+.compare td b { display: block; font-size: 9.5pt; }
+.compare td small { display: block; font-size: 7.5pt; color: #6b6a70; }
+.compare .small2 { font-size: 8.3pt; color: #3b3a40; }
+.compare tr.hl td { background: #f1f6ec; }
+.compare tr.hl td small { color: #2f7a22; font-weight: 600; }
+.floors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+.floors span { background: #fff; border-radius: 3.5mm; padding: 3mm 4mm; box-shadow: 0 0 0 1px #e8e5de inset; font-weight: 600; font-size: 9.5pt; }
 `;
 
 const FILES = { siku: "EFLOOR-List-Siku-L.pdf", plint: "EFLOOR-List-Plint-Skirting.pdf", adaptasi: "EFLOOR-List-Adaptasi.pdf" };
@@ -319,23 +472,12 @@ const fontCss = (
     ),
   )
 ).join("");
-for (const key of Object.keys(FILES)) {
-  const config = TRIMS[key];
-  console.log(`${config.name}`);
-  const variants = await variantsFor(config, prices[key] ?? []);
-  const img = {
-    logo,
-    hero: await dataUri(config.gallery[0].src),
-    swatches,
-    shape:
-      key === "plint"
-        ? { cut: await dataUri(path.join(here, "img/plint-penampang.webp")) }
-        : undefined,
-  };
+/** Renders one sheet's HTML to a PDF, refusing to print a cut-off page. */
+async function renderPdf(name, body, file) {
   const html = `<!doctype html><html lang="id"><head><meta charset="utf-8">
 <style>${fontCss}${CSS}</style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8e06"/><stop offset="1" stop-color="#c62020"/></linearGradient></defs></svg>
-${sheet(config, variants, img)}</body></html>`;
+${body}</body></html>`;
 
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "load" });
@@ -349,12 +491,35 @@ ${sheet(config, variants, img)}</body></html>`;
     console.log(await page.evaluate(() => [...document.querySelectorAll(".page")].map((pg, n) => `p${n + 1} ` + [...pg.children].map((c) => `${c.className || c.tagName}:${Math.round(c.getBoundingClientRect().height)}`).join(" ")).join("\n")));
   }
   if (overflow.some((px) => px > 1)) {
-    throw new Error(`${config.name}: content overflows the page by ${overflow.map((px) => `${px}px`).join(" / ")}`);
+    throw new Error(`${name}: content overflows the page by ${overflow.map((px) => `${px}px`).join(" / ")}`);
   }
-  const file = path.join(outDir, FILES[key]);
   await page.pdf({ path: file, format: "A4", printBackground: true, preferCSSPageSize: true });
   if (process.env.PREVIEW) await page.screenshot({ path: file.replace(".pdf", ".png"), fullPage: true });
   await page.close();
+}
+
+for (const key of Object.keys(FILES)) {
+  const config = TRIMS[key];
+  console.log(`${config.name}`);
+  const variants = await variantsFor(config, prices[key] ?? []);
+  const img = {
+    logo,
+    hero: await dataUri(config.gallery[0].src),
+    swatches,
+    shape:
+      key === "plint"
+        ? { cut: await dataUri(path.join(here, "img/plint-penampang.webp")) }
+        : undefined,
+  };
+  const file = path.join(outDir, FILES[key]);
+  await renderPdf(config.name, sheet(config, variants, img), file);
   console.log(`  ${variants.map((v) => `${v.label}: ${v.price ? rupiah(v.price) : "Tanya harga"}`).join(", ")}\n  → ${path.relative(root, file)}`);
+}
+
+{
+  console.log("Lem Karpet & Vinyl ECO");
+  const file = path.join(outDir, "EFLOOR-Lem-Karpet-Vinyl-ECO.pdf");
+  await renderPdf("Lem ECO", ecoSheet({ logo, hero: await dataUri("img/lem-eco-4kg.webp") }), file);
+  console.log(`  ${priceProduct("eco").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}\n  → ${path.relative(root, file)}`);
 }
 await browser.close();
