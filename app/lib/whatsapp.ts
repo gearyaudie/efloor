@@ -17,7 +17,11 @@ export function buildWhatsAppUrl({
   const topic = product
     ? `saya tertarik dengan ${product}`
     : "saya ingin bertanya tentang produk EFLOOR";
-  const suffix = ref ? ` (ref: ${ref})` : "";
+  // The code goes on its own line and asks to be kept: visitors were editing
+  // the greeting and taking an inline "(ref: ...)" with it, which breaks the
+  // link between a chat and the order it becomes. The click itself is still
+  // logged server-side either way — this only protects the human-readable link.
+  const suffix = ref ? `\n\nKode: ${ref} (mohon jangan dihapus)` : "";
   const text = `Halo EFLOOR, ${topic}.${suffix}`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
