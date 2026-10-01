@@ -93,7 +93,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Harga Lem Vinyl & Lem Karpet Terbaru ${PRICE_LIST_UPDATED} | Price List EFLOOR`,
 
-    description: `Harga Lem Vinyl / Lem Karpet EFLOOR: ${list}. Plus harga Lem MAX, ECO, HPL, Lem Kayu & Lem PU, estimasi cakupan area, dan harga khusus grosir, procurement & tender.`,
+    description: `Harga Lem Vinyl / Lem Karpet EFLOOR: ${list}. Plus harga Lem MAX, ECO, HPL, Lem Kayu & Lem PU rumput sintetis, estimasi cakupan area, dan harga khusus grosir, procurement & tender.`,
 
     keywords: [
       "harga lem vinyl",

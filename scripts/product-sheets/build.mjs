@@ -1,5 +1,5 @@
 // Builds the printable/shareable A4 product sheets for the three PVC trims
-// (List Siku L, List Plint, List Adaptasi) and Lem Karpet & Vinyl ECO, from
+// (List Siku L, List Plint, List Adaptasi), Lem Karpet & Vinyl ECO and Lem PU, from
 // the same content as their web pages (app/static/trims.ts, priceList.ts).
 //
 //   node --experimental-strip-types scripts/product-sheets/build.mjs
@@ -353,6 +353,129 @@ function ecoSheet(img) {
 </section>`;
 }
 
+// Lem PU EFLOOR for padel courts / artificial turf. Prices from priceList.ts;
+// claims are the ones printed on the label and used on /lem-lapangan-padel.
+function padelSheet(img) {
+  const pu = priceProduct("pu");
+  const url = `${SITE_URL}${pu.href}`;
+  const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Halo EFLOOR, saya tertarik dengan Lem PU EFLOOR untuk rumput sintetis / lapangan padel.")}`;
+  const today = new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric", timeZone: "Asia/Jakarta" });
+  const perKg = (s) => s.price / s.kg;
+  const fit = {
+    "450 GRAM": "Botol bermoncong — perbaikan sambungan, rumput hiasan, bata ringan",
+    "33 KG": "Jeriken — pemasangan lapangan padel & proyek kontraktor",
+  };
+  const rows = pu.sizes
+    .map(
+      (s, i) => `<tr>
+        <td><div class="var"><b>${esc(s.label)}</b>${i === pu.sizes.length - 1 ? '<span class="tag">Untuk lapangan</span>' : ""}</div></td>
+        <td class="small2">${esc(fit[s.label] ?? "")}</td>
+        <td class="price">${rupiah(s.price)}</td>
+        <td class="mono muted">${rupiah(perKg(s))}/kg</td>
+      </tr>`,
+    )
+    .join("");
+  const uses = [
+    ["Lapangan padel", "Sambungan gulungan rumput, garis lapangan, tepi di sekeliling dinding."],
+    ["Rumput hiasan & taman", "Rumput sintetis untuk taman, balkon, rooftop, dan dekorasi."],
+    ["Bata ringan", "Tercantum di label: untuk batu bata ringan."],
+  ];
+  const benefits = [
+    ["Tahan air", "Cocok untuk penggunaan indoor maupun outdoor."],
+    ["Cepat kering", "Lapangan bisa segera dirapikan dan dipakai."],
+    ["Mengembang mengisi celah", "Saat mengering lem mengembang, sambungan jadi lebih rapat."],
+    ["Polyurethane (PU)", "Lem reaktif untuk rumput sintetis dan bata ringan."],
+  ];
+  const steps = [
+    ["Bersihkan", "Bersihkan area dari debu, minyak, air, atau kotoran."],
+    ["Oles tipis", "Oles lem tipis di salah satu permukaan — lem mengembang saat mengering."],
+    ["Tempelkan", "Tempelkan kedua bahan yang ingin direkatkan, tekan rata."],
+    ["Diamkan", "Diamkan dan tunggu hingga lem kering sebelum dipakai."],
+  ];
+  const specs = [
+    ["Jenis", "Lem polyurethane (PU)"],
+    ["Untuk", "Rumput sintetis (lapangan padel, taman, hiasan), bata ringan"],
+    ["Sifat", "Tahan air, cepat kering, mengembang mengisi celah"],
+    ["Pemakaian", "Indoor & outdoor; oles tipis di salah satu permukaan"],
+    ["Kemasan", pu.sizes.map((s) => s.label).join(" · ")],
+  ];
+
+  return `
+<section class="page padel">
+  <header class="top">
+    <img class="logo" src="${img.logo}" alt="EFLOOR">
+    <div class="meta">Info Produk · ${esc(today)}</div>
+  </header>
+
+  <div class="title">
+    <span class="chip">Polyurethane</span><span class="tags">Padel · Rumput sintetis · Bata ringan</span>
+    <h1>Lem Lapangan Padel <span class="grad">&amp; Rumput Sintetis</span></h1>
+    <p class="intro">Lem PU EFLOOR untuk menyambung rumput sintetis lapangan padel, taman, dan dekorasi — juga untuk bata ringan. Tahan air, cepat kering, untuk dalam maupun luar ruangan.</p>
+  </div>
+
+  <div class="hero">
+    <div class="shot turf"><img src="${img.big}" alt=""><img class="small" src="${img.small}" alt=""></div>
+    <div class="facts">
+      <h3>Sekilas</h3>
+      <ul class="ticks">
+        <li>Untuk sambungan rumput sintetis lapangan padel</li>
+        <li>Polyurethane: tahan air, cepat kering</li>
+        <li>Bisa untuk indoor maupun outdoor</li>
+      </ul>
+      <div class="kv">
+        <div><small>Mulai</small><b>${rupiah(pu.sizes[0].price)}</b></div>
+        <div><small>Kemasan</small><b>450 gr · 33 kg</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="bar"></span>Kemasan &amp; harga</h2>
+  <table class="prices">
+    <thead><tr><th>Kemasan</th><th>Cocok untuk</th><th>Harga</th><th>Per kg</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <p class="note">Harga toko per ${esc(PRICE_LIST_UPDATED)}, dapat berubah sewaktu-waktu. Kontraktor &amp; proyek beberapa lapangan: minta harga khusus via WhatsApp.</p>
+
+  <h2><span class="bar"></span>Aplikasi</h2>
+  <ol class="uses">${uses.map(([t, d]) => `<li><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ol>
+</section>
+
+<section class="page padel">
+  <header class="top">
+    <img class="logo" src="${img.logo}" alt="EFLOOR">
+    <div class="meta">Lem Lapangan Padel &amp; Rumput Sintetis · halaman 2</div>
+  </header>
+
+  <div class="signature">
+    <h3>Sambungan rumput yang rapat, hujan atau panas.</h3>
+    <p>Rumput lapangan padel datang dalam gulungan yang disambung di atas seaming tape berlem. Sambungan inilah yang menentukan apakah lapangan tetap rata atau mulai terbuka setelah dipakai.</p>
+  </div>
+
+  <h2><span class="bar"></span>Keunggulan</h2>
+  <div class="benefits">${benefits.map(([t, d]) => `<div><b>${esc(t)}</b><span>${esc(d)}</span></div>`).join("")}</div>
+
+  <h2><span class="bar"></span>Cara pakai</h2>
+  <ol class="steps">${steps.map(([t, d], i) => `<li><span class="n">0${i + 1}</span><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ol>
+  <p class="small"><b>Penting:</b> oles tipis — polyurethane mengembang saat mengering, lem berlebih bisa naik ke permukaan rumput.</p>
+
+  <h2><span class="bar"></span>Spesifikasi</h2>
+  <table class="specs">${specs.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+
+  <footer class="contact">
+    <div class="cta">
+      <b>Pesan atau minta harga proyek</b>
+      <a href="${wa}">WhatsApp ${PHONE_DISPLAY}</a>
+      <a href="${url}">${esc(url.replace("https://", ""))}</a>
+    </div>
+    <div class="addr">
+      <small>Toko</small>${esc(ADDRESS)}
+      <small>Jam buka</small>${esc(HOURS)}
+      <small>Marketplace</small>Shopee &amp; Tokopedia: efloor.id
+    </div>
+  </footer>
+</section>`;
+}
+
 const CSS = `
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -391,7 +514,7 @@ table { width: 100%; border-collapse: collapse; }
 .prices th { text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.08em; color: #6b6a70; font-weight: 600; padding: 3mm 4mm; background: #f2f0eb; }
 .prices td { padding: 2.6mm 4mm; border-top: 1px solid #e8e5de; }
 .var { display: flex; align-items: center; gap: 3mm; }
-.var b { font-family: "IBM Plex Mono", monospace; font-size: 10.5pt; }
+.var b { font-family: "IBM Plex Mono", monospace; font-size: 10.5pt; white-space: nowrap; }
 .prof { width: 10mm; display: inline-flex; justify-content: center; }
 .tag { font-size: 7pt; font-weight: 600; color: #f2561d; background: #fff3e4; padding: 0.5mm 2mm; border-radius: 99px; }
 .price { font-size: 13pt; font-weight: 700; letter-spacing: -0.02em; }
@@ -446,6 +569,12 @@ table { width: 100%; border-collapse: collapse; }
 .compare tr.hl td { background: #f1f6ec; }
 .compare tr.hl td small { color: #2f7a22; font-weight: 600; }
 .floors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+.padel .grad { color: #2f7d3a; }
+.padel .chip { background: #e3f1e4; color: #24692e; }
+.shot.turf { background: linear-gradient(160deg, #3b9147, #25692f); }
+.shot.turf::after { content: ""; position: absolute; left: 0; right: 0; top: 70%; height: 1.2mm; background: rgba(255,255,255,.85); }
+.shot.turf img { position: absolute; inset: auto; left: 8%; top: 6%; width: 62%; height: 88%; object-fit: contain; padding: 0; z-index: 1; }
+.shot.turf img.small { left: 62%; top: 30%; width: 32%; height: 64%; }
 .floors span { background: #fff; border-radius: 3.5mm; padding: 3mm 4mm; box-shadow: 0 0 0 1px #e8e5de inset; font-weight: 600; font-size: 9.5pt; }
 `;
 
@@ -514,7 +643,10 @@ ${body}</body></html>`;
 for (const catalog of CATALOGS.filter((c) => c.sheet)) {
   const file = path.join(outDir, `${catalog.slug}.pdf`);
   console.log(catalog.title);
-  if (catalog.sheet === "eco") {
+  if (catalog.sheet === "padel") {
+    await renderPdf(catalog.title, padelSheet({ logo, big: await dataUri("img/lem-pu-33kg.webp"), small: await dataUri("img/lem-pu-450gr.webp") }), file);
+    console.log(`  ${priceProduct("pu").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}`);
+  } else if (catalog.sheet === "eco") {
     await renderPdf(catalog.title, ecoSheet({ logo, hero: await dataUri("img/lem-eco-4kg.webp") }), file);
     console.log(`  ${priceProduct("eco").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}`);
   } else {

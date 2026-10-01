@@ -17,7 +17,7 @@ export type Catalog = {
   /** The product's page on the site. */
   productHref: string;
   /** Which builder template produces it; omit for PDFs added by hand. */
-  sheet?: "siku" | "plint" | "adaptasi" | "eco";
+  sheet?: "siku" | "plint" | "adaptasi" | "eco" | "padel";
 };
 
 export const CATALOGS: Catalog[] = [
@@ -30,6 +30,16 @@ export const CATALOGS: Catalog[] = [
     pages: 2,
     productHref: "/lem-karpet-vinyl-eco",
     sheet: "eco",
+  },
+  {
+    slug: "lem-lapangan-padel",
+    title: "Lem Lapangan Padel & Rumput Sintetis",
+    category: "Lem & perekat",
+    summary: "Lem PU untuk sambungan rumput sintetis lapangan padel, taman & bata ringan — harga 450 gram & 33 KG, cara pakai, dan spesifikasi.",
+    contents: ["Harga 450 gr · 33 KG", "Aplikasi", "Cara pakai", "Spesifikasi"],
+    pages: 2,
+    productHref: "/lem-lapangan-padel",
+    sheet: "padel",
   },
   {
     slug: "list-siku-l",
