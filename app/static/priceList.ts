@@ -75,10 +75,12 @@ export const PRICE_LIST: PriceProduct[] = [
   },
   {
     id: "pu",
-    name: "Lem PU",
+    name: "Lem PU EFLOOR (Polyurethane)",
+    note: "Lem rumput sintetis & lapangan padel. Tahan air, cepat kering, indoor & outdoor.",
+    href: "/lem-lapangan-padel",
     sizes: [
-      { label: "450 GRAM", kg: 0.45, price: 55_000 },
-      { label: "33 KG", kg: 33, price: 3_375_000 },
+      { label: "450 GRAM", kg: 0.45, price: 49_000, img: "/img/lem-pu-450gr.webp" },
+      { label: "33 KG", kg: 33, price: 3_375_000, img: "/img/lem-pu-33kg.webp" },
     ],
   },
 ];

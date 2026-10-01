@@ -10,7 +10,7 @@ const PRODUCTS = [
   "Lem Karpet & Vinyl ECO",
   "Lem HPL EFLOOR",
   "Lem Kayu Tahan Air",
-  "Lem PU",
+  "Lem PU (rumput sintetis / padel)",
   "List siku / skirting / aksesoris",
 ];
 
