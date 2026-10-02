@@ -62,6 +62,44 @@ Then, in order:
 | Raise the daily budget | Lost impression share (budget) >20% **and** cost per lead on target for 14 days; raise by at most 20% at a time |
 | Switch to Maximize Conversion Value | Lead values actually differ (tiered or real order values) **and** "Calls from ads" has a realistic value instead of Rp1 |
 
+## Location targeting: Jabodetabek only
+
+The store is in Kelapa Gading and buyers who expect a nearby shop drop off
+once they learn the distance. In the 30 days to 2 Oct 2026, Surabaya alone
+took Rp247.123 — more than any single Jakarta district — and roughly 40% of
+spend went outside the core Jabodetabek cities.
+
+Target these geo target constant IDs, and nothing broader:
+
+| Location | ID |
+|---|---|
+| Jakarta (province, covers all 5 cities) | 20440 |
+| Bekasi | 1007701 |
+| Bekasi Regency | 9117967 |
+| Depok | 1007706 |
+| Bogor | 1007702 |
+| Bogor Regency | 9117968 |
+| Tangerang | 1007710 |
+| Tangerang Regency | 9117969 |
+| South Tangerang | 9056654 |
+
+Indonesia as a whole is ID **2360** — the criterion to remove.
+
+```
+update_campaign_locations  campaign 23588047100
+  add_location_ids: the nine above      # add first
+  remove_location_ids: ["2360"]        # then remove Indonesia
+```
+
+Add the narrower targets **before** removing Indonesia: a campaign with no
+location criteria at all targets everywhere. Keep the location option on
+**Presence**, and check the result with `list_campaign_locations`.
+
+Note the trade-off: this gives up roughly 40% of reach, and smart bidding
+wobbles for a few days. Nationwide delivery buyers are still worth having —
+the better way to reach them is a separate campaign whose copy leads on
+"kirim ke seluruh Indonesia" rather than the store, so distance is set from
+the first impression instead of discovered in the chat.
 ## Order values: closing the loop
 
 Every WhatsApp CTA opens the chat with a reference code, e.g.
