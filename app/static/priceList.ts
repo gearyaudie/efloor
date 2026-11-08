@@ -83,6 +83,16 @@ export const PRICE_LIST: PriceProduct[] = [
       { label: "33 KG", kg: 33, price: 3_375_000, img: "/img/lem-pu-33kg.webp" },
     ],
   },
+  {
+    id: "epoxy",
+    name: "Lem Epoxy EFLOOR Non-Sag",
+    note: "Epoxy 2 komponen (Resin + Hardener, campur 1 : 1). Harga per set untuk sambungan kayu, tenon & sudut 45°.",
+    href: "/lem-epoxy",
+    sizes: [
+      { label: "500 GR", kg: 0.5, price: 50_000, img: "/img/lem-epoxy-500gr.webp" },
+      { label: "2,8 KG", kg: 2.8, price: 239_000, img: "/img/lem-epoxy-2-8kg.webp" },
+    ],
+  },
 ];
 
 export const priceProduct = (id: string) => {

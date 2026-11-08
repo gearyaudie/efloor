@@ -11,6 +11,7 @@ export const VERTICAL_PAGES = [
   { label: "Lem HPL & PVC Sheet", href: "/lem-hpl-pvc-sheet" },
   { label: "Lem Karpet & Vinyl ECO", href: "/lem-karpet-vinyl-eco" },
   { label: "Lem Lapangan Padel & Rumput Sintetis", href: "/lem-lapangan-padel" },
+  { label: "Lem Epoxy Non-Sag", href: "/lem-epoxy" },
   {
     label: "Lem Vinyl & Karpet Tangerang",
     href: "/lem-vinyl-karpet-tangerang",
