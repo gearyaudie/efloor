@@ -17,7 +17,7 @@ export type Catalog = {
   /** The product's page on the site. */
   productHref: string;
   /** Which builder template produces it; omit for PDFs added by hand. */
-  sheet?: "siku" | "plint" | "adaptasi" | "eco" | "padel";
+  sheet?: "siku" | "plint" | "adaptasi" | "eco" | "padel" | "epoxy";
 };
 
 export const CATALOGS: Catalog[] = [
@@ -40,6 +40,16 @@ export const CATALOGS: Catalog[] = [
     pages: 2,
     productHref: "/lem-lapangan-padel",
     sheet: "padel",
+  },
+  {
+    slug: "lem-epoxy",
+    title: "Lem Epoxy Non-Sag",
+    category: "Lem & perekat",
+    summary: "Epoxy 2 komponen untuk sambungan kayu, tenon & sudut 45° — harga per set Resin + Hardener (500 gr & 2,8 KG), cara campur, dan spesifikasi.",
+    contents: ["Harga per set", "Cara campur 1 : 1", "Aplikasi", "Spesifikasi"],
+    pages: 2,
+    productHref: "/lem-epoxy",
+    sheet: "epoxy",
   },
   {
     slug: "list-siku-l",

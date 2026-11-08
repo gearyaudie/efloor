@@ -476,6 +476,129 @@ function padelSheet(img) {
 </section>`;
 }
 
+// Lem Epoxy EFLOOR Non-Sag, sold per set (Resin A + Hardener B). Prices from
+// priceList.ts; claims are the ones on the label and on /lem-epoxy.
+function epoxySheet(img) {
+  const ep = priceProduct("epoxy");
+  const url = `${SITE_URL}${ep.href}`;
+  const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Halo EFLOOR, saya tertarik dengan Lem Epoxy EFLOOR Non-Sag (Resin + Hardener).")}`;
+  const today = new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric", timeZone: "Asia/Jakarta" });
+  const perKg = (s) => s.price / s.kg;
+  const fit = {
+    "500 GR": "Resin 250 gr + Hardener 250 gr — perbaikan & pekerjaan kecil",
+    "2,8 KG": "Resin 1,4 kg + Hardener 1,4 kg — workshop & produksi furnitur",
+  };
+  const rows = ep.sizes
+    .map(
+      (s, i) => `<tr>
+        <td><div class="var"><b>${esc(s.label)}</b>${i === ep.sizes.length - 1 ? '<span class="tag">Untuk workshop</span>' : ""}</div></td>
+        <td class="small2">${esc(fit[s.label] ?? "")}</td>
+        <td class="price">${rupiah(s.price)}<span class="per">/set</span></td>
+        <td class="mono muted">${rupiah(perKg(s))}/kg</td>
+      </tr>`,
+    )
+    .join("");
+  const uses = [
+    ["Tenon & mortise", "Rangka kursi, meja, pintu dan kusen yang menahan beban."],
+    ["Sudut 45° (mitre)", "Bingkai, kusen, list dan sudut furnitur tanpa celah."],
+    ["Kayu, logam & kaca", "Merekatkan kayu dengan logam atau kaca, serta perbaikan."],
+  ];
+  const benefits = [
+    ["Non-sag, tidak meleleh", "Tetap di tempat di bidang tegak dan sambungan sudut, tidak menetes."],
+    ["Rekat kuat", "Epoxy 2 komponen untuk sambungan kayu yang harus kokoh."],
+    ["Garis lem tidak terlihat", "Sambungan tampak rapi, siap difinishing."],
+    ["Keras 3–4 jam", "Campur 1 : 1 (berat); sambungan keras dalam sekitar 3–4 jam."],
+  ];
+  const steps = [
+    ["Bersihkan", "Bersihkan permukaan dari debu dan minyak."],
+    ["Campur 1 : 1", "Timbang Resin (A) dan Hardener (B) sama berat, aduk sampai rata."],
+    ["Oles & jepit", "Oleskan, tempelkan, lalu tekan atau jepit sambungan."],
+    ["Tunggu keras", "Biarkan mengeras sekitar 3–4 jam sebelum klem dilepas."],
+  ];
+  const specs = [
+    ["Jenis", "Epoxy 2 komponen: Resin (A) + Hardener (B)"],
+    ["Perbandingan", "1 : 1 (berat)"],
+    ["Waktu keras", "±3–4 jam"],
+    ["Untuk", "Sambungan kayu, tenon & sudut 45°; juga logam & kaca"],
+    ["Kemasan (per set)", "500 gr (250 + 250 gr) · 2,8 KG (1,4 + 1,4 kg)"],
+  ];
+
+  return `
+<section class="page epoxy">
+  <header class="top">
+    <img class="logo" src="${img.logo}" alt="EFLOOR">
+    <div class="meta">Info Produk · ${esc(today)}</div>
+  </header>
+
+  <div class="title">
+    <span class="chip">Epoxy 2 komponen</span><span class="tags">Kayu · Logam · Kaca</span>
+    <h1>Lem Epoxy <span class="grad">Non-Sag</span></h1>
+    <p class="intro">Lem epoxy 2 komponen EFLOOR untuk sambungan kayu, tenon, dan sudut 45°. Formula non-sag tidak meleleh, rekat kuat, dan garis lemnya tidak terlihat. Dijual per set: Resin (A) + Hardener (B).</p>
+  </div>
+
+  <div class="hero">
+    <div class="shot amber"><img src="${img.big}" alt=""><img class="small" src="${img.small}" alt=""></div>
+    <div class="facts">
+      <h3>Sekilas</h3>
+      <ul class="ticks">
+        <li>Non-sag: tidak meleleh di bidang tegak &amp; sudut</li>
+        <li>Untuk sambungan kayu, tenon &amp; sudut 45°</li>
+        <li>Campur 1 : 1 (berat), keras ±3–4 jam</li>
+      </ul>
+      <div class="kv">
+        <div><small>Mulai</small><b>${rupiah(ep.sizes[0].price)} / set</b></div>
+        <div><small>Set</small><b>500 gr · 2,8 kg</b></div>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="bar"></span>Harga per set</h2>
+  <table class="prices">
+    <thead><tr><th>Set</th><th>Isi</th><th>Harga</th><th>Per kg</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <p class="note"><b>Harga dan berat untuk 1 set lengkap (Resin + Hardener), bukan per botol.</b> Harga toko per ${esc(PRICE_LIST_UPDATED)}, dapat berubah sewaktu-waktu. Pembelian rutin: minta harga grosir via WhatsApp.</p>
+
+  <h2><span class="bar"></span>Aplikasi</h2>
+  <ol class="uses">${uses.map(([t, d]) => `<li><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ol>
+</section>
+
+<section class="page epoxy">
+  <header class="top">
+    <img class="logo" src="${img.logo}" alt="EFLOOR">
+    <div class="meta">Lem Epoxy Non-Sag · halaman 2</div>
+  </header>
+
+  <div class="signature">
+    <h3>Resin (A) + Hardener (B) = siap pakai.</h3>
+    <p>Timbang kedua komponen dengan berat yang sama, aduk sampai warnanya rata, lalu langsung pakai. Campur secukupnya saja dan tutup rapat kedua botol setelah dipakai.</p>
+  </div>
+
+  <h2><span class="bar"></span>Keunggulan</h2>
+  <div class="benefits">${benefits.map(([t, d]) => `<div><b>${esc(t)}</b><span>${esc(d)}</span></div>`).join("")}</div>
+
+  <h2><span class="bar"></span>Cara pakai</h2>
+  <ol class="steps">${steps.map(([t, d], i) => `<li><span class="n">0${i + 1}</span><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ol>
+  <p class="small"><b>Video cara pakai:</b> ${esc(url.replace("https://", ""))}</p>
+
+  <h2><span class="bar"></span>Spesifikasi</h2>
+  <table class="specs">${specs.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+
+  <footer class="contact">
+    <div class="cta">
+      <b>Pesan atau tanya harga grosir</b>
+      <a href="${wa}">WhatsApp ${PHONE_DISPLAY}</a>
+      <a href="${url}">${esc(url.replace("https://", ""))}</a>
+    </div>
+    <div class="addr">
+      <small>Toko</small>${esc(ADDRESS)}
+      <small>Jam buka</small>${esc(HOURS)}
+      <small>Marketplace</small>Shopee &amp; Tokopedia: efloor.id
+    </div>
+  </footer>
+</section>`;
+}
+
 const CSS = `
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -575,6 +698,14 @@ table { width: 100%; border-collapse: collapse; }
 .shot.turf::after { content: ""; position: absolute; left: 0; right: 0; top: 70%; height: 1.2mm; background: rgba(255,255,255,.85); }
 .shot.turf img { position: absolute; inset: auto; left: 8%; top: 6%; width: 62%; height: 88%; object-fit: contain; padding: 0; z-index: 1; }
 .shot.turf img.small { left: 62%; top: 30%; width: 32%; height: 64%; }
+.epoxy .grad { color: #c9780a; }
+.epoxy .chip { background: #fbecc4; color: #8a5a06; }
+.epoxy .signature { background-color: #16231b; background-image: radial-gradient(60mm 50mm at 100% 0, rgba(242,179,28,.35), transparent); }
+.shot.amber { background: linear-gradient(165deg, #fff8e6, #f3d895); }
+.shot.amber img { position: absolute; inset: auto; object-fit: contain; padding: 0; z-index: 1; }
+.shot.amber img:first-child { left: 4%; top: 6%; width: 58%; height: 88%; }
+.shot.amber img.small { left: 58%; top: 34%; width: 40%; height: 58%; }
+.price .per { font-size: 8pt; font-weight: 500; color: #6b6a70; margin-left: 1mm; }
 .floors span { background: #fff; border-radius: 3.5mm; padding: 3mm 4mm; box-shadow: 0 0 0 1px #e8e5de inset; font-weight: 600; font-size: 9.5pt; }
 `;
 
@@ -640,10 +771,14 @@ ${body}</body></html>`;
   await page.close();
 }
 
-for (const catalog of CATALOGS.filter((c) => c.sheet)) {
+// ONLY=<slug> rebuilds one sheet and leaves the other PDFs untouched.
+for (const catalog of CATALOGS.filter((c) => c.sheet && (!process.env.ONLY || c.slug === process.env.ONLY))) {
   const file = path.join(outDir, `${catalog.slug}.pdf`);
   console.log(catalog.title);
-  if (catalog.sheet === "padel") {
+  if (catalog.sheet === "epoxy") {
+    await renderPdf(catalog.title, epoxySheet({ logo, big: await dataUri("img/lem-epoxy-2-8kg.webp"), small: await dataUri("img/lem-epoxy-500gr.webp") }), file);
+    console.log(`  ${priceProduct("epoxy").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}`);
+  } else if (catalog.sheet === "padel") {
     await renderPdf(catalog.title, padelSheet({ logo, big: await dataUri("img/lem-pu-33kg.webp"), small: await dataUri("img/lem-pu-450gr.webp") }), file);
     console.log(`  ${priceProduct("pu").sizes.map((s) => `${s.label}: ${rupiah(s.price)}`).join(", ")}`);
   } else if (catalog.sheet === "eco") {
