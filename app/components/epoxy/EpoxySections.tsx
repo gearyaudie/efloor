@@ -180,6 +180,46 @@ export function EpoxySteps() {
   );
 }
 
+// Short demo filmed for TikTok, hosted on Google Drive (shared by link).
+const VIDEO_ID = "1TEzbn7iRfkoKWlo9Yfq7r9FtJIwTW2rq";
+
+export function EpoxyVideo() {
+  return (
+    <section id="video" className="scroll-mt-[140px] max-w-[1200px] mx-auto px-4 md:px-8 pb-[72px] lg:pb-[104px]">
+      <div className="grid gap-10 lg:gap-16 lg:grid-cols-[1fr_340px] items-center">
+        <div data-reveal>
+          <Eyebrow>Video</Eyebrow>
+          <h2 className={h2Class}>Lihat Lem Epoxy EFLOOR dipakai</h2>
+          <p className="mt-3.5 text-muted text-base md:text-[17px] max-w-[48ch]">
+            Dari mencampur Resin dan Hardener sampai menyambung kayu. Perhatikan bagaimana lem
+            tetap di tempat dan tidak meleleh.
+          </p>
+          <ul className="mt-6 grid gap-2.5 text-[15px] text-ink-soft">
+            {["Campur Resin (A) + Hardener (B) 1 : 1", "Oles, tempel & jepit sambungan", "Non-sag: lem tidak turun atau menetes"].map((t) => (
+              <li key={t} className="flex items-start gap-2.5">
+                <CheckIcon className={`w-5 h-5 mt-0.5 shrink-0 ${amber}`} />
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div data-reveal className="mx-auto w-full max-w-[340px] rounded-[32px] bg-[#16231b] p-2.5 shadow-e3">
+          <div className="relative aspect-[9/16] rounded-[24px] overflow-hidden bg-black">
+            <iframe
+              src={`https://drive.google.com/file/d/${VIDEO_ID}/preview`}
+              title="Video Lem Epoxy EFLOOR Non-Sag"
+              loading="lazy"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full border-0"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const FITS: Record<string, { title: string; split: string; points: string[] }> = {
   "500 GR": {
     title: "Set 500 gr",

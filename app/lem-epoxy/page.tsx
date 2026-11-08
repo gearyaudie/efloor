@@ -8,7 +8,7 @@ import RevealOnScroll from "../components/home/RevealOnScroll";
 import ClosingCta from "../components/home/ClosingCta";
 import SectionNav from "../components/product/SectionNav";
 import EpoxyHero from "../components/epoxy/EpoxyHero";
-import { EpoxyBenefits, EpoxyPricing, EpoxySpecs, EpoxySteps, EpoxyUses } from "../components/epoxy/EpoxySections";
+import { EpoxyBenefits, EpoxyPricing, EpoxySpecs, EpoxySteps, EpoxyUses, EpoxyVideo } from "../components/epoxy/EpoxySections";
 import { rupiah } from "../lib/format";
 import { priceProduct } from "../static/priceList";
 
@@ -19,6 +19,7 @@ const NAV = [
   { id: "keunggulan", label: "Keunggulan" },
   { id: "aplikasi", label: "Aplikasi" },
   { id: "cara-pakai", label: "Cara pakai" },
+  { id: "video", label: "Video" },
   { id: "harga", label: "Harga" },
   { id: "spesifikasi", label: "Spesifikasi" },
   { id: "faq-lem-epoxy", label: "FAQ" },
@@ -34,6 +35,14 @@ export default function LemEpoxy() {
       "Lem epoxy 2 komponen EFLOOR untuk sambungan kayu, tenon dan sudut 45°. Non-sag, rekat kuat, garis lem tidak terlihat, serbaguna untuk kayu, logam dan kaca. Dijual per set Resin + Hardener.",
     image: epoxy.sizes.map((s) => `${SITE_URL}${s.img}`),
     url: `${SITE_URL}${PAGE_HREF}`,
+    subjectOf: {
+      "@type": "VideoObject",
+      name: "Lem Epoxy EFLOOR Non-Sag: cara pakai",
+      description: "Mencampur Resin dan Hardener 1 : 1 lalu menyambung kayu dengan Lem Epoxy EFLOOR Non-Sag.",
+      embedUrl: "https://drive.google.com/file/d/1TEzbn7iRfkoKWlo9Yfq7r9FtJIwTW2rq/preview",
+      thumbnailUrl: `${SITE_URL}/img/lem-epoxy-2-8kg.webp`,
+      uploadDate: "2026-11-08",
+    },
     offers: epoxy.sizes.map((s) => ({
       "@type": "Offer",
       name: `1 set ${s.label} (Resin + Hardener)`,
@@ -60,6 +69,7 @@ export default function LemEpoxy() {
       <EpoxyBenefits />
       <EpoxyUses />
       <EpoxySteps />
+      <EpoxyVideo />
       <EpoxyPricing />
       <EpoxySpecs />
       <FaqSectionEpoxy aside={<FaqAside source="epoxy-faq" product="Lem Epoxy EFLOOR Non-Sag" text="Tanya kebutuhan untuk workshop atau proyek Anda." />} />
